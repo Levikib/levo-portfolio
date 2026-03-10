@@ -467,63 +467,85 @@ function ServicesView() {
 
   return (
     <div>
-      {/* Intro strip */}
-      <div style={{ background:"var(--bg)", padding:"40px 48px 0" }}>
-        <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"640px", lineHeight:1.85 }}>
+      {/* Intro strip + category pills */}
+      <div style={{ background:"var(--bg)", padding:"40px 48px 32px", borderBottom:"1px solid var(--border)" }}>
+        <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"640px", lineHeight:1.85, marginBottom:"24px" }}>
           Everything I can do for your business — engineering, infrastructure, security, AI, marketing, design. Browse by category, select what you need, and I&apos;ll reach out within 24 hours.
         </p>
-      </div>
-
-      {/* Category pills */}
-      <div style={{ padding:"28px 48px 0", display:"flex", gap:"6px", flexWrap:"wrap", borderBottom:"1px solid var(--border)", paddingBottom:"28px" }}>
-        <button onClick={() => setActiveCategory(null)}
-          style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"7px 16px", background:activeCategory===null?"var(--text)":"transparent", border:`1px solid ${activeCategory===null?"var(--text)":"var(--border)"}`, color:activeCategory===null?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}>All Categories</button>
+        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
+          <button onClick={() => setActiveCategory(null)}
+            style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"7px 16px", background:activeCategory===null?"var(--text)":"transparent", border:`1px solid ${activeCategory===null?"var(--text)":"var(--border)"}`, color:activeCategory===null?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}>All Categories</button>
         {SERVICE_CATEGORIES.map(cat => (
           <button key={cat.id} onClick={() => setActiveCategory(activeCategory===cat.id ? null : cat.id)}
             style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"7px 16px", background:activeCategory===cat.id?cat.accent:"transparent", border:`1px solid ${activeCategory===cat.id?cat.accent:"var(--border)"}`, color:activeCategory===cat.id?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}>{cat.label}</button>
         ))}
+        </div>
       </div>
 
-      {/* Service categories */}
-      <div style={{ padding:"48px 48px 0" }}>
-        {visibleCats.map((cat, cidx) => (
-          <div key={cat.id} style={{ marginBottom:"56px" }}>
-            {/* Category header */}
-            <div style={{ display:"flex", alignItems:"center", gap:"14px", marginBottom:"20px" }}>
-              <div style={{ width:"40px", height:"40px", background:cat.accentLight, border:`1px solid ${cat.accentBorder}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"18px", color:cat.accent, flexShrink:0 }}>{cat.icon}</div>
-              <div style={{ flex:1 }}>
-                <h3 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"22px", letterSpacing:"-0.01em", color:"var(--text)", lineHeight:1 }}>{cat.label}</h3>
-                <div style={{ fontFamily:"var(--font-body)", fontSize:"12px", color:"var(--text-3)", marginTop:"3px" }}>{cat.desc}</div>
-              </div>
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:cat.accent, letterSpacing:"0.1em", background:cat.accentLight, border:`1px solid ${cat.accentBorder}`, padding:"4px 10px" }}>{cat.services.length} services</div>
-            </div>
+      {/* Service categories — alternating light / dark full-width bands */}
+      <div>
+        {visibleCats.map((cat, cidx) => {
+          const isDark = cidx % 2 !== 0;
+          const sectionBg    = isDark ? "#0a0805" : "var(--bg)";
+          const headingCol   = isDark ? "white"   : "var(--text)";
+          const subCol       = isDark ? "rgba(255,255,255,0.45)" : "var(--text-3)";
+          const borderCol    = isDark ? "rgba(255,255,255,0.08)" : "var(--border)";
+          const cardBg       = isDark ? "rgba(255,255,255,0.04)" : "#ffffff";
+          const cardBgAlt    = isDark ? "rgba(255,255,255,0.02)" : "var(--bg-2)";
+          const tagCol       = isDark ? "rgba(255,255,255,0.3)" : "var(--text-4)";
+          const tagBorder    = isDark ? "rgba(255,255,255,0.08)" : "var(--border)";
+          const svcNameCol   = isDark ? "rgba(255,255,255,0.9)" : "var(--text)";
+          const svcDescCol   = isDark ? "rgba(255,255,255,0.45)" : "var(--text-3)";
+          const checkBorder  = isDark ? "rgba(255,255,255,0.2)" : "var(--border)";
+          const countBg      = isDark ? `${cat.accent}20` : cat.accentLight;
+          const dividerCol   = isDark ? "rgba(255,255,255,0.06)" : "var(--border)";
 
-            {/* Service cards */}
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:"10px" }}>
-              {cat.services.map(svc => {
-                const isSel = selected.has(svc.id);
-                const cardBg = cidx % 2 === 0 ? "#ffffff" : "var(--bg-2)";
-                return (
-                  <div key={svc.id} onClick={() => toggleService(svc.id)}
-                    style={{ background: isSel ? cat.accentLight : cardBg, border:`1.5px solid ${isSel ? cat.accent : "var(--border)"}`, padding:"20px 20px 18px", cursor:"pointer", transition:"all 0.18s", position:"relative", boxShadow: isSel ? `0 0 0 1px ${cat.accent}30, 0 4px 20px ${cat.accent}12` : "none" }}
-                    onMouseEnter={e => { if (!isSel) { (e.currentTarget as HTMLElement).style.borderColor = cat.accentBorder; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)"; } }}
-                    onMouseLeave={e => { if (!isSel) { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; } }}
-                  >
-                    {/* Checkbox */}
-                    <div style={{ position:"absolute", top:"16px", right:"16px", width:"18px", height:"18px", border:`1.5px solid ${isSel ? cat.accent : "var(--border)"}`, background: isSel ? cat.accent : "transparent", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.18s", flexShrink:0 }}>
-                      {isSel && <span style={{ color:"white", fontSize:"11px", lineHeight:1, fontWeight:700 }}>✓</span>}
-                    </div>
-                    <div style={{ fontFamily:"var(--font-display)", fontWeight:700, fontSize:"14px", color:"var(--text)", lineHeight:1.3, marginBottom:"8px", paddingRight:"28px" }}>{svc.name}</div>
-                    <div style={{ fontFamily:"var(--font-body)", fontSize:"11px", color:"var(--text-3)", lineHeight:1.75, marginBottom:"14px" }}>{svc.desc}</div>
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:"4px" }}>
-                      {svc.tags.map(t => <span key={t} style={{ fontFamily:"var(--font-mono)", fontSize:"8px", color: isSel ? cat.accent : "var(--text-4)", background: isSel ? `${cat.accent}10` : "transparent", border:`1px solid ${isSel ? cat.accentBorder : "var(--border)"}`, padding:"2px 7px", transition:"all 0.18s" }}>{t}</span>)}
-                    </div>
+          return (
+            <div key={cat.id} style={{ background:sectionBg, padding:"56px 48px", borderBottom:`1px solid ${dividerCol}`, position:"relative", overflow:"hidden" }}>
+              {/* Subtle background texture for dark sections */}
+              {isDark && <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(${cat.accent}08 1px, transparent 1px)`, backgroundSize:"28px 28px", pointerEvents:"none" }} />}
+              {isDark && <div style={{ position:"absolute", top:"-80px", right:"-60px", width:"320px", height:"320px", background:`radial-gradient(circle, ${cat.accent}10, transparent 70%)`, filter:"blur(80px)", pointerEvents:"none" }} />}
+
+              <div style={{ position:"relative", zIndex:1 }}>
+                {/* Category header */}
+                <div style={{ display:"flex", alignItems:"center", gap:"14px", marginBottom:"28px", paddingBottom:"20px", borderBottom:`1px solid ${borderCol}` }}>
+                  <div style={{ width:"44px", height:"44px", background: isDark ? `${cat.accent}15` : cat.accentLight, border:`1px solid ${isDark ? `${cat.accent}30` : cat.accentBorder}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"20px", color:cat.accent, flexShrink:0 }}>{cat.icon}</div>
+                  <div style={{ flex:1 }}>
+                    <h3 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"24px", letterSpacing:"-0.01em", color:headingCol, lineHeight:1 }}>{cat.label}</h3>
+                    <div style={{ fontFamily:"var(--font-body)", fontSize:"12px", color:subCol, marginTop:"4px" }}>{cat.desc}</div>
                   </div>
-                );
-              })}
+                  <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:cat.accent, letterSpacing:"0.1em", background:countBg, border:`1px solid ${isDark ? `${cat.accent}30` : cat.accentBorder}`, padding:"5px 12px" }}>{cat.services.length} services</div>
+                </div>
+
+                {/* Service cards */}
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:"10px" }}>
+                  {cat.services.map((svc, si) => {
+                    const isSel = selected.has(svc.id);
+                    const bg = isSel ? (isDark ? `${cat.accent}18` : cat.accentLight) : (si % 2 === 0 ? cardBg : cardBgAlt);
+                    const bd = isSel ? cat.accent : borderCol;
+                    return (
+                      <div key={svc.id} onClick={() => toggleService(svc.id)}
+                        style={{ background:bg, border:`1.5px solid ${bd}`, padding:"20px 20px 18px", cursor:"pointer", transition:"all 0.18s", position:"relative", boxShadow: isSel ? `0 0 0 1px ${cat.accent}30, 0 4px 24px ${cat.accent}18` : "none" }}
+                        onMouseEnter={e => { if (!isSel) { (e.currentTarget as HTMLElement).style.borderColor = isDark ? `${cat.accent}40` : cat.accentBorder; (e.currentTarget as HTMLElement).style.boxShadow = isDark ? `0 2px 16px rgba(0,0,0,0.3)` : "0 2px 12px rgba(0,0,0,0.06)"; } }}
+                        onMouseLeave={e => { if (!isSel) { (e.currentTarget as HTMLElement).style.borderColor = borderCol; (e.currentTarget as HTMLElement).style.boxShadow = "none"; } }}
+                      >
+                        {/* Checkbox */}
+                        <div style={{ position:"absolute", top:"16px", right:"16px", width:"18px", height:"18px", border:`1.5px solid ${isSel ? cat.accent : checkBorder}`, background: isSel ? cat.accent : "transparent", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.18s" }}>
+                          {isSel && <span style={{ color:"white", fontSize:"11px", lineHeight:1, fontWeight:700 }}>✓</span>}
+                        </div>
+                        <div style={{ fontFamily:"var(--font-display)", fontWeight:700, fontSize:"14px", color: isSel ? cat.accent : svcNameCol, lineHeight:1.3, marginBottom:"8px", paddingRight:"28px", transition:"color 0.18s" }}>{svc.name}</div>
+                        <div style={{ fontFamily:"var(--font-body)", fontSize:"11px", color:svcDescCol, lineHeight:1.75, marginBottom:"14px" }}>{svc.desc}</div>
+                        <div style={{ display:"flex", flexWrap:"wrap", gap:"4px" }}>
+                          {svc.tags.map(t => <span key={t} style={{ fontFamily:"var(--font-mono)", fontSize:"8px", color: isSel ? cat.accent : tagCol, background: isSel ? `${cat.accent}12` : "transparent", border:`1px solid ${isSel ? `${cat.accent}40` : tagBorder}`, padding:"2px 7px", transition:"all 0.18s" }}>{t}</span>)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* ── LEAD GEN FORM ── */}
@@ -667,22 +689,20 @@ export default function Work() {
       <div style={{ background:"var(--bg)", paddingTop:"140px", paddingBottom:"56px", paddingLeft:"48px", paddingRight:"48px", borderBottom:"1px solid var(--border)" }}>
         <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"16px" }}>// Work & Services</div>
 
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", flexWrap:"wrap", gap:"32px" }}>
-          <div>
-            <h1 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(44px,6vw,80px)", lineHeight:0.92, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"16px" }}>
-              {view === "portfolio"
-                ? <>What I&apos;ve Built<br /><span style={{ color:"var(--purple)" }}>& Made.</span></>
-                : <>What I Can<br /><span style={{ color:"var(--purple)" }}>Do For You.</span></>}
-            </h1>
-            <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"460px", lineHeight:1.8 }}>
-              {view === "portfolio"
-                ? "Production systems, AI tools, digital agencies, editorial design. Every project is real. Every metric is earned."
-                : "Engineering, infrastructure, security, AI, marketing, design. Select what you need — I'll handle the rest."}
-            </p>
-          </div>
+        <div style={{ maxWidth:"680px" }}>
+          <h1 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(44px,6vw,80px)", lineHeight:0.92, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"16px" }}>
+            {view === "portfolio"
+              ? <>What I&apos;ve Built<br /><span style={{ color:"var(--purple)" }}>& Made.</span></>
+              : <>What I Can<br /><span style={{ color:"var(--purple)" }}>Do For You.</span></>}
+          </h1>
+          <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"460px", lineHeight:1.8, marginBottom:"32px" }}>
+            {view === "portfolio"
+              ? "Production systems, AI tools, digital agencies, editorial design. Every project is real. Every metric is earned."
+              : "Engineering, infrastructure, security, AI, marketing, design. Select what you need — I'll handle the rest."}
+          </p>
 
-          {/* Toggle */}
-          <div style={{ display:"flex", background:"var(--bg-2)", border:"1px solid var(--border)", padding:"4px", gap:"3px", flexShrink:0 }}>
+          {/* Toggle — left-aligned under description */}
+          <div style={{ display:"inline-flex", background:"var(--bg-2)", border:"1px solid var(--border)", padding:"4px", gap:"3px" }}>
             <button onClick={() => setView("portfolio")}
               style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"11px 26px", background:view==="portfolio"?"var(--text)":"transparent", border:"none", color:view==="portfolio"?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.25s", whiteSpace:"nowrap" }}>
               ◆ Work Portfolio
