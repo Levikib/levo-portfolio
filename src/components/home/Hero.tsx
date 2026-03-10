@@ -125,12 +125,12 @@ export default function Hero() {
           </div>
 
           {/* Photo — mid-speed parallax */}
-          <div ref={photoRef} style={{ position:"relative", zIndex:2, willChange:"transform" }}>
+          <div ref={photoRef} style={{ position:"relative", zIndex:2, willChange:"transform", filter:"drop-shadow(0 0 0 3px white) drop-shadow(0 0 12px rgba(124,58,237,0.2))" }}>
             <div style={{
               width:"260px", height:"320px",
               borderRadius:"40% 60% 55% 45% / 45% 40% 60% 55%",
               overflow:"hidden",
-              boxShadow:"0 0 0 3px white, 0 0 0 5px rgba(124,58,237,0.15)",
+              boxShadow:"none",
             }}>
               <img src="/levo.jpg" alt="Levis Kibirie" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 20%", filter:"saturate(1.1) contrast(1.03)" }} />
               <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"40%", background:"linear-gradient(to top, rgba(15,61,31,0.35) 0%, transparent 100%)" }} />
