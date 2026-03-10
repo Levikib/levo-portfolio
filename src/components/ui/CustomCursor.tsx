@@ -14,8 +14,10 @@ export default function CustomCursor() {
   },[]);
   return(
     <>
-      <div ref={dotRef} className="fixed w-2.5 h-2.5 rounded-full pointer-events-none z-[9999]" style={{top:0,left:0,background:"var(--purple)"}}/>
-      <div ref={ringRef} className="fixed w-9 h-9 rounded-full pointer-events-none z-[9998]" style={{top:0,left:0,border:"1.5px solid var(--purple)",opacity:0.5}}/>
+      <div ref={dotRef} className="fixed w-2.5 h-2.5 rounded-full pointer-events-none z-[99999]"
+        style={{top:0,left:0,background:"white",mixBlendMode:"difference"}}/>
+      <div ref={ringRef} className="fixed w-9 h-9 rounded-full pointer-events-none z-[99998]"
+        style={{top:0,left:0,border:"1.5px solid white",opacity:0.8,mixBlendMode:"difference"}}/>
     </>
   );
 }

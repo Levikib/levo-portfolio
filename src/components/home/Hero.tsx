@@ -172,7 +172,7 @@ export default function Hero() {
           </div>
 
           {/* Floating location badge */}
-          <div className="absolute top-12 left-4 lg:left-0 bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2" style={{
+          <div className="absolute top-12 left-4 lg:left-0 glass-stat rounded-full px-4 py-2 flex items-center gap-2" style={{
             border: "1px solid var(--forest-pale)",
             animation: "float 5s ease-in-out infinite",
             zIndex: 3,
@@ -182,7 +182,7 @@ export default function Hero() {
           </div>
 
           {/* Stats — floating cards */}
-          <div className="absolute top-20 right-2 lg:-right-2 bg-white rounded-lg p-4 shadow-lg" style={{
+          <div className="absolute top-20 right-2 lg:-right-2 glass-stat rounded-lg p-4" style={{
             border: "1px solid var(--border)",
             animation: "float 4s ease-in-out infinite",
             zIndex: 3, minWidth: "110px",
@@ -191,7 +191,7 @@ export default function Hero() {
             <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "3px" }}>Units Managed</div>
           </div>
 
-          <div className="absolute bottom-16 right-2 lg:-right-2 bg-white rounded-lg p-4 shadow-lg" style={{
+          <div className="absolute bottom-16 right-2 lg:-right-2 glass-stat rounded-lg p-4" style={{
             border: "1px solid var(--border)",
             animation: "float 4s 1.2s ease-in-out infinite",
             zIndex: 3, minWidth: "110px",
@@ -200,7 +200,7 @@ export default function Hero() {
             <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "3px" }}>Monthly Volume</div>
           </div>
 
-          <div className="absolute bottom-28 left-4 lg:left-0 bg-white rounded-lg p-4 shadow-lg" style={{
+          <div className="absolute bottom-28 left-4 lg:left-0 glass-stat rounded-lg p-4" style={{
             border: "1px solid var(--forest-pale)",
             animation: "float 4s 2.2s ease-in-out infinite",
             zIndex: 3,

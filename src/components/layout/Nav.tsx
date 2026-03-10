@@ -1,71 +1,87 @@
 "use client";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-
-const links = [
-  { href:"/work", label:"Work" },
-  { href:"/store", label:"Store" },
-  { href:"/blog", label:"Thoughts" },
-  { href:"/about", label:"About" },
-];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const links = [["Work", "/work"], ["Store", "/store"], ["Thoughts", "/blog"], ["About", "/about"]];
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[500] flex justify-between items-center px-8 md:px-12 py-5 transition-all duration-500 ${
-      scrolled
-        ? "bg-[rgba(250,247,240,0.92)] backdrop-blur-md border-b border-[var(--border)] shadow-sm"
-        : "bg-transparent"
-    }`}>
-      {/* Logo */}
-      <Link href="/" style={{
-        fontFamily:"var(--font-display)", fontWeight:800, fontSize:"20px",
-        letterSpacing:"0.05em", color:"var(--text)", textDecoration:"none",
-      }}>
-        LK<span style={{color:"var(--purple)"}}>.</span>
-      </Link>
+    <nav style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999,
+      background: "rgba(10,8,5,0.98)",
+      backdropFilter: "blur(24px)",
+      WebkitBackdropFilter: "blur(24px)",
+      borderBottom: "1px solid rgba(124,58,237,0.3)",
+      boxShadow: scrolled ? "0 4px 40px rgba(0,0,0,0.5)" : "0 2px 20px rgba(0,0,0,0.3)",
+    }}>
+      {/* Rainbow top line */}
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:"2px", background:"linear-gradient(90deg, #7c3aed 0%, #a855f7 25%, #4ead6a 50%, #d97706 75%, #7c3aed 100%)" }} />
 
-      {/* Desktop links */}
-      <ul className="hidden md:flex gap-10 list-none">
-        {links.map(l => (
-          <li key={l.href}>
-            <Link href={l.href} className="nav-link">{l.label}</Link>
-          </li>
-        ))}
-      </ul>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 48px", height:"72px" }}>
 
-      {/* Right side */}
-      <div className="hidden md:flex items-center gap-4">
-        <a href="https://github.com/Levikib" target="_blank" rel="noopener noreferrer" className="nav-link">GitHub</a>
-        <a href="mailto:leviskibirie2110@gmail.com" className="btn-primary py-2.5 px-5 text-xs">
-          Hire Me
-        </a>
-      </div>
+        {/* Logo */}
+        <Link href="/" style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"12px" }}>
+          <span style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"24px", letterSpacing:"-0.02em", color:"white" }}>
+            LK<span style={{ color:"#a855f7" }}>.</span>
+          </span>
+          <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.2em", color:"rgba(255,255,255,0.45)", textTransform:"uppercase", borderLeft:"1px solid rgba(255,255,255,0.15)", paddingLeft:"12px" }}>
+            Nairobi → World
+          </span>
+        </Link>
 
-      {/* Mobile toggle */}
-      <button className="md:hidden flex flex-col gap-1.5 p-2" onClick={() => setOpen(!open)}>
-        <span className={`block w-6 h-0.5 bg-[var(--text)] transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
-        <span className={`block w-6 h-0.5 bg-[var(--text)] transition-all ${open ? "opacity-0" : ""}`} />
-        <span className={`block w-6 h-0.5 bg-[var(--text)] transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
-      </button>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="absolute top-full left-0 right-0 bg-[var(--bg)] border-b border-[var(--border)] p-8 flex flex-col gap-6 md:hidden shadow-lg">
-          {links.map(l => (
-            <Link key={l.href} href={l.href} className="nav-link text-base" onClick={() => setOpen(false)}>{l.label}</Link>
+        {/* Nav links — bright and readable */}
+        <div style={{ display:"flex", alignItems:"center", gap:"2px" }}>
+          {links.map(([label, href]) => (
+            <Link key={label} href={href}
+              style={{
+                fontFamily:"var(--font-mono)", fontWeight: 600,
+                fontSize:"12px", letterSpacing:"0.18em",
+                textTransform:"uppercase", textDecoration:"none",
+                padding:"10px 20px", color:"rgba(255,255,255,0.85)",
+                transition:"all 0.2s",
+                borderRadius: "2px",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.color = "white";
+                (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.2)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)";
+                (e.currentTarget as HTMLElement).style.background = "transparent";
+              }}
+            >{label}</Link>
           ))}
-          <a href="mailto:leviskibirie2110@gmail.com" className="btn-primary text-center">Hire Me</a>
         </div>
-      )}
+
+        {/* Right side */}
+        <div style={{ display:"flex", alignItems:"center", gap:"16px" }}>
+          {/* Available pill */}
+          <div style={{ display:"flex", alignItems:"center", gap:"7px", padding:"6px 14px", borderRadius:"999px", background:"rgba(77,173,106,0.12)", border:"1px solid rgba(77,173,106,0.3)" }}>
+            <span style={{ width:"7px", height:"7px", borderRadius:"50%", background:"#4ead6a", display:"block", animation:"blink 2s ease-in-out infinite" }} />
+            <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.15em", color:"#4ead6a", textTransform:"uppercase", fontWeight:600 }}>Available</span>
+          </div>
+
+          <a href="https://github.com/Levikib" target="_blank" rel="noopener noreferrer"
+            style={{ fontFamily:"var(--font-mono)", fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", color:"rgba(255,255,255,0.65)", textDecoration:"none", transition:"color 0.2s", fontWeight:600 }}
+            onMouseEnter={e => (e.currentTarget.style.color = "white")}
+            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.65)")}
+          >GitHub</a>
+
+          <a href="mailto:leviskibirie2110@gmail.com"
+            style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"11px 26px", textDecoration:"none", transition:"all 0.25s", display:"block", boxShadow:"0 0 24px rgba(124,58,237,0.45)" }}
+            onMouseEnter={e => { (e.currentTarget.style.background = "white"); (e.currentTarget.style.color = "#7c3aed"); }}
+            onMouseLeave={e => { (e.currentTarget.style.background = "#7c3aed"); (e.currentTarget.style.color = "white"); }}
+          >Hire Me</a>
+        </div>
+      </div>
     </nav>
   );
 }
