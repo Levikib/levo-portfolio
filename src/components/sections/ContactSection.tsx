@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const contactTypes = [
-  { val:"hire", label:"Hire You", icon:"💼", desc:"Senior engineering role", accent:"#7c3aed", accentBg:"rgba(124,58,237,0.08)", accentBorder:"rgba(124,58,237,0.2)" },
+  { val:"hire", label:"Work Together", icon:"💼", desc:"Senior engineering role", accent:"#7c3aed", accentBg:"rgba(124,58,237,0.08)", accentBorder:"rgba(124,58,237,0.2)" },
   { val:"collab", label:"Collaborate", icon:"🤝", desc:"Build something together", accent:"#2d7a45", accentBg:"rgba(45,122,69,0.08)", accentBorder:"rgba(45,122,69,0.2)" },
   { val:"project", label:"Commission", icon:"🎯", desc:"Custom project", accent:"#d97706", accentBg:"rgba(217,119,6,0.08)", accentBorder:"rgba(217,119,6,0.2)" },
   { val:"just", label:"Say Hi", icon:"👋", desc:"Just connect", accent:"#e11d48", accentBg:"rgba(225,29,72,0.08)", accentBorder:"rgba(225,29,72,0.2)" },

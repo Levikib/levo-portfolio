@@ -116,7 +116,7 @@ export default function Hero() {
             transform: loaded ? "translateY(0)" : "translateY(20px)",
             transition: "all 0.8s 0.4s cubic-bezier(0.16,1,0.3,1)",
           }}>
-            <a href="mailto:leviskibirie2110@gmail.com" className="btn-primary">Hire Me →</a>
+            <a href="#contact" className="btn-primary">Let's Work →</a>
             <a href="#work" className="btn-secondary">See My Work</a>
           </div>
         </div>
