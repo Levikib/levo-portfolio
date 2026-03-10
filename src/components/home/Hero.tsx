@@ -111,9 +111,10 @@ export default function Hero() {
         <div style={{
           position: "relative",
           display: "flex", alignItems: "center", justifyContent: "center",
-          padding: "80px 60px", /* padding creates space for badges to float outside photo */
+          padding: "80px 60px",
           opacity: loaded ? 1 : 0,
           transition: "opacity 1s 0.3s cubic-bezier(0.16,1,0.3,1)",
+          background: "transparent", boxShadow: "none", border: "none",
         }}>
 
           {/* Slow ring — own parallax layer */}
@@ -129,7 +130,7 @@ export default function Hero() {
               width:"260px", height:"320px",
               borderRadius:"40% 60% 55% 45% / 45% 40% 60% 55%",
               overflow:"hidden",
-              boxShadow:"0 30px 80px rgba(26,92,46,0.15), 0 0 0 3px white, 0 0 0 5px rgba(124,58,237,0.2)",
+              boxShadow:"0 0 0 3px white, 0 0 0 5px rgba(124,58,237,0.15)",
             }}>
               <img src="/levo.jpg" alt="Levis Kibirie" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 20%", filter:"saturate(1.1) contrast(1.03)" }} />
               <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"40%", background:"linear-gradient(to top, rgba(15,61,31,0.35) 0%, transparent 100%)" }} />
