@@ -1,6 +1,191 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
+// ── MOTION GRAPHIC SCRIPT ─────────────────────────────────────────────────────
+// Each segment: text, optional emoji, color highlight, pause after (ms)
+type Segment = {
+  text: string;
+  emoji?: string;
+  color?: string;
+  pause: number;       // ms to wait after this segment before next
+  newline?: boolean;   // start on new line
+  size?: "sm" | "md" | "lg" | "xl";
+  dim?: boolean;       // slightly faded
+};
+
+const SCRIPT: Segment[] = [
+  { text: "Hi, I'm Levis", emoji: "👋", color: "#a855f7", pause: 900, size: "xl" },
+  { text: "Welcome to my little corner of the internet.", pause: 1100, newline: true, size: "md", dim: true },
+  { text: "Let's talk", pause: 400, newline: true, size: "lg" },
+  { text: "tech.", color: "#7c3aed", pause: 300, size: "lg" },
+  { text: "Anime.", color: "#e11d48", pause: 300, size: "lg" },
+  { text: "Shows.", color: "#d97706", pause: 300, size: "lg" },
+  { text: "Life.", color: "#4ead6a", pause: 300, size: "lg" },
+  { text: "Philosophy.", color: "#0891b2", pause: 300, size: "lg" },
+  { text: "Politics.", color: "#a855f7", pause: 600, size: "lg" },
+  { text: "You name it.", pause: 1200, newline: true, size: "md", dim: true },
+  { text: "But also —", pause: 700, newline: true, size: "md", dim: true },
+  { text: "I build things.", color: "white", pause: 600, newline: true, size: "xl" },
+  { text: "Real things.", pause: 500, newline: true, size: "lg" },
+  { text: "That move real money.", color: "#4ead6a", pause: 900, newline: true, size: "lg" },
+  { text: "From Nairobi, Kenya.", pause: 600, newline: true, size: "md", dim: true },
+  { text: "To the world.", emoji: "🌍", color: "#a855f7", pause: 3000, newline: true, size: "xl" },
+];
+
+const SIZE_MAP = {
+  sm: "11px",
+  md: "14px",
+  lg: "20px",
+  xl: "28px",
+};
+
+function MotionGraphic() {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Typewriter segment reveal
+  useEffect(() => {
+    if (visibleCount >= SCRIPT.length) {
+      setIsComplete(true);
+      // Restart after a pause
+      timerRef.current = setTimeout(() => {
+        setVisibleCount(0);
+        setIsComplete(false);
+      }, 3200);
+      return;
+    }
+    const seg = SCRIPT[visibleCount];
+    timerRef.current = setTimeout(() => {
+      setVisibleCount(v => v + 1);
+    }, visibleCount === 0 ? 600 : seg.pause + 120);
+
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [visibleCount]);
+
+  // Cursor blink
+  useEffect(() => {
+    const t = setInterval(() => setShowCursor(c => !c), 530);
+    return () => clearInterval(t);
+  }, []);
+
+  // Group segments into lines
+  const lines: Segment[][] = [];
+  let currentLine: Segment[] = [];
+  SCRIPT.slice(0, visibleCount).forEach((seg) => {
+    if (seg.newline && currentLine.length > 0) {
+      lines.push(currentLine);
+      currentLine = [seg];
+    } else {
+      currentLine.push(seg);
+    }
+  });
+  if (currentLine.length > 0) lines.push(currentLine);
+
+  return (
+    <div style={{
+      background: "#0a0805",
+      position: "relative",
+      overflow: "hidden",
+      minHeight: "540px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      padding: "52px 48px",
+      borderLeft: "1px solid rgba(255,255,255,0.06)",
+    }}>
+      {/* Background dot grid */}
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(124,58,237,0.08) 1px, transparent 1px)", backgroundSize: "24px 24px", pointerEvents: "none" }} />
+
+      {/* Purple glow */}
+      <div style={{ position: "absolute", top: "-80px", right: "-60px", width: "360px", height: "360px", background: "radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%)", filter: "blur(80px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "-40px", left: "-40px", width: "200px", height: "200px", background: "radial-gradient(circle, rgba(78,173,106,0.08), transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }} />
+
+      {/* Terminal label */}
+      <div style={{ position: "absolute", top: "20px", left: "24px", display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "5px" }}>
+          {["#e11d48", "#d97706", "#4ead6a"].map(c => (
+            <div key={c} style={{ width: "10px", height: "10px", borderRadius: "50%", background: c, opacity: 0.7 }} />
+          ))}
+        </div>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em" }}>levo.sh — about</div>
+      </div>
+
+      {/* Script content */}
+      <div style={{ position: "relative", zIndex: 1, minHeight: "320px", display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center" }}>
+        {lines.map((line, li) => (
+          <div key={li} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "6px", lineHeight: 1.3 }}>
+            {line.map((seg, si) => (
+              <span
+                key={si}
+                style={{
+                  fontFamily: seg.size === "xl" || seg.size === "lg" ? "var(--font-display)" : "var(--font-body)",
+                  fontWeight: seg.size === "xl" || seg.size === "lg" ? 800 : 400,
+                  fontSize: SIZE_MAP[seg.size ?? "md"],
+                  color: seg.color ?? (seg.dim ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.82)"),
+                  letterSpacing: seg.size === "xl" ? "-0.02em" : "-0.01em",
+                  animation: "fadeSlideIn 0.35s cubic-bezier(0.16,1,0.3,1) both",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                {seg.text}
+                {seg.emoji && <span style={{ fontSize: SIZE_MAP[seg.size ?? "md"], animation: "popIn 0.4s 0.1s cubic-bezier(0.34,1.56,0.64,1) both" }}>{seg.emoji}</span>}
+              </span>
+            ))}
+          </div>
+        ))}
+
+        {/* Blinking cursor */}
+        {!isComplete && (
+          <span style={{
+            display: "inline-block",
+            width: "2px",
+            height: "24px",
+            background: "#a855f7",
+            opacity: showCursor ? 1 : 0,
+            transition: "opacity 0.1s",
+            verticalAlign: "middle",
+            marginLeft: "4px",
+            boxShadow: "0 0 8px #a855f7",
+          }} />
+        )}
+
+        {/* Replay hint when complete */}
+        {isComplete && (
+          <div style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "9px",
+            color: "rgba(255,255,255,0.2)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            marginTop: "8px",
+            animation: "fadeSlideIn 0.4s ease both",
+          }}>
+            replaying in a moment...
+          </div>
+        )}
+      </div>
+
+      {/* Inline keyframes */}
+      <style>{`
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+          to   { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── REST OF PAGE DATA ─────────────────────────────────────────────────────────
+
 const TIMELINE = [
   { year:"2017", title:"Software Development Certificate", org:"ICT Authority Kenya", type:"education", accent:"#7c3aed", desc:"First formal grounding in software engineering fundamentals. The start of everything." },
   { year:"2020", title:"Cybersecurity & Ethical Hacking", org:"Zalego Institute of Technology", type:"education", accent:"#dc2626", desc:"Hands-on ethical hacking, penetration testing, and security fundamentals. CEH foundation begins." },
@@ -24,8 +209,8 @@ const STACK = [
 ];
 
 const BEYOND = [
+  { icon:"🎌", title:"Anime Head", body:"Fullmetal Alchemist, Attack on Titan, Vinland Saga. The philosophy in these is real — don't argue." },
   { icon:"📖", title:"Editorial Designer", body:"Two volumes of Chill Minds Magazine — 72 pages of children's mental wellness content. Designed solo, printed, distributed." },
-  { icon:"🍽️", title:"Food Entrepreneur", body:"Running Shan's Delights — because systems thinking applies to kitchens too." },
   { icon:"📈", title:"Markets Watcher", body:"NSE investor building the tool I always wished existed. Understanding money is understanding systems." },
   { icon:"🌍", title:"Nairobi → World", body:"Building from Kenya, for Kenya and beyond. Proving that world-class products can ship from anywhere." },
 ];
@@ -63,11 +248,11 @@ export default function About() {
 
       {/* ── HERO ── */}
       <div style={{ borderBottom:"1px solid var(--border)" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", minHeight:"540px" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr" }}>
 
-          {/* Left */}
+          {/* Left: copy */}
           <div style={{ paddingTop:"140px", padding:"140px 0 0 48px", display:"flex", flexDirection:"column" }}>
-            <div style={{ flex:1 }}>
+            <div style={{ flex:1, paddingBottom:"0" }}>
               <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"20px" }}>// Who I Am</div>
               <h1 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(48px,6vw,84px)", lineHeight:0.9, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"28px" }}>
                 Levis.<br /><span style={{ color:"var(--purple)" }}>Kibirie.</span>
@@ -76,9 +261,9 @@ export default function About() {
                 Founding Fullstack Engineer based in Nairobi, Kenya. I build production systems that handle real money, real users, and real consequences — then I make them beautiful.
               </p>
               <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", lineHeight:1.9, maxWidth:"440px", marginBottom:"36px" }}>
-                I founded Makeja Homes — a property management SaaS processing KSH 1.5M/month across 170+ units. Built every line of it alone. That&apos;s the bar I hold everything to.
+                I founded Makeja Homes — a property management SaaS processing KSH 1.5M/month across 170+ units. Built every line alone. That&apos;s the bar.
               </p>
-              <div style={{ display:"flex", gap:"10px" }}>
+              <div style={{ display:"flex", gap:"10px", flexWrap:"wrap" }}>
                 <a href="/work" style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"var(--text)", color:"white", padding:"12px 24px", textDecoration:"none", transition:"all 0.2s" }}
                   onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="var(--purple)";}}
                   onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="var(--text)";}}>
@@ -91,6 +276,7 @@ export default function About() {
                 </a>
               </div>
             </div>
+
             {/* Quick facts */}
             <div style={{ display:"flex", borderTop:"1px solid var(--border)", marginTop:"48px" }}>
               {[{l:"Based in",v:"Nairobi, KE"},{l:"Available",v:"Remotely"},{l:"Response",v:"< 24 hrs"}].map((f,i) => (
@@ -102,26 +288,8 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: photo */}
-          <div style={{ position:"relative", background:"var(--bg-2)", overflow:"hidden", borderLeft:"1px solid var(--border)" }}>
-            <div style={{ position:"absolute", inset:0, backgroundImage:"radial-gradient(rgba(124,58,237,0.05) 1px, transparent 1px)", backgroundSize:"24px 24px" }} />
-            <img src="/levo.jpg" alt="Levis Kibirie" style={{ position:"absolute", bottom:0, left:"50%", transform:"translateX(-50%)", width:"85%", objectFit:"cover", objectPosition:"top", display:"block" }} />
-            {/* Floating badges */}
-            <div style={{ position:"absolute", top:"32px", left:"28px", background:"white", border:"1px solid var(--border)", padding:"14px 20px", zIndex:3, boxShadow:"0 4px 20px rgba(0,0,0,0.08)" }}>
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:"8px", color:"var(--text-4)", letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:"4px" }}>Active Units</div>
-              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"28px", color:"var(--purple)", lineHeight:1 }}>170+</div>
-            </div>
-            <div style={{ position:"absolute", top:"32px", right:"28px", background:"#0a0805", border:"1px solid rgba(255,255,255,0.08)", padding:"14px 20px", zIndex:3 }}>
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:"8px", color:"rgba(255,255,255,0.3)", letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:"4px" }}>Monthly Vol.</div>
-              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"20px", color:"#4ead6a", lineHeight:1 }}>KSH 1.5M</div>
-            </div>
-            <div style={{ position:"absolute", bottom:"80px", right:"28px", background:"var(--purple)", padding:"12px 18px", zIndex:3 }}>
-              <div style={{ display:"flex", alignItems:"center", gap:"7px" }}>
-                <div style={{ width:"7px", height:"7px", borderRadius:"50%", background:"#4ead6a", animation:"blink 2s ease-in-out infinite" }} />
-                <div style={{ fontFamily:"var(--font-mono)", fontSize:"11px", color:"white", letterSpacing:"0.08em" }}>Available Remotely</div>
-              </div>
-            </div>
-          </div>
+          {/* Right: motion graphic */}
+          <MotionGraphic />
         </div>
       </div>
 
@@ -157,7 +325,8 @@ export default function About() {
           <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
             {[{k:null,l:"All"},{k:"education",l:"Education"},{k:"work",l:"Work"},{k:"founding",l:"Founded"},{k:"cert",l:"Certs"},{k:"building",l:"Building"}].map(f => (
               <button key={String(f.k)} onClick={() => setActiveType(f.k)}
-                style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.1em", textTransform:"uppercase", padding:"6px 14px", background:activeType===f.k?"var(--text)":"transparent", border:`1px solid ${activeType===f.k?"var(--text)":"var(--border)"}`, color:activeType===f.k?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s" }}>{f.l}
+                style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.1em", textTransform:"uppercase", padding:"6px 14px", background:activeType===f.k?"var(--text)":"transparent", border:`1px solid ${activeType===f.k?"var(--text)":"var(--border)"}`, color:activeType===f.k?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s" }}>
+                {f.l}
               </button>
             ))}
           </div>
@@ -168,8 +337,8 @@ export default function About() {
           {filtered.map((item, i) => (
             <div key={i} style={{ display:"flex", gap:"0", position:"relative" }}>
               <div style={{ position:"absolute", left:"-20px", top:"36px", width:"9px", height:"9px", borderRadius:"50%", background:item.accent, border:`2px solid var(--bg)`, boxShadow:`0 0 0 1px ${item.accent}` }} />
-              <div style={{ position:"absolute", left:"-160px", top:"32px", right:"calc(100% + 20px)", textAlign:"right" }}>
-                <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", color:"var(--text-4)", letterSpacing:"0.08em", whiteSpace:"nowrap" }}>{item.year}</div>
+              <div style={{ position:"absolute", left:"-160px", top:"32px", textAlign:"right", width:"140px" }}>
+                <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", color:"var(--text-4)", letterSpacing:"0.08em" }}>{item.year}</div>
               </div>
               <div style={{ flex:1, padding:"28px 0 28px 40px", borderBottom: i < filtered.length-1 ? "1px solid var(--border)" : "none" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:"10px", marginBottom:"7px", flexWrap:"wrap" }}>
@@ -228,7 +397,7 @@ export default function About() {
           Available for the<br /><span style={{ color:"#a855f7" }}>right opportunity.</span>
         </h2>
         <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"rgba(255,255,255,0.4)", marginBottom:"36px" }}>Senior remote roles · Founding engineer positions · Long-term contracts</p>
-        <div style={{ display:"flex", gap:"12px", justifyContent:"center" }}>
+        <div style={{ display:"flex", gap:"12px", justifyContent:"center", flexWrap:"wrap" }}>
           <a href="/#contact" style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"15px 36px", textDecoration:"none", boxShadow:"0 0 32px rgba(124,58,237,0.35)", transition:"all 0.25s" }}
             onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="white";(e.currentTarget as HTMLElement).style.color="#7c3aed";}}
             onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="#7c3aed";(e.currentTarget as HTMLElement).style.color="white";}}>
