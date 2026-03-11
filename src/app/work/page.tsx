@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ── PROJECTS DATA ─────────────────────────────────────────────────────────────
 const PROJECTS = [
@@ -370,10 +371,11 @@ const VIZMAP: Record<string, React.FC<{ accent: string }>> = { makeja:MakejaViz,
 
 // ── PROJECT CARD ──────────────────────────────────────────────────────────────
 function ProjectCard({ p, idx, expanded, onToggle }: { p: typeof PROJECTS[0]; idx: number; expanded: boolean; onToggle: () => void; }) {
+  const isMobile = useIsMobile();
   const Viz = VIZMAP[p.id];
   const isEven = idx % 2 === 0;
   const detailsPanel = (
-    <div style={{ padding:"44px 48px", display:"flex", flexDirection:"column", justifyContent:"space-between", background: isEven ? "#ffffff" : "var(--bg-2)", height:"100%" }}>
+    <div style={{ padding:isMobile?"24px 20px":"44px 48px", display:"flex", flexDirection:"column", justifyContent:"space-between", background: isEven ? "#ffffff" : "var(--bg-2)", height:"100%" }}>
       <div>
         <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"80px", color:`${p.accent}10`, lineHeight:1, marginBottom:"-18px", letterSpacing:"-0.05em", userSelect:"none" }}>{p.num}</div>
         <div style={{ display:"flex", alignItems:"center", gap:"8px", marginBottom:"14px" }}>
@@ -390,7 +392,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: { p: typeof PROJECTS[0]; id
         </div>
       </div>
       <div style={{ marginTop:"32px" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"8px", marginBottom:"20px" }}>
+        <div style={{ display:"grid", gridTemplateColumns:isMobile?"repeat(2,1fr)":"repeat(4,1fr)", gap:"8px", marginBottom:"20px" }}>
           {p.metrics.map(m => (
             <div key={m.label} style={{ background:`${p.accent}08`, border:`1px solid ${p.accent}20`, padding:"11px 8px", textAlign:"center" }}>
               <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"15px", color:p.accent, lineHeight:1, marginBottom:"4px" }}>{m.val}</div>
@@ -415,12 +417,12 @@ function ProjectCard({ p, idx, expanded, onToggle }: { p: typeof PROJECTS[0]; id
   return (
     <div style={{ border:"1px solid var(--border)", overflow:"hidden", boxShadow:"0 2px 24px rgba(0,0,0,0.06)" }}>
       <div style={{ height:"3px", background:`linear-gradient(90deg, ${p.accent}, ${p.accent}40, transparent)` }} />
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", minHeight:"420px" }}>
+      <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", minHeight:isMobile?"auto":"420px" }}>
         <div style={{ order: isEven ? 1 : 2 }}>{detailsPanel}</div>
         <div style={{ order: isEven ? 2 : 1 }}>{vizPanel}</div>
       </div>
       {expanded && (
-        <div style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:"36px 48px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"52px" }}>
+        <div style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:isMobile?"24px 20px":"36px 48px", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?"32px":"52px" }}>
           <div>
             <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.2em", color:p.accent, textTransform:"uppercase", marginBottom:"12px" }}>// The Challenge</div>
             <p style={{ fontFamily:"var(--font-body)", fontSize:"13px", color:"var(--text-3)", lineHeight:1.9, fontStyle:"italic", borderLeft:`2px solid ${p.accent}40`, paddingLeft:"16px" }}>{p.challenge}</p>
@@ -437,6 +439,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: { p: typeof PROJECTS[0]; id
 
 // ── SERVICES VIEW ─────────────────────────────────────────────────────────────
 function ServicesView() {
+  const isMobile = useIsMobile();
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name:"", email:"", message:"" });
@@ -468,7 +471,7 @@ function ServicesView() {
   return (
     <div>
       {/* Intro strip + category pills */}
-      <div style={{ background:"var(--bg)", padding:"40px 48px 32px", borderBottom:"1px solid var(--border)" }}>
+      <div style={{ background:"var(--bg)", padding:isMobile?"28px 20px":"40px 48px 32px", borderBottom:"1px solid var(--border)" }}>
         <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"640px", lineHeight:1.85, marginBottom:"24px" }}>
           Everything I can do for your business — engineering, infrastructure, security, AI, marketing, design. Browse by category, select what you need, and I&apos;ll reach out within 24 hours.
         </p>
@@ -501,7 +504,7 @@ function ServicesView() {
           const dividerCol   = isDark ? "rgba(255,255,255,0.06)" : "var(--border)";
 
           return (
-            <div key={cat.id} style={{ background:sectionBg, padding:"56px 48px", borderBottom:`1px solid ${dividerCol}`, position:"relative", overflow:"hidden" }}>
+            <div key={cat.id} style={{ background:sectionBg, padding:isMobile?"32px 20px":"56px 48px", borderBottom:`1px solid ${dividerCol}`, position:"relative", overflow:"hidden" }}>
               {/* Subtle background texture for dark sections */}
               {isDark && <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(${cat.accent}08 1px, transparent 1px)`, backgroundSize:"28px 28px", pointerEvents:"none" }} />}
               {isDark && <div style={{ position:"absolute", top:"-80px", right:"-60px", width:"320px", height:"320px", background:`radial-gradient(circle, ${cat.accent}10, transparent 70%)`, filter:"blur(80px)", pointerEvents:"none" }} />}
@@ -518,7 +521,7 @@ function ServicesView() {
                 </div>
 
                 {/* Service cards */}
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:"10px" }}>
+                <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"repeat(3, 1fr)", gap:"10px" }}>
                   {cat.services.map((svc, si) => {
                     const isSel = selected.has(svc.id);
                     const bg = isSel ? (isDark ? `${cat.accent}18` : cat.accentLight) : (si % 2 === 0 ? cardBg : cardBgAlt);
@@ -549,12 +552,12 @@ function ServicesView() {
       </div>
 
       {/* ── LEAD GEN FORM ── */}
-      <div style={{ margin:"0 48px 80px", background:"var(--text)", padding:"56px", position:"relative", overflow:"hidden" }}>
+      <div style={{ margin:isMobile?"0 0 0":"0 48px 80px", background:"var(--text)", padding:isMobile?"32px 20px":"56px", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, backgroundImage:"radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize:"24px 24px", pointerEvents:"none" }} />
         <div style={{ position:"absolute", top:"-80px", right:"-80px", width:"400px", height:"400px", background:"radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%)", filter:"blur(80px)", pointerEvents:"none" }} />
         <div style={{ position:"absolute", bottom:"-40px", left:"10%", width:"200px", height:"200px", background:"radial-gradient(circle, rgba(217,119,6,0.08), transparent 70%)", filter:"blur(50px)", pointerEvents:"none" }} />
 
-        <div style={{ position:"relative", zIndex:1, display:"grid", gridTemplateColumns:"1fr 1fr", gap:"72px", alignItems:"start" }}>
+        <div style={{ position:"relative", zIndex:1, display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?"40px":"72px", alignItems:"start" }}>
 
           {/* Left: selection summary */}
           <div>
@@ -677,6 +680,7 @@ function ServicesView() {
 
 // ── MAIN PAGE ─────────────────────────────────────────────────────────────────
 export default function Work() {
+  const isMobile = useIsMobile();
   const [view, setView] = useState<"portfolio"|"services">("portfolio");
   const [activeCat, setActiveCat] = useState("All");
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -686,7 +690,7 @@ export default function Work() {
     <div style={{ background:"var(--bg)", minHeight:"100vh" }}>
 
       {/* ── HERO ── */}
-      <div style={{ background:"var(--bg)", paddingTop:"140px", paddingBottom:"56px", paddingLeft:"48px", paddingRight:"48px", borderBottom:"1px solid var(--border)" }}>
+      <div style={{ background:"var(--bg)", paddingTop:"110px", paddingBottom:"40px", paddingLeft:isMobile?"20px":"48px", paddingRight:isMobile?"20px":"48px", borderBottom:"1px solid var(--border)" }}>
         <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"16px" }}>// Work & Services</div>
 
         <div style={{ maxWidth:"680px" }}>
@@ -702,13 +706,13 @@ export default function Work() {
           </p>
 
           {/* Toggle — left-aligned under description */}
-          <div style={{ display:"inline-flex", background:"var(--bg-2)", border:"1px solid var(--border)", padding:"4px", gap:"3px" }}>
+          <div style={{ display:"flex", background:"var(--bg-2)", border:"1px solid var(--border)", padding:"4px", gap:"3px", width:isMobile?"100%":"auto" }}>
             <button onClick={() => setView("portfolio")}
-              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"11px 26px", background:view==="portfolio"?"var(--text)":"transparent", border:"none", color:view==="portfolio"?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.25s", whiteSpace:"nowrap" }}>
+              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:isMobile?"11px 12px":"11px 26px", flex:isMobile?"1":"none", background:view==="portfolio"?"var(--text)":"transparent", border:"none", color:view==="portfolio"?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.25s", whiteSpace:"nowrap" }}>
               ◆ Work Portfolio
             </button>
             <button onClick={() => setView("services")}
-              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"11px 26px", background:view==="services"?"#7c3aed":"transparent", border:"none", color:view==="services"?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.25s", whiteSpace:"nowrap" }}>
+              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:isMobile?"11px 12px":"11px 26px", flex:isMobile?"1":"none", background:view==="services"?"#7c3aed":"transparent", border:"none", color:view==="services"?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.25s", whiteSpace:"nowrap" }}>
               ◈ Services
             </button>
           </div>
@@ -727,7 +731,7 @@ export default function Work() {
 
       {/* ── CONTENT ── */}
       {view === "portfolio" ? (
-        <div style={{ background:"var(--bg)", padding:"56px 48px 80px", display:"flex", flexDirection:"column", gap:"56px" }}>
+        <div style={{ background:"var(--bg)", padding:isMobile?"32px 20px 64px":"56px 48px 80px", display:"flex", flexDirection:"column", gap:isMobile?"40px":"56px" }}>
           {filtered.map((p, idx) => (
             <ProjectCard key={p.id} p={p} idx={idx} expanded={expanded===p.id} onToggle={() => setExpanded(expanded===p.id?null:p.id)} />
           ))}
@@ -737,7 +741,7 @@ export default function Work() {
       )}
 
       {/* ── CTA ── */}
-      <div style={{ background:"#0a0805", textAlign:"center", padding:"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ background:"#0a0805", textAlign:"center", padding:isMobile?"48px 20px":"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Next Mission</div>
         <h2 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(32px,5vw,60px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"32px" }}>
           Want to be<br /><span style={{ color:"#a855f7" }}>the next project?</span>
