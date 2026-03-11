@@ -2,12 +2,16 @@
 import { useState, useEffect } from "react";
 
 export function useIsMobile(breakpoint = 768) {
-  // Default false so SSR renders desktop (avoids hydration mismatch)
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    // Lazy initializer — runs synchronously on first client render.
+    // On SSR (window undefined) default to TRUE (mobile-first).
+    // On client, read actual viewport width immediately — no flash.
+    if (typeof window === "undefined") return true;
+    return window.innerWidth <= breakpoint;
+  });
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= breakpoint);
-    check(); // run immediately on mount
     window.addEventListener("resize", check, { passive: true });
     return () => window.removeEventListener("resize", check);
   }, [breakpoint]);
@@ -15,7 +19,6 @@ export function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-// Convenience alias for tablet
 export function useIsTablet() {
   return useIsMobile(1024);
 }
