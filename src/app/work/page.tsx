@@ -534,17 +534,41 @@ export default function Work() {
         <p style={{ fontFamily:"var(--font-dm-sans)", fontSize:"15px", color:"var(--text-3)", maxWidth:"460px", lineHeight:1.8, marginBottom:"40px" }}>
           Production systems, AI tools, digital agencies, editorial design. Every project is real. Every metric is earned.
         </p>
-        <div style={{ display:"flex", gap:"0", marginBottom:"-1px" }}>
-          {(["portfolio","services"] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)}
-              style={{ fontFamily:"var(--font-syne-mono)", fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"14px 32px", background:tab===t?"var(--bg)":"transparent", border:"1px solid var(--border)", borderBottom:tab===t?"1px solid var(--bg)":"1px solid var(--border)", color:tab===t?"var(--purple)":"var(--text-4)", cursor:"pointer", transition:"all 0.2s", position:"relative", zIndex:1, marginRight:"-1px" }}
-            >
-              {t === "portfolio" ? "Portfolio" : "Services"}
-              <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", background:tab===t?"var(--purple)":"rgba(124,58,237,0.25)", color:"white", padding:"1px 6px", marginLeft:"8px", borderRadius:"2px" }}>
-                {t==="portfolio"?"4":"36"}
-              </span>
-            </button>
-          ))}
+        {/* ── TOGGLE ── */}
+        <div style={{ display:"flex", alignItems:"center", gap:"24px", paddingBottom:"40px" }}>
+          <div style={{ display:"inline-flex", background:"#0c0a07", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"5px", padding:"5px", gap:"4px" }}>
+            {([
+              { id:"portfolio", label:"Portfolio", sub:"4 Projects",   accent:"#7c3aed", glow:"rgba(124,58,237,0.45)" },
+              { id:"services",  label:"Services",  sub:"36 Offerings", accent:"#d97706", glow:"rgba(217,119,6,0.45)" },
+            ] as const).map(btn => {
+              const on = tab === btn.id;
+              return (
+                <button key={btn.id} onClick={() => setTab(btn.id)}
+                  style={{
+                    position:"relative", border:"none", cursor:"pointer",
+                    padding:"16px 40px 14px", borderRadius:"3px", overflow:"hidden",
+                    background: on ? btn.accent : "transparent",
+                    boxShadow: on ? `0 0 32px ${btn.glow}, 0 0 64px ${btn.glow.replace("0.45","0.15")}, inset 0 1px 0 rgba(255,255,255,0.2)` : "none",
+                    transition:"all 0.35s cubic-bezier(0.16,1,0.3,1)",
+                  }}
+                  onMouseEnter={e => { if(!on)(e.currentTarget as HTMLElement).style.background="rgba(255,255,255,0.07)"; }}
+                  onMouseLeave={e => { if(!on)(e.currentTarget as HTMLElement).style.background="transparent"; }}
+                >
+                  {on && <div style={{ position:"absolute", top:0, left:"-120%", width:"70%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)", animation:"shimmerSweep 2.4s ease-in-out infinite", pointerEvents:"none" }} />}
+                  {on && <div style={{ position:"absolute", top:"9px", right:"11px", width:"5px", height:"5px", borderRadius:"50%", background:"rgba(255,255,255,0.9)", boxShadow:"0 0 8px white", animation:"blink 1.8s ease-in-out infinite" }} />}
+                  <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"15px", letterSpacing:"0.04em", textTransform:"uppercase", color: on ? "#ffffff" : "rgba(255,255,255,0.55)", transition:"color 0.3s", lineHeight:1, marginBottom:"6px", position:"relative", zIndex:1 }}>{btn.label}</div>
+                  <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.16em", textTransform:"uppercase", color: on ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.32)", transition:"color 0.3s", position:"relative", zIndex:1 }}>{btn.sub}</div>
+                </button>
+              );
+            })}
+          </div>
+
+          {tab === "portfolio" && (
+            <div style={{ display:"flex", alignItems:"center", gap:"8px", animation:"nudgeDrift 2.8s ease-in-out infinite" }}>
+              <div style={{ width:"32px", height:"1px", background:"linear-gradient(90deg, transparent, #d97706aa)" }} />
+              <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.16em", textTransform:"uppercase", color:"#d97706", whiteSpace:"nowrap" }}>See what I offer →</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -596,7 +620,12 @@ export default function Work() {
         </>
       )}
 
-      <style>{`@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }`}</style>
+      <style>{`
+        @keyframes blink        { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes shimmerSweep { 0%{left:-120%} 60%,100%{left:160%} }
+        @keyframes nudgeDrift   { 0%,100%{transform:translateX(0);opacity:0.9} 50%{transform:translateX(7px);opacity:1} }
+        * { cursor: none !important; }
+      `}</style>
     </div>
   );
 }
