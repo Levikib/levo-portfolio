@@ -1,165 +1,260 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const LINKS = [
+  { label: "Home",     href: "/" },
+  { label: "Work",     href: "/work" },
+  { label: "Store",    href: "/store" },
+  { label: "Thoughts", href: "/blog" },
+  { label: "About",    href: "/about" },
+];
 
 export default function Nav() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [open, setOpen]           = useState(false);
-  const [mounted, setMounted]     = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen]         = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    setMounted(true);
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const links = [["Home", "/"], ["Work", "/work"], ["Store", "/store"], ["Thoughts", "/blog"], ["About", "/about"]];
-
   return (
     <>
+      {/* ─── NAV BAR ─── */}
       <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999,
-        background: "rgba(10,8,5,0.98)",
-        backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-        borderBottom: "1px solid rgba(124,58,237,0.3)",
-        boxShadow: scrolled ? "0 4px 40px rgba(0,0,0,0.5)" : "0 2px 20px rgba(0,0,0,0.3)",
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 9990,
+        height: "52px",
+        display: "flex", alignItems: "center",
+        padding: "0 28px",
+        background: scrolled ? "rgba(6,4,10,0.92)" : "rgba(6,4,10,0.7)",
+        backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)",
+        borderBottom: `1px solid ${scrolled ? "rgba(168,85,247,0.18)" : "rgba(168,85,247,0.08)"}`,
+        boxShadow: scrolled ? "0 1px 40px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(168,85,247,0.1)" : "none",
+        transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
       }}>
-        {/* Rainbow top bar */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, #7c3aed 0%, #a855f7 25%, #4ead6a 50%, #d97706 75%, #7c3aed 100%)" }} />
+        {/* Rainbow thread */}
+        <div style={{
+          position:"absolute", top:0, left:0, right:0, height:"1.5px",
+          background:"linear-gradient(90deg, transparent 0%, #7c3aed 25%, #a855f7 45%, #4ead6a 65%, #d97706 82%, transparent 100%)",
+          opacity: scrolled ? 0.9 : 0.4,
+          transition:"opacity 0.4s",
+        }}/>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", height: "68px" }}>
+        {/* Logo */}
+        <Link href="/" onClick={() => setOpen(false)}
+          style={{ textDecoration:"none", flexShrink:0, marginRight:"auto" }}>
+          <span style={{
+            fontFamily:"var(--font-display)", fontWeight:800,
+            fontSize:"18px", letterSpacing:"-0.02em", color:"white",
+          }}>
+            LK<span style={{ color:"#a855f7", textShadow:"0 0 12px rgba(168,85,247,0.8)" }}>.</span>
+          </span>
+        </Link>
 
-          {/* Logo */}
-          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-            <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "22px", letterSpacing: "-0.02em", color: "white" }}>
-              LK<span style={{ color: "#a855f7" }}>.</span>
-            </span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.18em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", borderLeft: "1px solid rgba(255,255,255,0.12)", paddingLeft: "12px", display: mounted && window.innerWidth < 480 ? "none" : "block" }}>
-              Nairobi → World
-            </span>
-          </Link>
-
-          {/* Desktop nav links */}
-          <div style={{ display: "flex", alignItems: "center", gap: "2px" }} className="nav-desktop-links">
-            {links.map(([label, href]) => (
+        {/* Desktop links — centered absolutely */}
+        <div className="nav-links" style={{
+          position:"absolute", left:"50%", transform:"translateX(-50%)",
+          display:"flex", alignItems:"center",
+        }}>
+          {LINKS.map(({ label, href }) => {
+            const active = pathname === href;
+            return (
               <Link key={label} href={href}
-                style={{ fontFamily: "var(--font-mono)", fontWeight: 600, fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none", padding: "10px 14px", color: "rgba(255,255,255,0.75)", transition: "all 0.2s", borderRadius: "2px" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "white"; (e.currentTarget as HTMLElement).style.background = "rgba(124,58,237,0.18)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
-                onClick={() => setOpen(false)}
-              >{label}</Link>
-            ))}
-          </div>
-
-          {/* Desktop right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }} className="nav-desktop-right">
-            <div style={{ display: "flex", alignItems: "center", gap: "7px", padding: "6px 12px", borderRadius: "999px", background: "rgba(77,173,106,0.12)", border: "1px solid rgba(77,173,106,0.3)" }}>
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ead6a", display: "block", animation: "blink 2s ease-in-out infinite" }} />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", color: "#4ead6a", textTransform: "uppercase" }}>Available</span>
-            </div>
-            <a href="https://github.com/Levikib" target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-mono)", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", textDecoration: "none", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "white")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
-            >GitHub</a>
-            <a href="#contact"
-              style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", background: "#7c3aed", color: "white", padding: "10px 22px", textDecoration: "none", transition: "all 0.25s", display: "block", boxShadow: "0 0 20px rgba(124,58,237,0.4)", whiteSpace: "nowrap" }}
-              onMouseEnter={e => { (e.currentTarget.style.background = "white"); (e.currentTarget.style.color = "#7c3aed"); }}
-              onMouseLeave={e => { (e.currentTarget.style.background = "#7c3aed"); (e.currentTarget.style.color = "white"); }}
-            >Let&apos;s Work</a>
-          </div>
-
-          {/* Hamburger — mobile only */}
-          <button
-            onClick={() => setOpen(o => !o)}
-            className="nav-hamburger"
-            style={{
-              background: "transparent", border: "1px solid rgba(255,255,255,0.12)",
-              padding: "8px 10px", cursor: "pointer", display: "flex",
-              flexDirection: "column", gap: "5px", borderRadius: "3px",
-              transition: "border-color 0.2s",
-            }}
-            aria-label="Toggle menu"
-          >
-            <span style={{ display: "block", width: "22px", height: "2px", background: open ? "#a855f7" : "rgba(255,255,255,0.8)", borderRadius: "2px", transition: "all 0.3s", transform: open ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-            <span style={{ display: "block", width: "22px", height: "2px", background: open ? "#a855f7" : "rgba(255,255,255,0.8)", borderRadius: "2px", transition: "all 0.3s", opacity: open ? 0 : 1 }} />
-            <span style={{ display: "block", width: "22px", height: "2px", background: open ? "#a855f7" : "rgba(255,255,255,0.8)", borderRadius: "2px", transition: "all 0.3s", transform: open ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
-          </button>
+                style={{
+                  fontFamily:"var(--font-mono)", fontSize:"10px",
+                  letterSpacing:"0.18em", textTransform:"uppercase",
+                  textDecoration:"none", padding:"6px 14px",
+                  color: active ? "white" : "rgba(255,255,255,0.42)",
+                  position:"relative", transition:"color 0.2s",
+                  display:"flex", flexDirection:"column", alignItems:"center", gap:"3px",
+                }}
+                onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.color="rgba(255,255,255,0.85)"; }}
+                onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.color="rgba(255,255,255,0.42)"; }}
+              >
+                {label}
+                <span style={{
+                  height:"1px",
+                  width: active ? "100%" : "0",
+                  background:"linear-gradient(90deg, transparent, #a855f7, transparent)",
+                  boxShadow:"0 0 6px #a855f7",
+                  transition:"width 0.3s cubic-bezier(0.16,1,0.3,1)",
+                  borderRadius:"1px",
+                }}/>
+              </Link>
+            );
+          })}
         </div>
+
+        {/* Right — desktop only */}
+        <div className="nav-right" style={{ display:"flex", alignItems:"center", gap:"14px", marginLeft:"auto" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"5px" }}>
+            <span style={{
+              width:"5px", height:"5px", borderRadius:"50%",
+              background:"#4ead6a", boxShadow:"0 0 6px #4ead6a",
+              animation:"navBlink 2.5s ease-in-out infinite", flexShrink:0,
+            }}/>
+            <span style={{
+              fontFamily:"var(--font-mono)", fontSize:"9px",
+              letterSpacing:"0.14em", color:"rgba(78,173,106,0.8)",
+              textTransform:"uppercase",
+            }}>Available</span>
+          </div>
+
+          <a href="#contact"
+            style={{
+              fontFamily:"var(--font-mono)", fontSize:"10px",
+              letterSpacing:"0.14em", textTransform:"uppercase",
+              textDecoration:"none", color:"white",
+              padding:"7px 16px",
+              border:"1px solid rgba(168,85,247,0.45)",
+              background:"rgba(124,58,237,0.12)",
+              transition:"all 0.25s",
+              whiteSpace:"nowrap",
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background="rgba(124,58,237,0.85)";
+              el.style.borderColor="#a855f7";
+              el.style.boxShadow="0 0 18px rgba(168,85,247,0.35)";
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background="rgba(124,58,237,0.12)";
+              el.style.borderColor="rgba(168,85,247,0.45)";
+              el.style.boxShadow="none";
+            }}
+          >Let&apos;s Work</a>
+        </div>
+
+        {/* Hamburger — mobile only */}
+        <button
+          className="nav-burger"
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          style={{
+            background:"transparent", border:"none",
+            cursor:"pointer", marginLeft:"auto",
+            padding:"8px 4px",
+            display:"none", flexDirection:"column", gap:"5px",
+          }}
+        >
+          {[0,1,2].map(i => (
+            <span key={i} style={{
+              display:"block",
+              width: i === 1 ? (open ? "22px" : "13px") : "22px",
+              height:"1.5px",
+              background: open ? "#a855f7" : "rgba(255,255,255,0.65)",
+              borderRadius:"1px",
+              transition:"all 0.3s cubic-bezier(0.16,1,0.3,1)",
+              transform: open
+                ? i===0 ? "rotate(45deg) translate(4.5px, 4.5px)"
+                : i===2 ? "rotate(-45deg) translate(4.5px,-4.5px)"
+                : "none"
+                : "none",
+              opacity: open && i===1 ? 0 : 1,
+              boxShadow: open ? "0 0 8px rgba(168,85,247,0.8)" : "none",
+            }}/>
+          ))}
+        </button>
       </nav>
 
-      {/* Mobile menu overlay */}
+      {/* ─── MOBILE OVERLAY ─── */}
       <div style={{
-        position: "fixed", inset: 0, zIndex: 9998,
-        background: "rgba(5,2,15,0.97)",
-        backdropFilter: "blur(20px)",
-        display: "flex", flexDirection: "column",
-        paddingTop: "88px", paddingBottom: "40px",
-        paddingLeft: "28px", paddingRight: "28px",
+        position:"fixed", inset:0, zIndex:9980,
+        background:"rgba(4,2,10,0.97)",
+        backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+        display:"flex", flexDirection:"column",
+        padding:"72px 28px 36px",
         transform: open ? "translateX(0)" : "translateX(100%)",
-        transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-        overflowY: "auto",
+        transition:"transform 0.42s cubic-bezier(0.16,1,0.3,1)",
+        overflowY:"auto",
       }}>
-        {/* Nav links */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "40px" }}>
-          {links.map(([label, href], i) => (
+        <nav style={{ flex:1, display:"flex", flexDirection:"column", justifyContent:"center" }}>
+          {LINKS.map(({ label, href }, i) => (
             <Link key={label} href={href}
               onClick={() => setOpen(false)}
               style={{
-                fontFamily: "var(--font-display)", fontWeight: 800,
-                fontSize: "clamp(32px,8vw,48px)", letterSpacing: "-0.02em",
-                textTransform: "uppercase", textDecoration: "none",
-                color: "rgba(255,255,255,0.15)",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-                padding: "16px 0",
-                transition: "color 0.2s",
-                transform: open ? "translateX(0)" : "translateX(40px)",
+                display:"flex", alignItems:"baseline", gap:"14px",
+                textDecoration:"none", padding:"16px 0",
+                borderBottom:"1px solid rgba(255,255,255,0.04)",
                 opacity: open ? 1 : 0,
-                transitionDelay: `${i * 0.06}s`,
+                transform: open ? "translateX(0)" : "translateX(32px)",
+                transition:`opacity 0.4s ${i*0.065}s ease, transform 0.4s ${i*0.065}s cubic-bezier(0.16,1,0.3,1)`,
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = "white")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.15)")}
             >
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.2em", color: "#a855f7", marginRight: "14px", verticalAlign: "middle" }}>0{i + 1}</span>
-              {label}
+              <span style={{
+                fontFamily:"var(--font-mono)", fontSize:"10px",
+                letterSpacing:"0.2em", color:"rgba(168,85,247,0.5)",
+                flexShrink:0,
+              }}>0{i+1}</span>
+              <span
+                style={{
+                  fontFamily:"var(--font-display)", fontWeight:800,
+                  fontSize:"clamp(26px,7.5vw,42px)", letterSpacing:"-0.02em",
+                  textTransform:"uppercase", color:"rgba(255,255,255,0.1)",
+                  transition:"color 0.2s", lineHeight:1.1,
+                }}
+                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color="rgba(255,255,255,0.88)"}
+                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color="rgba(255,255,255,0.1)"}
+              >{label}</span>
             </Link>
           ))}
-        </div>
+        </nav>
 
-        {/* Bottom contact strip */}
-        <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#4ead6a", animation: "blink 2s ease-in-out infinite" }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.15em", color: "#4ead6a", textTransform: "uppercase" }}>Available for work</span>
+        <div style={{
+          paddingTop:"28px", display:"flex", flexDirection:"column", gap:"10px",
+          opacity: open ? 1 : 0,
+          transform: open ? "translateY(0)" : "translateY(16px)",
+          transition:"all 0.4s 0.32s ease",
+        }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"7px" }}>
+            <span style={{ width:"6px", height:"6px", borderRadius:"50%", background:"#4ead6a", boxShadow:"0 0 6px #4ead6a", animation:"navBlink 2.5s ease-in-out infinite" }}/>
+            <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.16em", color:"rgba(78,173,106,0.75)", textTransform:"uppercase" }}>Open to remote work</span>
           </div>
           <a href="#contact" onClick={() => setOpen(false)}
-            style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "14px", letterSpacing: "0.1em", textTransform: "uppercase", background: "#7c3aed", color: "white", padding: "16px 28px", textDecoration: "none", textAlign: "center", boxShadow: "0 0 32px rgba(124,58,237,0.4)" }}
+            style={{
+              fontFamily:"var(--font-mono)", fontSize:"10px",
+              letterSpacing:"0.2em", textTransform:"uppercase",
+              textDecoration:"none", textAlign:"center", color:"white",
+              padding:"15px",
+              background:"linear-gradient(135deg, #6d28d9, #a855f7)",
+              boxShadow:"0 8px 28px rgba(124,58,237,0.35)",
+            }}
           >Let&apos;s Work Together →</a>
           <a href="https://github.com/Levikib" target="_blank" rel="noopener noreferrer"
-            style={{ fontFamily: "var(--font-mono)", fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", textDecoration: "none", textAlign: "center", padding: "12px" }}
-          >GitHub ↗</a>
+            style={{
+              fontFamily:"var(--font-mono)", fontSize:"9px",
+              letterSpacing:"0.2em", textTransform:"uppercase",
+              color:"rgba(255,255,255,0.2)", textDecoration:"none",
+              textAlign:"center", padding:"10px",
+            }}
+          >github ↗</a>
         </div>
       </div>
 
       <style>{`
-        .nav-desktop-links { display: flex; }
-        .nav-desktop-right  { display: flex; }
-        .nav-hamburger      { display: none; }
+        .nav-links, .nav-right { display: flex !important; }
+        .nav-burger { display: none !important; }
 
         @media (max-width: 768px) {
-          .nav-desktop-links { display: none !important; }
-          .nav-desktop-right  { display: none !important; }
-          .nav-hamburger      { display: flex !important; }
+          .nav-links { display: none !important; }
+          .nav-right  { display: none !important; }
+          .nav-burger { display: flex !important; }
         }
 
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes navBlink {
+          0%,100% { opacity:1; box-shadow:0 0 6px #4ead6a; }
+          50%      { opacity:0.2; box-shadow:none; }
+        }
       `}</style>
     </>
   );
