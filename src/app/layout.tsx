@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, Syne_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/ui/CustomCursor";
+import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${syne.variable} ${syneMono.variable} ${dmSans.variable}`}>
       <body>
         <CustomCursor />
+        <WhatsAppFloat />
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
         <Footer />
