@@ -7,11 +7,9 @@ export default function CustomCursor() {
   const mx = useRef(0), my = useRef(0);
   const rx = useRef(0), ry = useRef(0);
   const rafRef = useRef<number>(0);
-  // Don't render on touch devices — causes invisible overlapping elements at 0,0
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Only show on non-touch devices
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (isTouch) return;
     setShow(true);
@@ -22,6 +20,7 @@ export default function CustomCursor() {
       if (dotRef.current) {
         dotRef.current.style.left = mx.current - 6 + "px";
         dotRef.current.style.top  = my.current - 6 + "px";
+        dotRef.current.style.opacity = "1";
       }
     };
 
@@ -36,12 +35,14 @@ export default function CustomCursor() {
     };
 
     const onEnterLink = () => {
-      dotRef.current?.classList.add("scale-[2.5]");
-      ringRef.current?.classList.add("scale-[1.8]", "opacity-50");
+      if (dotRef.current)  dotRef.current.style.transform  = "scale(2.5)";
+      if (ringRef.current) ringRef.current.style.transform = "scale(1.8)";
+      if (ringRef.current) ringRef.current.style.opacity   = "0.5";
     };
     const onLeaveLink = () => {
-      dotRef.current?.classList.remove("scale-[2.5]");
-      ringRef.current?.classList.remove("scale-[1.8]", "opacity-50");
+      if (dotRef.current)  dotRef.current.style.transform  = "scale(1)";
+      if (ringRef.current) ringRef.current.style.transform = "scale(1)";
+      if (ringRef.current) ringRef.current.style.opacity   = "1";
     };
 
     document.addEventListener("mousemove", onMove);
@@ -62,15 +63,42 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* Dot */}
       <div
         ref={dotRef}
-        className="fixed w-3 h-3 bg-[var(--neon-orange)] rounded-full pointer-events-none z-[9999] transition-transform duration-100 "
-        style={{ top: 0, left: 0 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "12px",
+          height: "12px",
+          borderRadius: "50%",
+          background: "#ff4d00",
+          pointerEvents: "none",
+          zIndex: 999999,
+          opacity: 0,
+          transition: "transform 0.1s ease",
+          boxShadow: "0 0 10px #ff4d00, 0 0 20px rgba(255,77,0,0.4)",
+          willChange: "left, top",
+        }}
       />
+      {/* Ring */}
       <div
         ref={ringRef}
-        className="fixed w-10 h-10 border border-[var(--neon-orange)] rounded-full pointer-events-none z-[9998] transition-transform duration-200 "
-        style={{ top: 0, left: 0 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          border: "1.5px solid #ff4d00",
+          pointerEvents: "none",
+          zIndex: 999998,
+          opacity: 1,
+          transition: "transform 0.2s ease, opacity 0.2s ease",
+          willChange: "left, top",
+        }}
       />
     </>
   );
