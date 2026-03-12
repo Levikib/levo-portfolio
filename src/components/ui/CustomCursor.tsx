@@ -10,7 +10,7 @@ export default function CustomCursor() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const isTouch = "ontouchstart" in window && navigator.maxTouchPoints > 0;
     if (isTouch) return;
     setShow(true);
 
