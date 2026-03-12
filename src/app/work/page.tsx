@@ -404,7 +404,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
         <div style={{ order: isEven ? 2 : 1 }}>{vizPanel}</div>
       </div>
       {expanded && (
-        <div className="proj-deep-grid" style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:"clamp(20px,3vw,36px) clamp(20px,4vw,48px)", display:"grid", gap:"clamp(20px,3vw,52px)" } className="proj-deep-grid"}>
+        <div className="proj-deep-grid" style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:"clamp(20px,3vw,36px) clamp(20px,4vw,48px)", display:"grid", gap:"clamp(20px,3vw,52px)" }}>
           <div>
             <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.2em", color:p.accent, textTransform:"uppercase", marginBottom:"12px" }}>// The Challenge</div>
             <p style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:"var(--text-3)", lineHeight:1.9, fontStyle:"italic", borderLeft:`2px solid ${p.accent}40`, paddingLeft:"16px" }}>{p.challenge}</p>
