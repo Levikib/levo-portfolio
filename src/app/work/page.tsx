@@ -344,7 +344,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
   const Viz = VIZMAP[p.id];
   const isEven = idx % 2 === 0;
   const detailsPanel = (
-    <div style={{ padding:"44px 48px", display:"flex", flexDirection:"column", justifyContent:"space-between", background: isEven ? "#ffffff" : "var(--bg-2)" }}>
+    <div style={{ padding:"clamp(24px,4vw,44px) clamp(20px,4vw,48px)", display:"flex", flexDirection:"column", justifyContent:"space-between", background: isEven ? "#ffffff" : "var(--bg-2)" }}>
       <div>
         <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"80px", color:`${p.accent}10`, lineHeight:1, marginBottom:"-18px", letterSpacing:"-0.05em", userSelect:"none" }}>{p.num}</div>
         <div style={{ display:"flex", alignItems:"center", gap:"8px", marginBottom:"14px" }}>
@@ -389,7 +389,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
     </div>
   );
   const vizPanel = (
-    <div style={{ background:p.vizBg, position:"relative", overflow:"hidden", minHeight:"420px" }}>
+    <div style={{ background:p.vizBg, position:"relative", overflow:"hidden" }}>
       <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(${p.accent}12 1px, transparent 1px)`, backgroundSize:"20px 20px", opacity:0.7, pointerEvents:"none" }} />
       <div style={{ position:"absolute", top:"-40px", right:"-40px", width:"220px", height:"220px", background:`radial-gradient(circle, ${p.accent}15, transparent 70%)`, filter:"blur(40px)", pointerEvents:"none" }} />
       <div style={{ position:"absolute", bottom:"-20px", left:"-20px", width:"150px", height:"150px", background:`radial-gradient(circle, ${p.accent}08, transparent 70%)`, filter:"blur(30px)", pointerEvents:"none" }} />
@@ -399,12 +399,12 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
   return (
     <div style={{ border:"1px solid var(--border)", overflow:"hidden", boxShadow:"0 2px 24px rgba(0,0,0,0.06)" }}>
       <div style={{ height:"3px", background:`linear-gradient(90deg, ${p.accent}, ${p.accent}40, transparent)` }} />
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", minHeight:"420px" }}>
+      <div className="proj-main-grid" style={{ display:"grid", minHeight:"420px" }}>
         <div style={{ order: isEven ? 1 : 2 }}>{detailsPanel}</div>
         <div style={{ order: isEven ? 2 : 1 }}>{vizPanel}</div>
       </div>
       {expanded && (
-        <div style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:"36px 48px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"52px" }}>
+        <div className="proj-deep-grid" style={{ background:`${p.accent}06`, borderTop:`1px solid ${p.accent}20`, padding:"clamp(20px,3vw,36px) clamp(20px,4vw,48px)", display:"grid", gap:"clamp(20px,3vw,52px)" } className="proj-deep-grid"}>
           <div>
             <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.2em", color:p.accent, textTransform:"uppercase", marginBottom:"12px" }}>// The Challenge</div>
             <p style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:"var(--text-3)", lineHeight:1.9, fontStyle:"italic", borderLeft:`2px solid ${p.accent}40`, paddingLeft:"16px" }}>{p.challenge}</p>
@@ -426,8 +426,8 @@ function ServiceBand({ s, idx }: { s: typeof SERVICES[0]; idx: number }) {
   const borderCol = s.dark ? `${s.accent}20` : `${s.accent}25`;
   return (
     <div style={{ background:bg, borderBottom:`1px solid ${s.dark ? "rgba(255,255,255,0.06)" : "var(--border)"}` }}>
-      <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"64px 48px" }}>
-        <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:"40px", gap:"24px" }}>
+      <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"clamp(36px,5vw,64px) clamp(20px,4vw,48px)" }}>
+        <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:"40px", gap:"24px", flexWrap:"wrap" }}>
           <div style={{ display:"flex", alignItems:"center", gap:"16px" }}>
             <div style={{ width:"48px", height:"48px", background:`${s.accent}15`, border:`1px solid ${s.accent}30`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"20px", flexShrink:0 }}>
               {s.icon}
@@ -437,7 +437,7 @@ function ServiceBand({ s, idx }: { s: typeof SERVICES[0]; idx: number }) {
               <h3 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(22px,2.5vw,32px)", color:textMain, lineHeight:1, letterSpacing:"-0.02em", margin:0 }}>{s.category}</h3>
             </div>
           </div>
-          <div style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:textSub, maxWidth:"320px", textAlign:"right", lineHeight:1.7, fontStyle:"italic", flexShrink:0 }}>{s.tagline}</div>
+          <div style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:textSub, maxWidth:"320px", lineHeight:1.7, fontStyle:"italic" }}>{s.tagline}</div>
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(280px,1fr))", gap:"1px", background:borderCol }}>
           {s.items.map((item, i) => (
@@ -472,7 +472,7 @@ function LeadForm() {
   };
   const inputStyle = { fontFamily:"var(--font-syne-mono)", fontSize:"11px", letterSpacing:"0.05em", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"white", padding:"12px 16px", width:"100%", outline:"none", transition:"border-color 0.2s", boxSizing:"border-box" as const };
   return (
-    <div style={{ background:"#05020f", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"80px 48px" }}>
+    <div style={{ background:"#05020f", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"clamp(40px,6vw,80px) clamp(20px,4vw,48px)" }}>
       <div style={{ maxWidth:"760px", margin:"0 auto" }}>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Start a Project</div>
         <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,4vw,52px)", color:"white", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:"14px" }}>
@@ -488,7 +488,7 @@ function LeadForm() {
           </div>
         ) : (
           <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
+            <div className="form-col-2" style={{ display:"grid", gap:"12px" }}>
               <input style={inputStyle} placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({...f, name:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
               <input style={inputStyle} placeholder="Email address *" type="email" value={form.email} onChange={e => setForm(f => ({...f, email:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
             </div>
@@ -526,7 +526,24 @@ export default function Work() {
 
   return (
     <div style={{ background:"var(--bg)", minHeight:"100vh" }}>
-      <div style={{ background:"var(--bg)", paddingTop:"140px", paddingBottom:"0", paddingLeft:"48px", paddingRight:"48px", borderBottom:"1px solid var(--border)" }}>
+      <style>{`
+        .proj-main-grid {
+          grid-template-columns: 1fr;
+          min-height: auto !important;
+        }
+        .proj-deep-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-col-2 {
+          grid-template-columns: 1fr;
+        }
+        @media (min-width: 700px) {
+          .proj-main-grid { grid-template-columns: 1fr 1fr; min-height: 420px !important; }
+          .proj-deep-grid { grid-template-columns: 1fr 1fr; }
+          .form-col-2     { grid-template-columns: 1fr 1fr; }
+        }
+      `}</style>
+      <div style={{ background:"var(--bg)", paddingTop:"clamp(96px,12vw,140px)", paddingBottom:"0", paddingLeft:"clamp(20px,5vw,48px)", paddingRight:"clamp(20px,5vw,48px)", borderBottom:"1px solid var(--border)" }}>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"16px" }}>// Work</div>
         <h1 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(48px,7vw,88px)", lineHeight:0.92, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"20px" }}>
           What I&apos;ve Built<br /><span style={{ color:"var(--purple)" }}>& Made.</span>
