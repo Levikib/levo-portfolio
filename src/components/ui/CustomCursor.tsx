@@ -64,12 +64,12 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed w-3 h-3 bg-[var(--neon-orange)] rounded-full pointer-events-none z-[9999] transition-transform duration-100 mix-blend-difference"
+        className="fixed w-3 h-3 bg-[var(--neon-orange)] rounded-full pointer-events-none z-[9999] transition-transform duration-100 "
         style={{ top: 0, left: 0 }}
       />
       <div
         ref={ringRef}
-        className="fixed w-10 h-10 border border-[var(--neon-orange)] rounded-full pointer-events-none z-[9998] transition-transform duration-200 mix-blend-difference"
+        className="fixed w-10 h-10 border border-[var(--neon-orange)] rounded-full pointer-events-none z-[9998] transition-transform duration-200 "
         style={{ top: 0, left: 0 }}
       />
     </>
