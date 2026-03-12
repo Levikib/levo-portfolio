@@ -68,10 +68,89 @@ const PROJECTS = [
   },
 ];
 
+const SERVICES = [
+  {
+    id: "fullstack", category: "Fullstack Engineering", icon: "⬡", accent: "#7c3aed", dark: true,
+    tagline: "Production-grade systems from database to UI.",
+    items: [
+      { name: "Next.js Application Development", desc: "Full-stack apps with SSR, API routes, auth, and deployment." },
+      { name: "REST & GraphQL API Design", desc: "Clean, documented APIs built to scale from day one." },
+      { name: "Database Architecture", desc: "PostgreSQL schema design, Prisma ORM, migrations, and indexing." },
+      { name: "TypeScript Systems", desc: "Typed, maintainable codebases — zero any, real contracts." },
+      { name: "Authentication & RBAC", desc: "JWT, session auth, role-based access across multi-tenant systems." },
+      { name: "Performance Optimisation", desc: "Core Web Vitals, query tuning, lazy loading, and bundle analysis." },
+    ],
+  },
+  {
+    id: "saas", category: "SaaS & Product", icon: "◈", accent: "#a855f7", dark: false,
+    tagline: "From zero to paying users — architecture that scales.",
+    items: [
+      { name: "MVP Development", desc: "Ship fast, ship right — full product from idea to launch." },
+      { name: "Multi-tenant Architecture", desc: "Subdomain routing, tenant isolation, shared infrastructure." },
+      { name: "Subscription & Billing Systems", desc: "Recurring charges, invoices, payment webhooks, and reconciliation." },
+      { name: "SaaS Dashboard Design", desc: "Admin panels, tenant portals, and real-time data views." },
+      { name: "User Onboarding Flows", desc: "First-run experience, progress tracking, and activation funnels." },
+      { name: "Analytics & Reporting", desc: "Business metrics, usage dashboards, and export pipelines." },
+    ],
+  },
+  {
+    id: "payments", category: "Payments & Integrations", icon: "⟁", accent: "#d97706", dark: true,
+    tagline: "Real money flowing reliably through your system.",
+    items: [
+      { name: "Paystack Integration", desc: "Full payment flows — cards, M-Pesa, bank transfers, webhooks." },
+      { name: "Webhook Architecture", desc: "Reliable event-driven systems with retry logic and logging." },
+      { name: "Third-Party API Integrations", desc: "Any API connected cleanly — CRMs, ERPs, comms platforms." },
+      { name: "Resend & Email Pipelines", desc: "Transactional emails, receipts, reminders, and bulk campaigns." },
+      { name: "Automation Workflows", desc: "Zapier, n8n, and custom trigger-action pipelines." },
+    ],
+  },
+  {
+    id: "devops", category: "DevOps & Infrastructure", icon: "⬢", accent: "#059669", dark: false,
+    tagline: "Servers that don't wake you up at 3am.",
+    items: [
+      { name: "VPS Setup & Nginx Config", desc: "Ubuntu servers, reverse proxy, SSL, and process management." },
+      { name: "CI/CD Pipelines", desc: "GitHub Actions, auto-deploy, environment promotion." },
+      { name: "Docker Containerisation", desc: "Compose stacks, image optimisation, and registry setup." },
+      { name: "Domain, DNS & SSL", desc: "End-to-end domain management and certificate automation." },
+      { name: "Monitoring & Alerting", desc: "Uptime checks, error tracking, and on-call alerts." },
+    ],
+  },
+  {
+    id: "ai", category: "AI & Data", icon: "◭", accent: "#d97706", dark: true,
+    tagline: "Intelligent systems that surface insight from noise.",
+    items: [
+      { name: "AI-Powered Dashboards", desc: "LLM summarisation layers on top of real business data." },
+      { name: "Data Ingestion Pipelines", desc: "Python ETL, scheduled jobs, and structured data stores." },
+      { name: "Financial Analysis Tools", desc: "Technical indicators, market data feeds, and signal engines." },
+      { name: "LLM API Integration", desc: "Claude, GPT, and open models wired into your product." },
+      { name: "Automated Reporting", desc: "Scheduled AI-generated reports delivered to stakeholders." },
+    ],
+  },
+  {
+    id: "agency", category: "Digital Agency", icon: "◇", accent: "#e11d48", dark: false,
+    tagline: "Growth infrastructure for businesses that mean business.",
+    items: [
+      { name: "GoHighLevel CRM Deployment", desc: "Full GHL setup — pipelines, automations, and integrations." },
+      { name: "Meta Ads Strategy & Execution", desc: "Campaign architecture, creative brief, pixel setup, and ROAS tracking." },
+      { name: "Social Infrastructure", desc: "Content systems, scheduling, and engagement workflows." },
+      { name: "Lead Generation Funnels", desc: "Landing pages, lead magnets, and automated follow-up sequences." },
+      { name: "Website for SMEs", desc: "Fast, SEO-ready sites built for conversion, not just aesthetics." },
+    ],
+  },
+  {
+    id: "design", category: "Design & Editorial", icon: "◉", accent: "#059669", dark: true,
+    tagline: "Visual systems with intent. Not decoration.",
+    items: [
+      { name: "UI/UX Design", desc: "Figma-based design systems, wireframes, and prototype handoff." },
+      { name: "Brand Identity", desc: "Logo, colour palette, type system, and brand guidelines." },
+      { name: "Editorial Design", desc: "Magazine layouts, annual reports, and long-form print design." },
+      { name: "Design Systems", desc: "Component libraries, token systems, and cross-team documentation." },
+    ],
+  },
+];
+
 const CATS = ["All", "Engineering", "AI & Data", "Agency", "Design"];
 const STATUS_COLOR: Record<string, string> = { live:"#4ead6a", building:"#d97706", completed:"#a855f7", published:"#059669" };
-
-// ── VISUALISATIONS ────────────────────────────────────────────────────────────
 
 function MakejaViz({ accent }: { accent: string }) {
   const payments = [340,480,520,390,610,580,720,650,810,760,920,1050];
@@ -259,14 +338,11 @@ const VIZMAP: Record<string, React.FC<{ accent: string }>> = {
   makeja: MakejaViz, nse: NseViz, shantech: ShantechViz, chillminds: ChillMindsViz,
 };
 
-// ── PROJECT CARD ──────────────────────────────────────────────────────────────
-
 function ProjectCard({ p, idx, expanded, onToggle }: {
   p: typeof PROJECTS[0]; idx: number; expanded: boolean; onToggle: () => void;
 }) {
   const Viz = VIZMAP[p.id];
   const isEven = idx % 2 === 0;
-
   const detailsPanel = (
     <div style={{ padding:"44px 48px", display:"flex", flexDirection:"column", justifyContent:"space-between", background: isEven ? "#ffffff" : "var(--bg-2)" }}>
       <div>
@@ -312,18 +388,14 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
       </div>
     </div>
   );
-
   const vizPanel = (
     <div style={{ background:p.vizBg, position:"relative", overflow:"hidden", minHeight:"420px" }}>
       <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(${p.accent}12 1px, transparent 1px)`, backgroundSize:"20px 20px", opacity:0.7, pointerEvents:"none" }} />
       <div style={{ position:"absolute", top:"-40px", right:"-40px", width:"220px", height:"220px", background:`radial-gradient(circle, ${p.accent}15, transparent 70%)`, filter:"blur(40px)", pointerEvents:"none" }} />
       <div style={{ position:"absolute", bottom:"-20px", left:"-20px", width:"150px", height:"150px", background:`radial-gradient(circle, ${p.accent}08, transparent 70%)`, filter:"blur(30px)", pointerEvents:"none" }} />
-      <div style={{ position:"relative", zIndex:1, height:"100%" }}>
-        <Viz accent={p.accent} />
-      </div>
+      <div style={{ position:"relative", zIndex:1, height:"100%" }}><Viz accent={p.accent} /></div>
     </div>
   );
-
   return (
     <div style={{ border:"1px solid var(--border)", overflow:"hidden", boxShadow:"0 2px 24px rgba(0,0,0,0.06)" }}>
       <div style={{ height:"3px", background:`linear-gradient(90deg, ${p.accent}, ${p.accent}40, transparent)` }} />
@@ -347,49 +419,182 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
   );
 }
 
-// ── MAIN PAGE ─────────────────────────────────────────────────────────────────
+function ServiceBand({ s, idx }: { s: typeof SERVICES[0]; idx: number }) {
+  const bg = s.dark ? "#0a0805" : "#ffffff";
+  const textMain = s.dark ? "rgba(255,255,255,0.92)" : "var(--text)";
+  const textSub = s.dark ? "rgba(255,255,255,0.35)" : "var(--text-3)";
+  const borderCol = s.dark ? `${s.accent}20` : `${s.accent}25`;
+  return (
+    <div style={{ background:bg, borderBottom:`1px solid ${s.dark ? "rgba(255,255,255,0.06)" : "var(--border)"}` }}>
+      <div style={{ maxWidth:"1200px", margin:"0 auto", padding:"64px 48px" }}>
+        <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:"40px", gap:"24px" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"16px" }}>
+            <div style={{ width:"48px", height:"48px", background:`${s.accent}15`, border:`1px solid ${s.accent}30`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"20px", flexShrink:0 }}>
+              {s.icon}
+            </div>
+            <div>
+              <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.2em", color:s.accent, textTransform:"uppercase", marginBottom:"4px" }}>// {String(idx+1).padStart(2,"0")}</div>
+              <h3 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(22px,2.5vw,32px)", color:textMain, lineHeight:1, letterSpacing:"-0.02em", margin:0 }}>{s.category}</h3>
+            </div>
+          </div>
+          <div style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:textSub, maxWidth:"320px", textAlign:"right", lineHeight:1.7, fontStyle:"italic", flexShrink:0 }}>{s.tagline}</div>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(280px,1fr))", gap:"1px", background:borderCol }}>
+          {s.items.map((item, i) => (
+            <div key={i}
+              style={{ background:bg, padding:"24px 28px", transition:"background 0.2s", cursor:"default" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = s.dark ? `${s.accent}08` : `${s.accent}05`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = bg; }}
+            >
+              <div style={{ display:"flex", alignItems:"flex-start", gap:"10px", marginBottom:"8px" }}>
+                <div style={{ width:"4px", height:"4px", borderRadius:"50%", background:s.accent, flexShrink:0, marginTop:"7px" }} />
+                <div style={{ fontFamily:"var(--font-syne)", fontWeight:700, fontSize:"13px", color:textMain, lineHeight:1.4 }}>{item.name}</div>
+              </div>
+              <div style={{ fontFamily:"var(--font-dm-sans)", fontSize:"12px", color:textSub, lineHeight:1.7, paddingLeft:"14px" }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LeadForm() {
+  const [form, setForm] = useState({ name:"", email:"", company:"", service:"", message:"" });
+  const [status, setStatus] = useState<"idle"|"sending"|"sent"|"error">("idle");
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) return;
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...form, subject:`[Work Enquiry] ${form.service || "General"} — ${form.name}` }) });
+      setStatus(res.ok ? "sent" : "error");
+    } catch { setStatus("error"); }
+  };
+  const inputStyle = { fontFamily:"var(--font-syne-mono)", fontSize:"11px", letterSpacing:"0.05em", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"white", padding:"12px 16px", width:"100%", outline:"none", transition:"border-color 0.2s", boxSizing:"border-box" as const };
+  return (
+    <div style={{ background:"#05020f", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"80px 48px" }}>
+      <div style={{ maxWidth:"760px", margin:"0 auto" }}>
+        <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Start a Project</div>
+        <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,4vw,52px)", color:"white", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:"14px" }}>
+          Let&apos;s build<br /><span style={{ color:"#a855f7" }}>something real.</span>
+        </h2>
+        <p style={{ fontFamily:"var(--font-dm-sans)", fontSize:"14px", color:"rgba(255,255,255,0.35)", lineHeight:1.8, marginBottom:"48px", maxWidth:"500px" }}>
+          Whether you need a full SaaS, a payment integration, or a growth system — tell me what you&apos;re building. I&apos;ll tell you how I can help.
+        </p>
+        {status === "sent" ? (
+          <div style={{ background:"rgba(78,173,106,0.1)", border:"1px solid rgba(78,173,106,0.3)", padding:"32px 40px", textAlign:"center" }}>
+            <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"24px", color:"#4ead6a", marginBottom:"8px" }}>Message received. ✓</div>
+            <div style={{ fontFamily:"var(--font-dm-sans)", fontSize:"13px", color:"rgba(255,255,255,0.4)" }}>I&apos;ll get back to you within 24 hours.</div>
+          </div>
+        ) : (
+          <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
+              <input style={inputStyle} placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({...f, name:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
+              <input style={inputStyle} placeholder="Email address *" type="email" value={form.email} onChange={e => setForm(f => ({...f, email:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
+              <input style={inputStyle} placeholder="Company / Project name" value={form.company} onChange={e => setForm(f => ({...f, company:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
+              <select style={{ ...inputStyle, cursor:"pointer" }} value={form.service} onChange={e => setForm(f => ({...f, service:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }}>
+                <option value="" style={{ background:"#0a0805" }}>Service area (optional)</option>
+                {SERVICES.map(o => <option key={o.id} value={o.category} style={{ background:"#0a0805" }}>{o.category}</option>)}
+              </select>
+            </div>
+            <textarea style={{ ...inputStyle, minHeight:"140px", resize:"vertical" }} placeholder="Tell me about your project. What are you building? What problem needs solving? *" value={form.message} onChange={e => setForm(f => ({...f, message:e.target.value}))} onFocus={e => { e.currentTarget.style.borderColor="rgba(168,85,247,0.5)"; }} onBlur={e => { e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }} />
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:"8px" }}>
+              <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"rgba(255,255,255,0.2)", letterSpacing:"0.08em" }}>
+                Or email directly: <span style={{ color:"rgba(168,85,247,0.7)" }}>leviskibirie2110@gmail.com</span>
+              </div>
+              <button onClick={handleSubmit} disabled={status==="sending"}
+                style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"11px", letterSpacing:"0.12em", textTransform:"uppercase", background:status==="sending"?"rgba(124,58,237,0.5)":"#7c3aed", color:"white", padding:"13px 32px", border:"none", cursor:status==="sending"?"default":"pointer", transition:"all 0.2s", boxShadow:"0 0 24px rgba(124,58,237,0.3)" }}
+                onMouseEnter={e => { if(status!=="sending"){ (e.currentTarget as HTMLElement).style.background="white"; (e.currentTarget as HTMLElement).style.color="#7c3aed"; }}}
+                onMouseLeave={e => { if(status!=="sending"){ (e.currentTarget as HTMLElement).style.background="#7c3aed"; (e.currentTarget as HTMLElement).style.color="white"; }}}
+              >{status==="sending"?"Sending...":status==="error"?"Try Again →":"Send Message →"}</button>
+            </div>
+            {status==="error" && <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"#e11d48", textAlign:"right" }}>Something went wrong. Email me directly.</div>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Work() {
+  const [tab, setTab] = useState<"portfolio"|"services">("portfolio");
   const [active, setActive] = useState("All");
   const [expanded, setExpanded] = useState<string | null>(null);
   const filtered = active === "All" ? PROJECTS : PROJECTS.filter(p => p.category === active);
 
   return (
     <div style={{ background:"var(--bg)", minHeight:"100vh" }}>
-      <div style={{ background:"var(--bg)", paddingTop:"140px", paddingBottom:"72px", paddingLeft:"48px", paddingRight:"48px", borderBottom:"1px solid var(--border)" }}>
-        <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"16px" }}>// Selected Work</div>
+      <div style={{ background:"var(--bg)", paddingTop:"140px", paddingBottom:"0", paddingLeft:"48px", paddingRight:"48px", borderBottom:"1px solid var(--border)" }}>
+        <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"16px" }}>// Work</div>
         <h1 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(48px,7vw,88px)", lineHeight:0.92, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"20px" }}>
           What I&apos;ve Built<br /><span style={{ color:"var(--purple)" }}>& Made.</span>
         </h1>
         <p style={{ fontFamily:"var(--font-dm-sans)", fontSize:"15px", color:"var(--text-3)", maxWidth:"460px", lineHeight:1.8, marginBottom:"40px" }}>
           Production systems, AI tools, digital agencies, editorial design. Every project is real. Every metric is earned.
         </p>
-        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
-          {CATS.map(c => (
-            <button key={c} onClick={() => setActive(c)}
-              style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"8px 18px", background:active===c?"var(--purple)":"transparent", border:`1px solid ${active===c?"var(--purple)":"var(--border)"}`, color:active===c?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}
-            >{c}</button>
+        <div style={{ display:"flex", gap:"0", marginBottom:"-1px" }}>
+          {(["portfolio","services"] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              style={{ fontFamily:"var(--font-syne-mono)", fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"14px 32px", background:tab===t?"var(--bg)":"transparent", border:"1px solid var(--border)", borderBottom:tab===t?"1px solid var(--bg)":"1px solid var(--border)", color:tab===t?"var(--purple)":"var(--text-4)", cursor:"pointer", transition:"all 0.2s", position:"relative", zIndex:1, marginRight:"-1px" }}
+            >
+              {t === "portfolio" ? "Portfolio" : "Services"}
+              <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", background:tab===t?"var(--purple)":"rgba(124,58,237,0.25)", color:"white", padding:"1px 6px", marginLeft:"8px", borderRadius:"2px" }}>
+                {t==="portfolio"?"4":"36"}
+              </span>
+            </button>
           ))}
         </div>
       </div>
 
-      <div style={{ background:"var(--bg)", padding:"56px 48px 80px", display:"flex", flexDirection:"column", gap:"56px" }}>
-        {filtered.map((p, idx) => (
-          <ProjectCard key={p.id} p={p} idx={idx} expanded={expanded === p.id} onToggle={() => setExpanded(expanded === p.id ? null : p.id)} />
-        ))}
-      </div>
+      {tab === "portfolio" && (
+        <>
+          <div style={{ background:"var(--bg)", padding:"28px 48px 32px", borderBottom:"1px solid var(--border)" }}>
+            <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
+              {CATS.map(c => (
+                <button key={c} onClick={() => setActive(c)}
+                  style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"8px 18px", background:active===c?"var(--purple)":"transparent", border:`1px solid ${active===c?"var(--purple)":"var(--border)"}`, color:active===c?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}
+                >{c}</button>
+              ))}
+            </div>
+          </div>
+          <div style={{ background:"var(--bg)", padding:"56px 48px 80px", display:"flex", flexDirection:"column", gap:"56px" }}>
+            {filtered.map((p, idx) => (
+              <ProjectCard key={p.id} p={p} idx={idx} expanded={expanded===p.id} onToggle={() => setExpanded(expanded===p.id?null:p.id)} />
+            ))}
+          </div>
+          <div style={{ background:"#0a0805", textAlign:"center", padding:"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Next Mission</div>
+            <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,5vw,60px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"32px" }}>
+              Want to be<br /><span style={{ color:"#a855f7" }}>the next project?</span>
+            </h2>
+            <button onClick={() => setTab("services")}
+              style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"15px 36px", border:"none", cursor:"pointer", boxShadow:"0 0 32px rgba(124,58,237,0.35)", transition:"all 0.25s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background="white"; (e.currentTarget as HTMLElement).style.color="#7c3aed"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="#7c3aed"; (e.currentTarget as HTMLElement).style.color="white"; }}
+            >See What I Offer →</button>
+          </div>
+        </>
+      )}
 
-      <div style={{ background:"#0a0805", textAlign:"center", padding:"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Next Mission</div>
-        <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,5vw,60px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"32px" }}>
-          Want to be<br /><span style={{ color:"#a855f7" }}>the next project?</span>
-        </h2>
-        <a href="/#contact"
-          style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"15px 36px", textDecoration:"none", display:"inline-block", boxShadow:"0 0 32px rgba(124,58,237,0.35)", transition:"all 0.25s" }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background="white"; (e.currentTarget as HTMLElement).style.color="#7c3aed"; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="#7c3aed"; (e.currentTarget as HTMLElement).style.color="white"; }}
-        >Let&apos;s Work Together →</a>
-      </div>
+      {tab === "services" && (
+        <>
+          <div style={{ background:"var(--bg)", padding:"32px 48px", borderBottom:"1px solid var(--border)" }}>
+            <div style={{ display:"flex", gap:"32px", alignItems:"center" }}>
+              {[{v:"7",l:"Service areas"},{v:"36",l:"Specific services"},{v:"4+",l:"Years shipping"}].map(s => (
+                <div key={s.l} style={{ display:"flex", gap:"10px", alignItems:"baseline" }}>
+                  <span style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"28px", color:"var(--purple)", lineHeight:1 }}>{s.v}</span>
+                  <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>{s.l}</span>
+                </div>
+              ))}
+              <div style={{ marginLeft:"auto", fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.1em", maxWidth:"280px", textAlign:"right", lineHeight:1.7 }}>Remote-first. Async-friendly. Nairobi → World.</div>
+            </div>
+          </div>
+          {SERVICES.map((s, i) => <ServiceBand key={s.id} s={s} idx={i} />)}
+          <LeadForm />
+        </>
+      )}
 
       <style>{`@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }`}</style>
     </div>
