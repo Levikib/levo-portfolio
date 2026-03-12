@@ -1,36 +1,28 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-// Detect touch device — skip Lenis entirely on mobile
-// Lenis hijacks touch scroll events causing pages to appear frozen/unloadable
-function isTouchDevice() {
-  if (typeof window === "undefined") return false;
-  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LenisInstance = any;
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const [isTouch] = useState(() => typeof window !== "undefined" ? isTouchDevice() : false);
-  const lenisRef = useRef<any>(null);
+  const lenisRef = useRef<LenisInstance>(null);
 
   useEffect(() => {
-    // Never run Lenis on touch/mobile — it blocks native scroll
-    if (isTouch) return;
+    // Skip smooth scroll on touch devices
+    if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+      return;
+    }
 
-    let lenis: any;
-    (async () => {
+    let animFrameId: number;
+
+    async function initLenis() {
       try {
-        // Try both package names — handles both old and new installs
-        let LenisClass;
-        try {
-          const mod = await import("lenis");
-          LenisClass = mod.default || mod.Lenis;
-        } catch {
-          const mod = await import("@studio-freight/lenis");
-          LenisClass = mod.default;
-        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mod = await import("lenis") as any;
+        const LenisClass = mod.default || mod;
 
-        lenis = new LenisClass({
-          duration: 1.2,
+        const lenis = new LenisClass({
+          duration: 1.4,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: "vertical",
           smoothWheel: true,
@@ -40,16 +32,41 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
         function raf(time: number) {
           lenis.raf(time);
-          requestAnimationFrame(raf);
+          animFrameId = requestAnimationFrame(raf);
         }
-        requestAnimationFrame(raf);
+        animFrameId = requestAnimationFrame(raf);
       } catch {
-        // If Lenis fails entirely, native scroll works fine
-      }
-    })();
+        try {
+          const mod = await import("@studio-freight/lenis");
+          const LenisClass = mod.default;
 
-    return () => { lenis?.destroy(); };
-  }, [isTouch]);
+          const lenis = new LenisClass({
+            duration: 1.4,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: "vertical",
+            smoothWheel: true,
+          });
+
+          lenisRef.current = lenis;
+
+          function raf(time: number) {
+            lenis.raf(time);
+            animFrameId = requestAnimationFrame(raf);
+          }
+          animFrameId = requestAnimationFrame(raf);
+        } catch {
+          // Smooth scroll unavailable — page scrolls normally
+        }
+      }
+    }
+
+    initLenis();
+
+    return () => {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      if (lenisRef.current?.destroy) lenisRef.current.destroy();
+    };
+  }, []);
 
   return <>{children}</>;
 }
