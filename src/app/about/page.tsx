@@ -248,7 +248,7 @@ function MotionGraphic() {
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", color:"rgba(255,255,255,0.1)", letterSpacing:"0.08em" }}>{isComplete ? "REPLAYING..." : "● LIVE"}</div>
       </div>
       {/* Text content — 3D tilt container */}
-      <div ref={textRef} style={{ position:"relative", zIndex:6, padding:"56px 48px 48px 110px", transformOrigin:"center center", willChange:"transform", minHeight:"400px", display:"flex", flexDirection:"column", justifyContent:"center", gap:"8px" }}>
+      <div ref={textRef} style={{ position:"relative", zIndex:6, padding:"clamp(36px,4vw,56px) clamp(20px,4vw,48px) clamp(36px,4vw,48px) clamp(24px,8vw,110px)", transformOrigin:"center center", willChange:"transform", minHeight:"400px", display:"flex", flexDirection:"column", justifyContent:"center", gap:"8px" }}>
         {lineGroups.map((lineWords, li) => {
           const hasAny = lineWords.some(w => display[w.key] !== undefined);
           if (!hasAny) return null;
@@ -362,14 +362,39 @@ export default function About() {
   const filtered = activeType ? TIMELINE.filter(t => t.type === activeType) : TIMELINE;
 
   return (
-    <div style={{ background:"var(--bg)", minHeight:"100vh" }}>
+    <div style={{ background:"var(--bg)", minHeight:"100vh", overflowX:"hidden" }}>
+      <style>{`
+        .about-main-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .about-skills-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .about-certs-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media (min-width: 640px) {
+          .about-stats-grid  { grid-template-columns: repeat(3, 1fr); }
+          .about-skills-grid { grid-template-columns: repeat(3, 1fr); }
+          .about-certs-grid  { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 900px) {
+          .about-main-grid   { grid-template-columns: 1fr 1fr; }
+          .about-stats-grid  { grid-template-columns: repeat(5, 1fr); }
+          .about-skills-grid { grid-template-columns: repeat(4, 1fr); }
+          .about-certs-grid  { grid-template-columns: repeat(4, 1fr); }
+        }
+      `}</style>
 
       {/* HERO */}
       <div style={{ borderBottom:"1px solid var(--border)" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr" }}>
+        <div className="about-main-grid" style={{ display:"grid" }}>
 
           {/* Left: copy */}
-          <div style={{ padding:"140px 0 0 48px", display:"flex", flexDirection:"column" }}>
+          <div style={{ padding:"clamp(88px,12vw,140px) clamp(20px,4vw,48px) clamp(40px,5vw,80px)", display:"flex", flexDirection:"column" }}>
             <div style={{ flex:1 }}>
               <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"20px" }}>// Who I Am</div>
               <h1 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(48px,6vw,84px)", lineHeight:0.9, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"28px" }}>
@@ -397,9 +422,9 @@ export default function About() {
               </div>
             </div>
             {/* Quick facts */}
-            <div style={{ display:"flex", borderTop:"1px solid var(--border)", marginTop:"48px" }}>
+            <div style={{ display:"flex", flexWrap:"wrap", borderTop:"1px solid var(--border)", marginTop:"clamp(28px,4vw,48px)" }}>
               {[{l:"Based in",v:"Nairobi, KE"},{l:"Available",v:"Remotely"},{l:"Response",v:"< 24 hrs"}].map((f,i) => (
-                <div key={f.l} style={{ flex:1, padding:"20px 24px", borderRight:i<2?"1px solid var(--border)":"none" }}>
+                <div key={f.l} style={{ flex:"1 1 120px", padding:"clamp(14px,2vw,20px) clamp(16px,2vw,24px)", borderRight:i<2?"1px solid var(--border)":"none" }}>
                   <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", color:"var(--text-4)", letterSpacing:"0.15em", textTransform:"uppercase", marginBottom:"4px" }}>{f.l}</div>
                   <div style={{ fontFamily:"var(--font-syne)", fontWeight:700, fontSize:"15px", color:"var(--text)" }}>{f.v}</div>
                 </div>
@@ -415,7 +440,7 @@ export default function About() {
       {/* NUMBERS */}
       <div style={{ background:"#0a0805", padding:"72px 48px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(124,58,237,0.6)", textTransform:"uppercase", marginBottom:"48px" }}>// By The Numbers</div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:"1px", background:"rgba(255,255,255,0.06)" }}>
+        <div className="about-stats-grid" style={{ display:"grid", gap:"1px", background:"rgba(255,255,255,0.06)" }}>
           {[
             { val:170, suffix:"+",     label:"Units Managed",  accent:"#7c3aed" },
             { val:1.5, suffix:"M KSH", label:"Monthly Volume", accent:"#4ead6a" },
@@ -456,7 +481,7 @@ export default function About() {
           {/* Vertical line */}
           <div style={{ position:"absolute", left:"120px", top:0, bottom:0, width:"1px", background:"var(--border)" }} />
           {filtered.map((item, i) => (
-            <div key={i} style={{ display:"grid", gridTemplateColumns:"120px 1fr", position:"relative", paddingBottom: i < filtered.length-1 ? "0" : "0" }}>
+            <div key={i} style={{ display:"grid", gridTemplateColumns:"80px 1fr", position:"relative", paddingBottom: i < filtered.length-1 ? "0" : "0" }}>
               {/* Year */}
               <div style={{ paddingTop:"32px", paddingRight:"24px", textAlign:"right" }}>
                 <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", color:item.accent, letterSpacing:"0.08em" }}>{item.year}</div>
@@ -483,7 +508,7 @@ export default function About() {
       <div style={{ background:"#0a0805", padding:"72px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(124,58,237,0.6)", textTransform:"uppercase", marginBottom:"12px" }}>// Full Stack</div>
         <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,4vw,52px)", letterSpacing:"-0.02em", color:"white", lineHeight:1, marginBottom:"48px" }}>The Toolkit.</h2>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"1px", background:"rgba(255,255,255,0.06)" }}>
+        <div className="about-skills-grid" style={{ display:"grid", gap:"1px", background:"rgba(255,255,255,0.06)" }}>
           {STACK.map(cat => (
             <div key={cat.cat} style={{ background:"#0a0805", padding:"32px 28px", position:"relative", overflow:"hidden" }}>
               <div style={{ position:"absolute", top:0, left:0, right:0, height:"2px", background:`linear-gradient(90deg,${cat.accent},transparent)` }} />
@@ -503,7 +528,7 @@ export default function About() {
       <div style={{ background:"var(--bg)", padding:"72px 48px" }}>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--purple)", textTransform:"uppercase", marginBottom:"12px" }}>// Beyond the Code</div>
         <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,4vw,52px)", letterSpacing:"-0.02em", color:"var(--text)", lineHeight:1, marginBottom:"48px" }}>The Full Picture.</h2>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"12px" }}>
+        <div className="about-certs-grid" style={{ display:"grid", gap:"12px" }}>
           {BEYOND.map((b,i) => (
             <div key={b.title} style={{ background:i%2===0?"#ffffff":"var(--bg-2)", border:"1px solid var(--border)", padding:"32px 28px" }}>
               <div style={{ fontSize:"32px", marginBottom:"16px" }}>{b.icon}</div>
