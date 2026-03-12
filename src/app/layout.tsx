@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, Syne_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
+import "./mobile.css";
 import CustomCursor from "@/components/ui/CustomCursor";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import SmoothScroll from "@/components/ui/SmoothScroll";

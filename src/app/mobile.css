@@ -1,0 +1,470 @@
+/*
+ * mobile.css — Complete mobile experience layer
+ * Desktop: zero impact (all rules inside max-width: 768px)
+ * Mobile: clean, intentional, full-width everything
+ *
+ * Strategy:
+ *   - !important used deliberately to override inline styles
+ *   - Every section gets explicit mobile treatment
+ *   - No JS changes needed, no component rewrites
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GLOBAL RESETS
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  *,
+  *::before,
+  *::after {
+    max-width: 100%;
+    box-sizing: border-box !important;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* Kill horizontal scroll caused by fixed-width elements */
+  canvas {
+    max-width: 100% !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NAV — already rebuilt, just ensuring no overflow
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 16px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HERO SECTION
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* The lg:grid-cols-2 grid — force single column */
+  .hero-grid,
+  section[class*="min-h-screen"] > div[class*="grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  /* Left text column — fix padding */
+  section[class*="min-h-screen"] > div[class*="grid"] > div:first-child {
+    padding: 0 !important;
+    padding-top: 24px !important;
+  }
+
+  /* Right photo column — hide on small screens to keep hero tight */
+  section[class*="min-h-screen"] > div[class*="grid"] > div:last-child {
+    display: none !important;
+  }
+
+  /* Hero outer padding */
+  section[class*="min-h-screen"] > div[class*="px-8"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* H1 size control */
+  section[class*="min-h-screen"] h1 {
+    font-size: clamp(44px, 12vw, 64px) !important;
+  }
+
+  /* Spacer div that creates top gap */
+  section[class*="min-h-screen"] > div.h-24 {
+    height: 80px !important;
+  }
+
+  /* CTA buttons — stack them */
+  section[class*="min-h-screen"] div[class*="flex-wrap"] a {
+    flex: 1 1 140px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FEATURED WORK SECTION (home page cards)
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* md:grid-cols-2 → single col */
+  #work .grid,
+  section#work .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  section#work {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SKILLS STACK
+   (SkillsStack.tsx already rebuilt — these are safety rules)
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BY THE NUMBERS
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* lg:grid-cols-3 → 1 col on small, 2 col on medium */
+  section[style*="\"#0a0805\""] .grid,
+  section[style*='#0a0805'] div[class*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stat card number — scale down */
+  section[style*='#0a0805'] [style*="clamp(36px"] {
+    font-size: 36px !important;
+  }
+}
+
+/* More targeted rule using the md:grid-cols-2 lg:grid-cols-3 class pattern */
+@media (max-width: 480px) {
+  div[class*="md:grid-cols-2"][class*="lg:grid-cols-3"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  div[class*="md:grid-cols-2"][class*="lg:grid-cols-3"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HOW I WORK
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* md:grid-cols-2 → single column */
+  div[class*="md:grid-cols-2"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   WORK PAGE — PROJECT CARDS
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Main project card two-col grid */
+  .proj-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Viz panel — don't force height on mobile */
+  .proj-main-grid > div:last-child {
+    min-height: 280px !important;
+  }
+
+  /* Re-order: details first, viz second regardless of isEven */
+  .proj-main-grid > div:first-child {
+    order: 1 !important;
+  }
+  .proj-main-grid > div:last-child {
+    order: 2 !important;
+  }
+
+  /* Details panel inner padding */
+  .proj-main-grid > div[style*="flex-direction"] {
+    padding: 24px 20px !important;
+  }
+
+  /* Deep dive expanded panel */
+  .proj-deep-grid {
+    grid-template-columns: 1fr !important;
+    padding: 24px 20px !important;
+  }
+
+  /* Metrics 4-col grid inside project card */
+  div[style*="repeat(4,1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Work page header padding */
+  div[style*="paddingLeft:\"clamp(20px"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Lead form 2-col grids */
+  .form-col-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Lead form submit row — stack on mobile */
+  div[style*="justifyContent:\"space-between\""][style*="marginTop:\"8px\""] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  div[style*="justifyContent:\"space-between\""][style*="marginTop:\"8px\""] button {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   WORK PAGE — SERVICES BAND
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Service header: title + tagline — stack them */
+  div[style*="auto-fill"][style*="minmax(280px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Service band header flex — already has flexWrap:wrap from patch */
+  /* Tagline — full width */
+  div[style*="maxWidth:\"320px\""] {
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ABOUT PAGE
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Main 2-col layout — stack */
+  .about-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Left text column */
+  .about-main-grid > div:first-child {
+    padding: 96px 20px 40px !important;
+  }
+
+  /* Motion graphic panel — full width below text */
+  .about-main-grid > div:last-child {
+    min-height: 400px !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+  }
+
+  /* Motion graphic text — fix left padding */
+  .about-main-grid div[style*="110px"] {
+    padding-left: clamp(20px, 5vw, 60px) !important;
+    padding-right: 20px !important;
+  }
+
+  /* Terminal bar — fix left position */
+  .about-main-grid div[style*="left:\"108px\""] {
+    left: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stats strip: 5-col → 2-col */
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Stats — each item padding */
+  .about-stats-grid > div {
+    padding: 16px !important;
+  }
+
+  /* Skills 4-col → 2-col */
+  .about-skills-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Certs 4-col → 2-col */
+  .about-certs-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Journey timeline — 120px label col → smaller */
+  div[style*="gridTemplateColumns:\"80px 1fr\""] {
+    grid-template-columns: 64px 1fr !important;
+  }
+
+  /* Journey section padding */
+  section[style*="var(--bg-2)"],
+  div[style*="var(--bg-2)"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* About section headings — don't let them overflow */
+  .about-main-grid h1,
+  .about-main-grid h2 {
+    font-size: clamp(36px, 10vw, 64px) !important;
+    line-height: 1 !important;
+  }
+
+  /* Scramble text sizes — cap xxl on small screens */
+  span[style*="42px"] {
+    font-size: clamp(24px, 7vw, 42px) !important;
+  }
+  span[style*="30px"] {
+    font-size: clamp(20px, 6vw, 30px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Certs grid → 1-col on very small screens */
+  .about-certs-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stats → 1-col on very small */
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DESIGN WORK SECTION
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Any 3-col or 4-col design grids */
+  section[id="design"] .grid,
+  section[class*="design"] .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CONTACT SECTION
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Contact 2-col layout → stack */
+  section#contact > div > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  section#contact {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Contact info right panel — remove border */
+  section#contact > div > div > div:last-child {
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    padding-top: 32px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MARQUEE
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Marquee text size */
+  .marquee-text,
+  div[class*="marquee"] span {
+    font-size: 11px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GLOBAL SECTION PADDING NORMALIZER
+   Catches any section that still has hard 48px side padding
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Tailwind px-8, md:px-12 sections */
+  .px-8, .md\:px-12 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Any section with inline padding left/right > 24px */
+  section {
+    padding-left: max(16px, env(safe-area-inset-left)) !important;
+    padding-right: max(16px, env(safe-area-inset-right)) !important;
+  }
+
+  /* Vertical padding normalization */
+  section[style*="py-28"],
+  section[class*="py-28"] {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TYPOGRAPHY SCALE
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* clamp() already handles most — these are backstops */
+  h1 { font-size: clamp(36px, 10vw, 64px) !important; }
+  h2 { font-size: clamp(28px, 8vw, 48px) !important; }
+  h3 { font-size: clamp(20px, 6vw, 32px) !important; }
+
+  /* Prevent any text from overflowing its container */
+  p, span, div {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SAFE AREA / NOTCH SUPPORT (iPhone)
+───────────────────────────────────────────────────────────────────────────── */
+@supports (padding-top: env(safe-area-inset-top)) {
+  nav {
+    padding-top: env(safe-area-inset-top) !important;
+  }
+
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   WHATSAPP FLOAT — ensure it doesn't clip on small screens
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* WhatsApp button */
+  a[href*="wa.me"] {
+    right: 16px !important;
+    bottom: 20px !important;
+    width: 52px !important;
+    height: 52px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SCROLL SMOOTHING & TOUCH
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Remove hover states that cause flicker on tap */
+  @media (hover: none) {
+    *:hover {
+      transform: none !important;
+    }
+  }
+}
