@@ -66,11 +66,11 @@ export default function Hero() {
             letterSpacing:"0.25em", textTransform:"uppercase",
           }}>
             <span className="w-2 h-2 rounded-full" style={{ background:"var(--forest-light)", animation:"blink 2s ease-in-out infinite" }}/>
-            <span style={{ color:"var(--forest)" }}>Available</span>
+            <span style={{ color:"var(--forest)", whiteSpace:"nowrap" }}>Available</span>
             <span style={{ color:"var(--text-4)" }}>·</span>
-            <span style={{ color:"var(--text-3)" }}>Nairobi, Kenya</span>
+            <span style={{ color:"var(--text-3)", whiteSpace:"nowrap" }}>Nairobi, Kenya</span>
             <span style={{ color:"var(--text-4)" }}>→</span>
-            <span style={{ color:"var(--purple)" }}>World</span>
+            <span style={{ color:"var(--purple)", whiteSpace:"nowrap" }}>World</span>
           </div>
 
           <div style={{ opacity:loaded?1:0, transform:loaded?"translateY(0)":"translateY(30px)", transition:"all 0.8s 0.1s cubic-bezier(0.16,1,0.3,1)" }}>

@@ -363,11 +363,11 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
         </div>
       </div>
       <div style={{ marginTop:"32px" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"8px", marginBottom:"20px" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:"8px", marginBottom:"20px" }}>
           {p.metrics.map(m => (
             <div key={m.label} style={{ background:`${p.accent}08`, border:`1px solid ${p.accent}20`, padding:"11px 8px", textAlign:"center" }}>
-              <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"15px", color:p.accent, lineHeight:1, marginBottom:"4px" }}>{m.val}</div>
-              <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"7px", color:"var(--text-4)", letterSpacing:"0.1em", textTransform:"uppercase" }}>{m.label}</div>
+              <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"15px", color:p.accent, lineHeight:1, marginBottom:"4px", whiteSpace:"nowrap" }}>{m.val}</div>
+              <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"7px", color:"var(--text-4)", letterSpacing:"0.1em", textTransform:"uppercase", whiteSpace:"nowrap" }}>{m.label}</div>
             </div>
           ))}
         </div>
@@ -563,7 +563,7 @@ export default function Work() {
                 <button key={btn.id} onClick={() => setTab(btn.id)}
                   style={{
                     position:"relative", border:"none", cursor:"pointer",
-                    padding:"16px 40px 14px", borderRadius:"3px", overflow:"hidden",
+                    padding:"12px 20px 10px", borderRadius:"3px", overflow:"hidden",
                     background: on ? btn.accent : "transparent",
                     boxShadow: on ? `0 0 32px ${btn.glow}, 0 0 64px ${btn.glow.replace("0.45","0.15")}, inset 0 1px 0 rgba(255,255,255,0.2)` : "none",
                     transition:"all 0.35s cubic-bezier(0.16,1,0.3,1)",
@@ -573,7 +573,7 @@ export default function Work() {
                 >
                   {on && <div style={{ position:"absolute", top:0, left:"-120%", width:"70%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)", animation:"shimmerSweep 2.4s ease-in-out infinite", pointerEvents:"none" }} />}
                   {on && <div style={{ position:"absolute", top:"9px", right:"11px", width:"5px", height:"5px", borderRadius:"50%", background:"rgba(255,255,255,0.9)", boxShadow:"0 0 8px white", animation:"blink 1.8s ease-in-out infinite" }} />}
-                  <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"15px", letterSpacing:"0.04em", textTransform:"uppercase", color: on ? "#ffffff" : "rgba(255,255,255,0.55)", transition:"color 0.3s", lineHeight:1, marginBottom:"6px", position:"relative", zIndex:1 }}>{btn.label}</div>
+                  <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"13px", letterSpacing:"0.04em", textTransform:"uppercase", color: on ? "#ffffff" : "rgba(255,255,255,0.55)", transition:"color 0.3s", lineHeight:1, marginBottom:"4px", position:"relative", zIndex:1 }}>{btn.label}</div>
                   <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", letterSpacing:"0.16em", textTransform:"uppercase", color: on ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.32)", transition:"color 0.3s", position:"relative", zIndex:1 }}>{btn.sub}</div>
                 </button>
               );
