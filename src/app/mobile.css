@@ -584,3 +584,39 @@
     display: none !important;
   }
 }
+
+/* ── WORK SERVICES STATS ROW — fix vertical text wrap ── */
+@media (max-width: 768px) {
+  /* Stats row container */
+  div[style*="gap:\"32px\""][style*="alignItems:\"center\""] {
+    gap: 16px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    padding-bottom: 4px !important;
+  }
+  /* Each stat item — don't wrap */
+  div[style*="gap:\"32px\""][style*="alignItems:\"center\""] > div {
+    flex-shrink: 0 !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    align-items: flex-start !important;
+  }
+  /* The label text — no wrap ever */
+  div[style*="gap:\"32px\""][style*="alignItems:\"center\""] span:last-child {
+    white-space: nowrap !important;
+    font-size: 8px !important;
+  }
+  /* Big number */
+  div[style*="gap:\"32px\""][style*="alignItems:\"center\""] span:first-child {
+    font-size: 22px !important;
+    line-height: 1 !important;
+  }
+  /* The tagline text beside stats */
+  div[style*="Remote-first"] {
+    display: none !important;
+  }
+  /* Services stats wrapper padding */
+  div[style*="padding:\"32px 48px\""] {
+    padding: 20px 16px !important;
+  }
+}
