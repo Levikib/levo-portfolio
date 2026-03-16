@@ -468,3 +468,119 @@
     }
   }
 }
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS TO THE BOTTOM OF src/app/mobile.css
+   Run: cat patch_mobile_addendum.css >> src/app/mobile.css
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── MARQUEE — speed up on mobile ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* The marquee div has style animation:"marquee 25s linear infinite"
+     We override with a faster animation via CSS */
+  div[style*="marquee 25s"] {
+    animation-duration: 12s !important;
+  }
+  /* Also target by class in case */
+  .w-max {
+    animation-duration: 12s !important;
+  }
+  /* Marquee text — slightly smaller on mobile so more items visible */
+  div[class*="overflow-hidden"] div[class*="w-max"] span {
+    font-size: 10px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+
+/* ── WORK PAGE TOGGLE — fix button overflow on mobile ────────────────────── */
+@media (max-width: 768px) {
+  /* Toggle container — full width, stack or shrink */
+  div[style*="inline-flex"][style*="0c0a07"] {
+    width: 100% !important;
+  }
+
+  /* Each toggle button — remove huge padding, share space equally */
+  div[style*="inline-flex"][style*="0c0a07"] button {
+    flex: 1 !important;
+    padding: 12px 16px 10px !important;
+  }
+
+  /* Toggle button label font size */
+  div[style*="inline-flex"][style*="0c0a07"] button div:first-child {
+    font-size: 13px !important;
+  }
+
+  /* The "See what I offer" nudge — hide on mobile, it overlaps */
+  div[style*="nudgeDrift"] {
+    display: none !important;
+  }
+
+  /* Toggle wrapper div — take full width */
+  div[style*="gap:\"24px\""][style*="paddingBottom:\"40px\""] {
+    flex-wrap: wrap !important;
+  }
+}
+
+
+/* ── WORK PAGE PORTFOLIO SECTION — fix section padding ───────────────────── */
+@media (max-width: 768px) {
+  /* Filter buttons strip */
+  div[style*="padding:\"28px 48px 32px\""] {
+    padding: 20px 16px !important;
+  }
+
+  /* Projects list container */
+  div[style*="padding:\"56px 48px 80px\""] {
+    padding: 28px 16px 48px !important;
+    gap: 32px !important;
+  }
+
+  /* "Want to be the next project?" CTA */
+  div[style*="padding:\"80px 48px\""] {
+    padding: 48px 20px !important;
+  }
+}
+
+
+/* ── WORK PAGE SERVICES — fix stats row ──────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Services stats row: 7 / 36 / 4+ */
+  div[style*="gap:\"32px\""][style*="alignItems:\"center\""] {
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+
+/* ── ABOUT PAGE — motion graphic text visibility on mobile ───────────────── */
+@media (max-width: 900px) {
+  /* The scramble text container */
+  div[style*="110px"] {
+    padding-left: 24px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Terminal bar inside motion graphic */
+  div[style*="left:\"108px\""] {
+    left: 16px !important;
+    right: 16px !important;
+  }
+
+  /* Scramble xxl text — too large on mobile */
+  span[style*="42px"] {
+    font-size: clamp(22px, 6.5vw, 38px) !important;
+  }
+  span[style*="30px"] {
+    font-size: clamp(18px, 5.5vw, 28px) !important;
+  }
+}
+
+
+/* ── GENERAL — prevent animated elements from causing layout shift ────────── */
+@media (max-width: 768px) {
+  /* Floating badges in Hero right panel — don't show on mobile (panel hidden) */
+  div[style*="badge"][style*="position:\"absolute\""] {
+    display: none !important;
+  }
+}
