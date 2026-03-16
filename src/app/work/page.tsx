@@ -621,15 +621,15 @@ export default function Work() {
 
       {tab === "services" && (
         <>
-          <div style={{ background:"var(--bg)", padding:"32px 48px", borderBottom:"1px solid var(--border)" }}>
-            <div style={{ display:"flex", gap:"32px", alignItems:"center" }}>
+          <div style={{ background:"var(--bg)", padding:"clamp(16px,3vw,32px) clamp(16px,4vw,48px)", borderBottom:"1px solid var(--border)" }}>
+            <div style={{ display:"flex", gap:"16px", alignItems:"center", flexWrap:"wrap" }}>
               {[{v:"7",l:"Service areas"},{v:"36",l:"Specific services"},{v:"4+",l:"Years shipping"}].map(s => (
                 <div key={s.l} style={{ display:"flex", gap:"10px", alignItems:"baseline" }}>
                   <span style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"28px", color:"var(--purple)", lineHeight:1 }}>{s.v}</span>
-                  <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.12em", textTransform:"uppercase" }}>{s.l}</span>
+                  <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.12em", textTransform:"uppercase", whiteSpace:"nowrap" }}>{s.l}</span>
                 </div>
               ))}
-              <div style={{ marginLeft:"auto", fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.1em", maxWidth:"280px", textAlign:"right", lineHeight:1.7 }}>Remote-first. Async-friendly. Nairobi → World.</div>
+              <div style={{ marginLeft:"auto", fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.1em", maxWidth:"280px", textAlign:"right", display:"var(--show-tagline, block)", lineHeight:1.7 }}>Remote-first. Async-friendly. Nairobi → World.</div>
             </div>
           </div>
           {SERVICES.map((s, i) => <ServiceBand key={s.id} s={s} idx={i} />)}
