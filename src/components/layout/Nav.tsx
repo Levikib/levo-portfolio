@@ -186,6 +186,8 @@ export default function Nav() {
         display: "flex", flexDirection: "column",
         padding: "0",
         transform: open ? "translateX(0)" : "translateX(100%)",
+        pointerEvents: open ? "auto" : "none",
+        visibility: open ? "visible" : "hidden",
         transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)",
         overflowY: "auto",
       }}>
