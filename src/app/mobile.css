@@ -592,3 +592,36 @@
     gap: 12px !important;
   }
 }
+
+/* ── TIMELINE — mobile single-column ── */
+@media (max-width: 640px) {
+  /* Collapse 3-col grid to spine + card */
+  [style*="grid-template-columns: 1fr 48px 1fr"] {
+    grid-template-columns: 32px 1fr !important;
+    gap: 0 !important;
+  }
+  /* Hide the empty left slot on mobile */
+  [style*="grid-template-columns: 1fr 48px 1fr"] > div:first-child:empty,
+  [style*="grid-template-columns: 32px 1fr"] > div:first-child {
+    display: none !important;
+  }
+  /* Cards take full width */
+  [style*="maxWidth: 360px"] {
+    max-width: 100% !important;
+  }
+}
+
+/* ── TERMINAL — mobile adjustments ── */
+@media (max-width: 640px) {
+  #terminal {
+    padding: 48px 16px !important;
+  }
+  #terminal [style*="minHeight: 280px"] {
+    min-height: 200px !important;
+    max-height: 340px !important;
+    font-size: 11px !important;
+  }
+  #terminal [style*="fontSize: 13px"] {
+    font-size: 11px !important;
+  }
+}

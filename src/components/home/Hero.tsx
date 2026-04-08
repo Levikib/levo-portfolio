@@ -167,19 +167,19 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* 170+ — top right */}
+          {/* 247+ tenants — top right */}
           <div ref={badge2Ref} style={{ position:"absolute", top:"24px", right:"4px", zIndex:5, willChange:"transform" }}>
             <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid var(--border)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s ease-in-out infinite", minWidth:"108px" }}>
-              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"24px", color:"var(--purple)", lineHeight:1 }}>170+</div>
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Units Managed</div>
+              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"24px", color:"var(--purple)", lineHeight:1 }}>247+</div>
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Tenants Managed</div>
             </div>
           </div>
 
-          {/* KSH 1.5M — bottom right */}
+          {/* GhostNet — bottom right */}
           <div ref={badge3Ref} style={{ position:"absolute", bottom:"24px", right:"4px", zIndex:5, willChange:"transform" }}>
-            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid var(--border)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s 1.2s ease-in-out infinite", minWidth:"108px" }}>
-              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"18px", color:"var(--earth)", lineHeight:1 }}>KSH 1.5M</div>
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Monthly Volume</div>
+            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid rgba(16,185,129,0.25)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s 1.2s ease-in-out infinite", minWidth:"108px" }}>
+              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"18px", color:"#059669", lineHeight:1 }}>GhostNet</div>
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Cybersec · Live</div>
             </div>
           </div>
 

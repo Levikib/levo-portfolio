@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { val:170, suffix:"+", label:"Residential Units Managed", sub:"Active on Makeja Homes", color:"#a855f7", ring:170/200 },
+  { val:247, suffix:"+", label:"Active Tenants Managed", sub:"Live on Makeja Homes", color:"#a855f7", ring:247/300 },
   { val:1.5, suffix:"M+", prefix:"KSH ", label:"Monthly Transaction Volume", sub:"Processed via Paystack", color:"#d97706", ring:0.75 },
+  { val:13, suffix:"", label:"GhostNet Cybersec Modules", sub:"243 lab steps · 9 live tools", color:"#10b981", ring:13/15 },
+  { val:5450, suffix:"", label:"GhostNet XP Economy", sub:"Gamified learning platform", color:"#10b981", ring:0.82 },
   { val:8, suffix:"+", label:"Years in Tech", sub:"From cert to SaaS founder", color:"#4ead6a", ring:8/10 },
-  { val:2, suffix:"", label:"Companies Founded", sub:"Makeja Homes · ShanTech", color:"#a855f7", ring:0.65 },
-  { val:30, suffix:"+", label:"TS Errors Fixed at 3am", sub:"Production debugging", color:"#e11d48", ring:30/50 },
-  { val:1, suffix:"", label:"Production SaaS Built Solo", sub:"Architecture to deployment", color:"#4ead6a", ring:1.0 },
+  { val:2, suffix:"", label:"Production SaaS Built Solo", sub:"Makeja Homes · GhostNet", color:"#a855f7", ring:1.0 },
 ];
 
 function CircleRing({ color, progress, size = 120 }: { color: string; progress: number; size?: number }) {

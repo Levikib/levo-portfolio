@@ -11,15 +11,32 @@ const PROJECTS = [
     year: "2024–Present", type: "SaaS Platform",
     accent: "#7c3aed", accentBorder: "rgba(124,58,237,0.2)",
     vizBg: "#0f0a1e",
-    desc: "Multi-tenant residential property management SaaS. Co-built from zero — every line of architecture, every payment flow, every automation. 170+ units. KSH 1.5M/month flowing through Paystack webhooks.",
+    desc: "Multi-tenant residential property management SaaS. Built from zero — every line of architecture, every payment flow, every automation. 247+ active tenants. KSH 1.5M/month flowing through Paystack webhooks.",
     challenge: "How do you build a system landlords trust with their entire rental income — from zero, in 6 months?",
     solution: "Database-driven architecture with monthly_bills as single source of truth. Automated lease expiry, recurring charges, tenant unit-switching, and full email receipt pipeline.",
     tags: ["TypeScript", "Next.js 14", "PostgreSQL", "Prisma ORM", "Paystack", "VPS/Nginx", "Resend"],
-    metrics: [{ val:"170+", label:"Active Units" },{ val:"KSH 1.5M", label:"Monthly Volume" },{ val:"2024", label:"Founded" },{ val:"100%", label:"Uptime" }],
+    metrics: [{ val:"247+", label:"Active Tenants" },{ val:"KSH 1.5M", label:"Monthly Volume" },{ val:"2024", label:"Founded" },{ val:"100%", label:"Uptime" }],
     github: "https://github.com/Levikib/makeja-homes",
   },
   {
-    num: "02", id: "nse",
+    num: "02", id: "ghostnet",
+    name: "GhostNet",
+    tagline: "Where cybersecurity meets cinematic experience.",
+    category: "Engineering",
+    status: "live", statusLabel: "Live in Production",
+    year: "2025–Present", type: "EdTech Platform",
+    accent: "#10b981", accentBorder: "rgba(16,185,129,0.2)",
+    vizBg: "#020f08",
+    desc: "Full-stack cybersecurity research & training platform. 13 learning modules, 243 guided lab steps, a 5450 XP gamification economy, 9 live hacking tools, a real-time leaderboard, and GHOST AI — a Groq llama-3.3-70b agent embedded inside the platform. Cinematic matrix-rain splash screen on first entry.",
+    challenge: "Cybersecurity education is either too academic or too shallow. How do you build something that feels like a game but trains you like a professional?",
+    solution: "Supabase realtime for XP updates and leaderboard. Groq llama-3.3-70b powering GHOST AI for contextual guidance. 9 browser-based live tools (port scanner, hash cracker, etc.). Cinematic GSAP/canvas matrix welcome sequence. Full gamification layer with badges and progress persistence.",
+    tags: ["Next.js 14", "TypeScript", "Supabase", "Groq llama-3.3-70b", "Realtime DB", "GSAP", "Canvas API"],
+    metrics: [{ val:"13", label:"Modules" },{ val:"243", label:"Lab Steps" },{ val:"5450", label:"XP Economy" },{ val:"9", label:"Live Tools" }],
+    github: null,
+    live: "https://ghostnet-pi.vercel.app",
+  },
+  {
+    num: "03", id: "nse",
     name: "NSE Research Agent",
     tagline: "AI that reads the market so you don't have to.",
     category: "AI & Data",
@@ -35,7 +52,7 @@ const PROJECTS = [
     github: null,
   },
   {
-    num: "03", id: "shantech",
+    num: "04", id: "shantech",
     name: "ShanTech Agency",
     tagline: "Kenyan SMEs. Measurable results. Technology.",
     category: "Agency",
@@ -51,7 +68,7 @@ const PROJECTS = [
     github: null,
   },
   {
-    num: "04", id: "chillminds",
+    num: "05", id: "chillminds",
     name: "Chill Minds Magazine",
     tagline: "72 pages. Two volumes. Built alone.",
     category: "Design",
@@ -183,7 +200,7 @@ function MakejaViz({ accent }: { accent: string }) {
       <div>
         <div style={{ display:"flex", justifyContent:"space-between", marginBottom:"6px" }}>
           <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"7px", color:"rgba(255,255,255,0.25)", textTransform:"uppercase", letterSpacing:"0.12em" }}>Unit Occupancy</div>
-          <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"7px", color:"#4ead6a" }}>170/182</div>
+          <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"7px", color:"#4ead6a" }}>247/260</div>
         </div>
         <div style={{ display:"flex", flexWrap:"wrap", gap:"2px" }}>
           {Array.from({length:36}).map((_,i) => (
@@ -334,8 +351,76 @@ function ChillMindsViz({ accent }: { accent: string }) {
   );
 }
 
+function GhostNetViz({ accent }: { accent: string }) {
+  const [tick, setTick] = useState(0);
+  const [xpFlash, setXpFlash] = useState(false);
+  useEffect(() => { const t = setInterval(() => { setTick(n => n + 1); if (Math.random() > 0.6) { setXpFlash(true); setTimeout(() => setXpFlash(false), 400); } }, 1400); return () => clearInterval(t); }, []);
+  const modules = [
+    { name:"Recon & OSINT", xp:450, done:true },
+    { name:"Network Scanning", xp:380, done:true },
+    { name:"Web App Attacks", xp:520, done:true },
+    { name:"Exploitation", xp:410, done:false },
+    { name:"Privilege Escalation", xp:390, done:false },
+  ];
+  const tools = ["Port Scanner","Hash Cracker","SQLi Tester","XSS Probe","Dir Buster","DNS Enum","Payload Gen","Log Analyser","GHOST AI"];
+  const leaderboard = [
+    { rank:1, name:"gh0st_r00t", xp:5450, badge:"🔴" },
+    { rank:2, name:"void_runner", xp:4820, badge:"🟠" },
+    { rank:3, name:"n3t_phr34k", xp:4210, badge:"🟡" },
+  ];
+  return (
+    <div style={{ padding:"24px", height:"100%", display:"flex", flexDirection:"column", gap:"14px", fontFamily:"var(--font-syne-mono)" }}>
+      {/* Header */}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+        <div>
+          <div style={{ fontSize:"8px", letterSpacing:"0.2em", color:`${accent}80`, textTransform:"uppercase" }}>GhostNet · Active</div>
+          <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"20px", color:"white", lineHeight:1, marginTop:"4px" }}>
+            GHOST<span style={{ color:accent }}>_AI</span>
+          </div>
+          <div style={{ fontSize:"8px", color:`${accent}cc`, marginTop:"3px", animation:xpFlash?"none":"none" }}>
+            <span style={{ color:xpFlash?accent:"rgba(255,255,255,0.4)", transition:"color 0.2s" }}>▲ {xpFlash ? "+50 XP" : "5450 XP total"}</span>
+          </div>
+        </div>
+        <div style={{ textAlign:"right" }}>
+          <div style={{ fontSize:"7px", color:"rgba(255,255,255,0.2)", marginBottom:"4px" }}>LIVE TOOLS</div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"3px", justifyContent:"flex-end", maxWidth:"120px" }}>
+            {tools.map((t,i) => (
+              <div key={i} style={{ width:"9px", height:"9px", borderRadius:"1px", background: i === (tick % tools.length) ? accent : `${accent}30`, transition:"background 0.3s", boxShadow: i === (tick % tools.length) ? `0 0 6px ${accent}` : "none" }} title={t} />
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* Modules */}
+      <div>
+        <div style={{ fontSize:"7px", color:"rgba(255,255,255,0.2)", textTransform:"uppercase", letterSpacing:"0.12em", marginBottom:"6px" }}>MODULES · 13 total</div>
+        {modules.map((m, i) => (
+          <div key={i} style={{ display:"flex", alignItems:"center", gap:"8px", padding:"5px 0", borderBottom:"1px solid rgba(255,255,255,0.04)" }}>
+            <div style={{ width:"14px", height:"14px", borderRadius:"2px", background:m.done?`${accent}30`:"rgba(255,255,255,0.04)", border:`1px solid ${m.done?accent:"rgba(255,255,255,0.1)"}`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+              {m.done && <span style={{ fontSize:"8px", color:accent }}>✓</span>}
+            </div>
+            <span style={{ fontSize:"9px", color:m.done?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.3)", flex:1, letterSpacing:"0.03em" }}>{m.name}</span>
+            <span style={{ fontSize:"8px", color:m.done?accent:"rgba(255,255,255,0.2)" }}>{m.xp} XP</span>
+          </div>
+        ))}
+        <div style={{ fontSize:"8px", color:"rgba(255,255,255,0.2)", marginTop:"5px", textAlign:"right" }}>+8 more modules...</div>
+      </div>
+      {/* Leaderboard */}
+      <div style={{ marginTop:"auto" }}>
+        <div style={{ fontSize:"7px", color:"rgba(255,255,255,0.2)", textTransform:"uppercase", letterSpacing:"0.12em", marginBottom:"6px" }}>LEADERBOARD</div>
+        {leaderboard.map(r => (
+          <div key={r.rank} style={{ display:"flex", alignItems:"center", gap:"8px", padding:"6px 8px", background: r.rank===1?`${accent}12`:"rgba(255,255,255,0.02)", borderRadius:"3px", marginBottom:"3px", border:`1px solid ${r.rank===1?accent+"25":"rgba(255,255,255,0.05)"}` }}>
+            <span style={{ fontSize:"9px", color:accent, width:"14px" }}>#{r.rank}</span>
+            <span style={{ fontSize:"9px", color:"rgba(255,255,255,0.6)", flex:1 }}>{r.name}</span>
+            <span style={{ fontSize:"9px", color:r.rank===1?accent:"rgba(255,255,255,0.35)" }}>{r.xp.toLocaleString()} XP</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const VIZMAP: Record<string, React.FC<{ accent: string }>> = {
-  makeja: MakejaViz, nse: NseViz, shantech: ShantechViz, chillminds: ChillMindsViz,
+  makeja: MakejaViz, ghostnet: GhostNetViz, nse: NseViz, shantech: ShantechViz, chillminds: ChillMindsViz,
 };
 
 function ProjectCard({ p, idx, expanded, onToggle }: {
@@ -383,6 +468,13 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color="var(--text)"; (e.currentTarget as HTMLElement).style.borderColor="var(--text)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color="var(--text-3)"; (e.currentTarget as HTMLElement).style.borderColor="var(--border)"; }}
             >GitHub ↗</a>
+          )}
+          {"live" in p && p.live && (
+            <a href={p.live as string} target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.1em", textTransform:"uppercase", color:p.accent, textDecoration:"none", padding:"9px 18px", border:`1px solid ${p.accent}50`, transition:"all 0.2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background=`${p.accent}15`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="transparent"; }}
+            >Live Demo ↗</a>
           )}
         </div>
       </div>
@@ -555,7 +647,7 @@ export default function Work() {
         <div style={{ display:"flex", alignItems:"center", gap:"24px", paddingBottom:"40px" }}>
           <div style={{ display:"inline-flex", background:"#0c0a07", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"5px", padding:"5px", gap:"4px" }}>
             {([
-              { id:"portfolio", label:"Portfolio", sub:"4 Projects",   accent:"#7c3aed", glow:"rgba(124,58,237,0.45)" },
+              { id:"portfolio", label:"Portfolio", sub:"5 Projects",   accent:"#7c3aed", glow:"rgba(124,58,237,0.45)" },
               { id:"services",  label:"Services",  sub:"36 Offerings", accent:"#d97706", glow:"rgba(217,119,6,0.45)" },
             ] as const).map(btn => {
               const on = tab === btn.id;

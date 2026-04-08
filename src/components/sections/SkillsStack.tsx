@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 
 const categories = [
-  { name: "Frontend",     color: "#a855f7", rgb:"168,85,247", level: 95, skills: ["TypeScript","Next.js 14","React","Tailwind CSS","Framer Motion","GSAP"] },
-  { name: "Backend",      color: "#4ead6a", rgb:"78,173,106",  level: 88, skills: ["Node.js","Prisma ORM","PostgreSQL","REST APIs","Webhooks","Cron Jobs"] },
-  { name: "Infra",        color: "#d97706", rgb:"217,119,6",   level: 78, skills: ["VPS/Linux","Nginx","SSL/TLS","Vercel","Neon DB","CI/CD"] },
-  { name: "Payments",     color: "#e11d48", rgb:"225,29,72",   level: 90, skills: ["Paystack API","Webhook Verification","Resend","Automated Billing"] },
-  { name: "Design",       color: "#a855f7", rgb:"168,85,247",  level: 85, skills: ["Graphic Design","Editorial Layout","Brand Identity","Typography"] },
-  { name: "Security",     color: "#4ead6a", rgb:"78,173,106",  level: 75, skills: ["Ethical Hacking","Oracle Cloud AI","Secure Architecture","OWASP"] },
+  { name: "Frontend",     color: "#a855f7", rgb:"168,85,247", level: 95, skills: ["TypeScript","Next.js 14","React","Tailwind CSS","GSAP","Canvas API"] },
+  { name: "Payments",     color: "#e11d48", rgb:"225,29,72",   level: 90, skills: ["Paystack API","Webhook Verification","Resend","Automated Billing","M-Pesa"] },
+  { name: "Backend",      color: "#4ead6a", rgb:"78,173,106",  level: 88, skills: ["Node.js","Prisma ORM","PostgreSQL","REST APIs","Supabase Realtime","Webhooks"] },
+  { name: "AI / LLM",     color: "#d97706", rgb:"217,119,6",   level: 82, skills: ["Groq llama-3.3-70b","Supabase AI","LLM Integration","Prompt Engineering","RAG"] },
+  { name: "Design",       color: "#a855f7", rgb:"168,85,247",  level: 85, skills: ["Graphic Design","Editorial Layout","Brand Identity","Typography","InDesign"] },
+  { name: "Security",     color: "#10b981", rgb:"16,185,129",  level: 80, skills: ["ISC2 CC","CEH","Pen Testing","OWASP","Secure Architecture","GhostNet Platform"] },
 ];
 
 function RadarChart({ size }: { size: number }) {
