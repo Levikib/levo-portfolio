@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import ParticleField from "@/components/ui/ParticleField";
 
 export default function Hero() {
@@ -144,8 +145,12 @@ export default function Hero() {
               borderRadius: BLOB,
               overflow:"hidden",
             }}>
-              <img
-                src="/levo.jpg" alt="Levis Kibirie"
+              <Image
+                src="/levo.jpg"
+                alt="Levis Kibirie — Fullstack Engineer & SaaS Founder from Nairobi, Kenya"
+                width={260}
+                height={320}
+                priority
                 style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 20%", filter:"saturate(1.1) contrast(1.03)", display:"block" }}
               />
               {/* Gradient overlay — INSIDE overflow:hidden so it clips perfectly */}
