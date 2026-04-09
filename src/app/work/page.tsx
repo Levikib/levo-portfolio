@@ -17,6 +17,7 @@ const PROJECTS = [
     tags: ["TypeScript", "Next.js 14", "PostgreSQL", "Prisma ORM", "Paystack", "VPS/Nginx", "Resend"],
     metrics: [{ val:"247+", label:"Active Tenants" },{ val:"KSH 1.5M", label:"Monthly Volume" },{ val:"2024", label:"Founded" },{ val:"100%", label:"Uptime" }],
     github: "https://github.com/Levikib/makeja-homes",
+    live: "https://makejahomes.co.ke",
   },
   {
     num: "02", id: "ghostnet",
