@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type Line = { type: "input" | "output" | "error" | "blank"; text: string; color?: string };
 
@@ -154,6 +155,9 @@ export default function Terminal() {
   const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
+  const monoSize = isMobile ? "11px" : "13px";
+  const prompt = isMobile ? "levis:~$" : PROMPT;
 
   // Boot sequence fires only when user scrolls to this section
   // rootMargin keeps it from triggering while the section is off-screen at load
@@ -281,25 +285,25 @@ export default function Terminal() {
           {/* Output area */}
           <div
             ref={outputRef}
-            style={{ padding:"20px 20px 8px", minHeight:"280px", maxHeight:"420px", overflowY:"auto", fontFamily:"'Courier New', monospace", fontSize:"13px", lineHeight:"1.75", cursor:"text" }}
+            style={{ padding:"16px 16px 8px", minHeight: isMobile ? "200px" : "280px", maxHeight: isMobile ? "320px" : "420px", overflowY:"auto", overflowX:"auto", fontFamily:"'Courier New', monospace", fontSize:monoSize, lineHeight:"1.7", cursor:"text" }}
           >
             {visible && lines.map((l, i) => {
               if (l.type === "blank") return <div key={i} style={{ height:"4px" }} />;
               if (l.type === "input") return (
                 <div key={i} style={{ display:"flex", gap:"8px", marginBottom:"2px" }}>
-                  <span style={{ color:"#10b981", flexShrink:0, userSelect:"none" }}>{PROMPT}</span>
+                  <span style={{ color:"#10b981", flexShrink:0, userSelect:"none" }}>{prompt}</span>
                   <span style={{ color:"white" }}>{l.text}</span>
                 </div>
               );
               return (
-                <div key={i} style={{ color: l.color ?? "rgba(255,255,255,0.65)", whiteSpace:"pre-wrap", fontFamily:"'Courier New', monospace" }}>{l.text}</div>
+                <div key={i} style={{ color: l.color ?? "rgba(255,255,255,0.65)", whiteSpace:"pre", fontFamily:"'Courier New', monospace", fontSize:monoSize }}>{l.text}</div>
               );
             })}
           </div>
 
           {/* Input row */}
-          <div style={{ borderTop:"1px solid rgba(255,255,255,0.05)", padding:"12px 20px 16px", display:"flex", alignItems:"center", gap:"10px", background:"rgba(0,0,0,0.2)" }}>
-            <span style={{ fontFamily:"'Courier New', monospace", fontSize:"13px", color:"#10b981", flexShrink:0, userSelect:"none" }}>{PROMPT}</span>
+          <div style={{ borderTop:"1px solid rgba(255,255,255,0.05)", padding:"10px 16px 14px", display:"flex", alignItems:"center", gap:"8px", background:"rgba(0,0,0,0.2)" }}>
+            <span style={{ fontFamily:"'Courier New', monospace", fontSize:monoSize, color:"#10b981", flexShrink:0, userSelect:"none" }}>{prompt}</span>
             <input
               ref={inputRef}
               value={input}
@@ -312,7 +316,7 @@ export default function Terminal() {
               spellCheck={false}
               style={{
                 flex:1, background:"transparent", border:"none", outline:"none",
-                fontFamily:"'Courier New', monospace", fontSize:"13px", color:"white",
+                fontFamily:"'Courier New', monospace", fontSize:monoSize, color:"white",
                 caretColor:"#10b981",
               }}
             />

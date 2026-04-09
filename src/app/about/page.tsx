@@ -553,9 +553,9 @@ export default function About() {
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <div style={{ position: "absolute", left: "96px", top: 0, bottom: 0, width: "1px", background: "var(--border)" }} />
+            <div style={{ position: "absolute", left: "clamp(64px,10vw,96px)", top: 0, bottom: 0, width: "1px", background: "var(--border)" }} />
             {filtered.map((item, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "80px 1fr", position: "relative" }}>
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "clamp(56px,10vw,80px) 1fr", position: "relative" }}>
                 <div style={{ paddingTop: "30px", paddingRight: "16px", textAlign: "right" }}>
                   <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: item.accent, letterSpacing: "0.06em", lineHeight: 1.4 }}>{item.year}</div>
                 </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const events = [
   {
@@ -82,6 +83,7 @@ const events = [
 function TimelineCard({ ev, index }: { ev: typeof events[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
@@ -92,6 +94,44 @@ function TimelineCard({ ev, index }: { ev: typeof events[0]; index: number }) {
   }, []);
 
   const isLeft = ev.side === "left";
+
+  if (isMobile) {
+    return (
+      <div
+        ref={ref}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "32px 1fr",
+          gap: "0",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(24px)",
+          transition: `opacity 0.6s ${index * 0.06}s cubic-bezier(0.16,1,0.3,1), transform 0.6s ${index * 0.06}s cubic-bezier(0.16,1,0.3,1)`,
+        }}
+      >
+        {/* Spine */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{
+            width: "28px", height: "28px", borderRadius: "50%",
+            background: ev.now ? `linear-gradient(135deg, ${ev.color}, ${ev.color}88)` : "var(--bg-2)",
+            border: `2px solid ${ev.color}`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "13px", flexShrink: 0, zIndex: 2, position: "relative",
+            boxShadow: ev.highlight || ev.now ? `0 0 14px ${ev.color}50` : "none",
+            animation: ev.now ? "blink 2.5s ease-in-out infinite" : "none",
+          }}>
+            {ev.icon}
+          </div>
+          {index < events.length - 1 && (
+            <div style={{ flex: 1, width: "1px", background: `linear-gradient(to bottom, ${ev.color}60, ${events[index + 1].color}30)`, minHeight: "32px" }} />
+          )}
+        </div>
+        {/* Card */}
+        <div style={{ paddingLeft: "16px", paddingBottom: "32px" }}>
+          <CardContent ev={ev} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -112,7 +152,6 @@ function TimelineCard({ ev, index }: { ev: typeof events[0]; index: number }) {
 
       {/* Center spine */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {/* Node */}
         <div style={{
           width: "36px", height: "36px", borderRadius: "50%",
           background: ev.now ? `linear-gradient(135deg, ${ev.color}, ${ev.color}88)` : "var(--bg)",
@@ -124,7 +163,6 @@ function TimelineCard({ ev, index }: { ev: typeof events[0]; index: number }) {
         }}>
           {ev.icon}
         </div>
-        {/* Line below */}
         {index < events.length - 1 && (
           <div style={{ flex: 1, width: "1px", background: `linear-gradient(to bottom, ${ev.color}60, ${events[index + 1].color}30)`, minHeight: "40px" }} />
         )}
