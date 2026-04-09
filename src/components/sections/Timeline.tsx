@@ -14,8 +14,8 @@ const events = [
   {
     year: "2018",
     title: "Deep Dive into Cybersecurity",
-    sub: "CEH · Ethical Hacking · Security Tools",
-    desc: "Earned Certified Ethical Hacker (CEH) certification. Built first security tools and penetration testing scripts. Discovered the intersection of systems thinking and attack surface design.",
+    sub: "Ethical Hacking · Security Tools · Pen Testing",
+    desc: "Studied ethical hacking and penetration testing. Built first security tools and scripts. Discovered the intersection of systems thinking and attack surface design.",
     color: "#10b981",
     icon: "🔐",
     side: "right",

@@ -92,11 +92,12 @@ export default function Store() {
                       <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:isDark?"rgba(255,255,255,0.25)":"var(--text-4)", marginTop:"2px" }}>{product.usd} USD</div>
                     </div>
                     <div style={{ display:"flex", gap:"8px", flexDirection: isMobile ? "row" : "column", flex: isMobile ? "none" : "none", minWidth: isMobile ? "auto" : "140px" }}>
-                      <button style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.1em", textTransform:"uppercase", background:product.accent, color:"white", border:"none", padding:"11px 20px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap", boxShadow:`0 0 20px ${product.accent}30` }}
+                      <a href="/#contact"
+                        style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.1em", textTransform:"uppercase", background:product.accent, color:"white", border:"none", padding:"11px 20px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap", boxShadow:`0 0 20px ${product.accent}30`, textDecoration:"none", display:"inline-block", textAlign:"center" }}
                         onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.opacity="0.85";}}
                         onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.opacity="1";}}>
-                        Get It →
-                      </button>
+                        Enquire →
+                      </a>
                       <button onClick={() => setExpanded(isExpanded ? null : product.id)}
                         style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.1em", textTransform:"uppercase", background:"transparent", border:`1px solid ${isDark?"rgba(255,255,255,0.1)":"var(--border)"}`, color:isDark?"rgba(255,255,255,0.35)":"var(--text-3)", padding:"11px 16px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
                         onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.borderColor=product.accent;(e.currentTarget as HTMLElement).style.color=product.accent;}}

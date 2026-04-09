@@ -32,6 +32,14 @@ const dmSans = DM_Sans({
 
 const BASE_URL = "https://levikibirie.dev";
 
+export const icons = {
+  icon: [
+    { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+    { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+  ],
+  apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -70,9 +78,6 @@ export const metadata: Metadata = {
     description: "Engineer who builds systems that move real money. 8+ years. Nairobi → World.",
     images: ["/og-image.png"],
     creator: "@levikibirie",
-  },
-  verification: {
-    google: "verify-later",
   },
 };
 

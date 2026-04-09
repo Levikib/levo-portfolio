@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About Levis Kibirie — Fullstack Engineer, SaaS Founder, and Graphic Designer from Nairobi, Kenya. 8+ years building production systems. CEH certified, builder of Makeja Homes and GhostNet.",
+    "About Levis Kibirie — Fullstack Engineer, SaaS Founder, and Graphic Designer from Nairobi, Kenya. 8+ years building production systems. Builder of Makeja Homes and GhostNet.",
   keywords: [
     "Levis Kibirie About", "Nairobi Engineer", "Fullstack Developer Kenya",
-    "CEH Certified", "SaaS Founder Kenya", "Remote Engineer Africa",
+    "SaaS Founder Kenya", "Remote Engineer Africa", "Cybersecurity Engineer Kenya",
   ],
   alternates: { canonical: "https://levikibirie.dev/about" },
   openGraph: {

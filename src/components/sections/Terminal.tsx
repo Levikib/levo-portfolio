@@ -53,7 +53,7 @@ const STACK_LINES = [
   "  Realtime    Supabase Realtime · WebSockets",
   "  Payments    Paystack · Webhooks · Resend",
   "  Infra       VPS · Nginx · Vercel · Docker · CI/CD",
-  "  Security    CEH · OWASP · Pen Testing · Secure Architecture",
+  "  Security    OWASP · Pen Testing · Secure Architecture · Auth",
   "  Design      Figma · InDesign · Typography Systems",
 ];
 
@@ -63,7 +63,7 @@ const WHOAMI_LINES = [
   "",
   "  Built Makeja Homes from scratch: 247+ tenants, KSH 1.5M/mo.",
   "  Built GhostNet: cybersec platform with AI, 13 modules, 9 tools.",
-  "  Certified Ethical Hacker · Forbes Africa ready.",
+  "  GhostNet builder · Pen tester · Forbes Africa ready.",
   "",
   "  Open to: senior remote engineering, SaaS collabs, interesting problems.",
 ];

@@ -115,21 +115,25 @@ export default function Blog() {
             Engineering deep dives, Kenya tech scene takes, and lessons learned shipping real products. No filler.
           </p>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.15em", color:"rgba(255,255,255,0.3)", textTransform:"uppercase" }}>Get notified</div>
-          <div style={{ display:"flex" }}>
-            <input type="email" placeholder="your@email.com"
-              style={{ flex:1, background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRight:"none", color:"white", fontFamily:"var(--font-body)", fontSize:"13px", padding:"13px 16px", outline:"none", minWidth:0 }}
-              onFocus={e=>{e.target.style.borderColor="rgba(168,85,247,0.5)";}}
-              onBlur={e=>{e.target.style.borderColor="rgba(255,255,255,0.1)";}}
-            />
-            <button style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", border:"none", padding:"13px 18px", cursor:"pointer", whiteSpace:"nowrap", flexShrink:0 }}
+        <div style={{ display:"flex", flexDirection:"column", gap:"16px" }}>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.15em", color:"rgba(255,255,255,0.3)", textTransform:"uppercase" }}>Stay connected</div>
+          <p style={{ fontFamily:"var(--font-body)", fontSize:"13px", color:"rgba(255,255,255,0.4)", lineHeight:1.8 }}>
+            New articles land when there&apos;s something real to say. Follow on LinkedIn or reach out directly.
+          </p>
+          <div style={{ display:"flex", gap:"10px", flexWrap:"wrap" }}>
+            <a href="https://linkedin.com/in/levis-kibirie-6bba13344" target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"12px 24px", textDecoration:"none", transition:"all 0.2s" }}
               onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="#6d28d9";}}
               onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="#7c3aed";}}>
-              Notify Me
-            </button>
+              Follow on LinkedIn →
+            </a>
+            <a href="/#contact"
+              style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", background:"transparent", color:"rgba(255,255,255,0.4)", padding:"12px 24px", textDecoration:"none", border:"1px solid rgba(255,255,255,0.12)", transition:"all 0.2s" }}
+              onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.color="white";(e.currentTarget as HTMLElement).style.borderColor="rgba(255,255,255,0.4)";}}
+              onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.color="rgba(255,255,255,0.4)";(e.currentTarget as HTMLElement).style.borderColor="rgba(255,255,255,0.12)";}}>
+              Say Hi
+            </a>
           </div>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:"8px", color:"rgba(255,255,255,0.18)" }}>No spam. Unsubscribe anytime.</div>
         </div>
       </div>
     </div>
