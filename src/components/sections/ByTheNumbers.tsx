@@ -7,7 +7,7 @@ const stats = [
   { val:13, suffix:"", label:"GhostNet Cybersec Modules", sub:"243 lab steps · 9 live tools", color:"#10b981", ring:13/15 },
   { val:5450, suffix:"", label:"GhostNet XP Economy", sub:"Gamified learning platform", color:"#10b981", ring:0.82 },
   { val:8, suffix:"+", label:"Years in Tech", sub:"From cert to SaaS founder", color:"#4ead6a", ring:8/10 },
-  { val:2, suffix:"", label:"Production SaaS Built Solo", sub:"Makeja Homes · GhostNet", color:"#a855f7", ring:1.0 },
+  { val:2, suffix:"", label:"Production SaaS Live", sub:"Makeja Homes · GhostNet", color:"#a855f7", ring:1.0 },
 ];
 
 function CircleRing({ color, progress, size = 120 }: { color: string; progress: number; size?: number }) {

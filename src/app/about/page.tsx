@@ -65,7 +65,7 @@ const SCRIPT: LineDef[] = [
   ], pauseAfter: 560 },
   { words: [
     { text: "Both live.", size: "md", color: "rgba(255,255,255,0.55)" },
-    { text: "Both solo.", size: "md", color: "#4ead6a", glow: true },
+    { text: "Both live.", size: "md", color: "#4ead6a", glow: true },
   ], pauseAfter: 520 },
   { words: [
     { text: "From Nairobi, Kenya.", size: "sm",  color: "rgba(255,255,255,0.42)" },
@@ -442,7 +442,7 @@ const JOURNEY = [
   { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder — ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
   { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder — Makeja Homes",           org: "Production SaaS",                       desc: "Built a full multi-tenant property management SaaS. 247+ tenants, KSH 1.5M/month." },
   { year: "2025",      label: "Cert",      accent: "#d97706", title: "Oracle Cloud AI Foundations",      org: "Oracle",                                desc: "Validated cloud and AI fundamentals with an internationally recognised Oracle certification." },
-  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 live tools, GHOST AI. Built solo from scratch." },
+  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 live tools, GHOST AI. Built from scratch." },
   { year: "2026",      label: "Building",  accent: "#a855f7", title: "NSE Research Agent",               org: "In Development",                        desc: "AI-powered market intelligence for the Nairobi Securities Exchange." },
 ];
 
@@ -459,7 +459,7 @@ const STACK = [
 const BEYOND = [
   { icon: "🎌", title: "Anime",           body: "FMA, Attack on Titan, Vinland Saga. The philosophy in these is real — don't argue." },
   { icon: "📈", title: "Markets",         body: "NSE investor building the tool I always wished existed." },
-  { icon: "📖", title: "Editorial",       body: "Designed Chill Minds Magazine — 72 pages, solo. Printed, distributed, real." },
+  { icon: "📖", title: "Editorial",       body: "Designed Chill Minds Magazine — 72 pages. Printed, distributed, real." },
   { icon: "🌍", title: "Nairobi → World", body: "Proving that world-class products ship from anywhere." },
 ];
 
@@ -468,7 +468,7 @@ const STATS = [
   { val: "KSH 1.5M", label: "Monthly Volume", accent: "#4ead6a" },
   { val: "13",      label: "GhostNet Modules", accent: "#10b981" },
   { val: "8+",      label: "Years in Tech",    accent: "#d97706" },
-  { val: "2",       label: "SaaS Built Solo",  accent: "#a855f7" },
+  { val: "2",       label: "Production SaaS",  accent: "#a855f7" },
 ];
 
 const LABEL_COLORS: Record<string, string> = {
@@ -499,7 +499,7 @@ export default function About() {
                 Founding Fullstack Engineer from Nairobi, Kenya. I build production systems that handle real money and real users — then I make them look good.
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "36px" }}>
-                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI) — both live, both solo.
+                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI) — both live and in production.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href="/work" className="btn-primary">See My Work →</a>

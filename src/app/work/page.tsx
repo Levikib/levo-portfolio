@@ -327,7 +327,7 @@ function ChillMindsViz({ accent }: { accent: string }) {
     <div style={{ padding:"clamp(16px,3vw,28px)", height:"100%", display:"flex", flexDirection:"column", gap:"16px" }}>
       <div>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", letterSpacing:"0.15em", color:`${accent}80`, textTransform:"uppercase" }}>Editorial System</div>
-        <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"22px", color:"white", marginTop:"4px" }}>72 Pages Solo</div>
+        <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"22px", color:"white", marginTop:"4px" }}>72 Pages. Two Volumes.</div>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"7px" }}>
         {spreads.map(s => (

@@ -11,7 +11,7 @@ const principles = [
       "Production-first thinking from day one",
       "Every feature designed for real users",
       "Scalable architecture, not clever hacks",
-      "Solo or team — same standard applies",
+      "Any context — same standard applies",
     ],
   },
   {
@@ -46,7 +46,7 @@ const principles = [
     points: [
       "Engineer who actually cares about UI",
       "Typography, spacing, visual hierarchy",
-      "Designed 72-page magazines solo",
+      "Designed 72-page magazines end-to-end",
       "Products that feel as good as they work",
     ],
   },

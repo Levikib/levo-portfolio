@@ -43,7 +43,7 @@ const events = [
     year: "2023",
     title: "Chill Minds Magazine",
     sub: "72 Pages · Print · 2 Volumes",
-    desc: "Designed 72-page children's mental wellness magazine. Solo. Every page, every colour system, every typography decision. Proof that engineering precision applies to design too.",
+    desc: "Designed 72-page children's mental wellness magazine. Every page, every colour system, every typography decision. Proof that engineering precision applies to design too.",
     color: "#d97706",
     icon: "📖",
     side: "left",
