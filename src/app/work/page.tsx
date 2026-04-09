@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const PROJECTS = [
   {
@@ -174,7 +175,7 @@ function MakejaViz({ accent }: { accent: string }) {
   const payments = [340,480,520,390,610,580,720,650,810,760,920,1050];
   const maxP = Math.max(...payments);
   return (
-    <div style={{ padding:"28px", height:"100%", display:"flex", flexDirection:"column", gap:"18px" }}>
+    <div style={{ padding:"clamp(16px,3vw,28px)", height:"100%", display:"flex", flexDirection:"column", gap:"18px" }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
         <div>
           <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", letterSpacing:"0.2em", color:`${accent}80`, textTransform:"uppercase" }}>Dashboard · Live</div>
@@ -224,12 +225,15 @@ function MakejaViz({ accent }: { accent: string }) {
 
 function NseViz({ accent }: { accent: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const [price, setPrice] = useState(142.5);
   useEffect(() => { const t = setInterval(() => setPrice(p => parseFloat((p+(Math.random()-0.48)*2).toFixed(2))), 1200); return () => clearInterval(t); }, []);
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return;
     const ctx = canvas.getContext("2d"); if (!ctx) return;
-    const W = canvas.width, H = canvas.height;
+    const W = wrapRef.current ? wrapRef.current.offsetWidth : canvas.offsetWidth;
+    const H = 130;
+    canvas.width = W; canvas.height = H;
     ctx.clearRect(0,0,W,H);
     for (let i=0;i<5;i++) { ctx.beginPath();ctx.moveTo(0,(H/5)*i+H/10);ctx.lineTo(W,(H/5)*i+H/10);ctx.strokeStyle="rgba(255,255,255,0.04)";ctx.lineWidth=1;ctx.stroke(); }
     const candles = Array.from({length:18},(_,i) => { const o=130+Math.sin(i*0.7)*15+Math.random()*8; const c=o+(Math.random()-0.45)*12; return{o,c,h:Math.max(o,c)+Math.random()*5,l:Math.min(o,c)-Math.random()*5}; });
@@ -242,7 +246,7 @@ function NseViz({ accent }: { accent: string }) {
     ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.shadowColor=accent;ctx.shadowBlur=6;ctx.stroke();ctx.shadowBlur=0;
   }, [price, accent]);
   return (
-    <div style={{ padding:"28px", height:"100%", display:"flex", flexDirection:"column", gap:"14px" }}>
+    <div style={{ padding:"clamp(16px,3vw,28px)", height:"100%", display:"flex", flexDirection:"column", gap:"14px" }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
         <div>
           <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", letterSpacing:"0.15em", color:`${accent}80`, textTransform:"uppercase" }}>NSE:SCOM · Live</div>
@@ -257,7 +261,9 @@ function NseViz({ accent }: { accent: string }) {
           ))}
         </div>
       </div>
-      <canvas ref={canvasRef} width={420} height={130} style={{ width:"100%", height:"130px" }} />
+      <div ref={wrapRef} style={{ width:"100%" }}>
+        <canvas ref={canvasRef} style={{ width:"100%", height:"130px", display:"block" }} />
+      </div>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"6px" }}>
         {[{n:"RSI",v:"58.4",s:"Neutral",c:accent},{n:"MACD",v:"+1.23",s:"Bullish",c:"#4ead6a"},{n:"Vol",v:"2.4M",s:"Above avg",c:"#a855f7"}].map(ind => (
           <div key={ind.n} style={{ background:"rgba(255,255,255,0.04)", borderRadius:"4px", padding:"9px", border:`1px solid ${ind.c}20` }}>
@@ -285,7 +291,7 @@ function ShantechViz({ accent }: { accent: string }) {
   }, []);
   const funnel = [{l:"Impressions",v:"250,000",pct:100,c:accent},{l:"Clicks",v:"18,500",pct:42,c:"#a855f7"},{l:"Leads",v:"2,200",pct:22,c:"#d97706"},{l:"Clients",v:"148",pct:8,c:"#4ead6a"}];
   return (
-    <div ref={ref} style={{ padding:"28px", height:"100%", display:"flex", flexDirection:"column", gap:"16px" }}>
+    <div ref={ref} style={{ padding:"clamp(16px,3vw,28px)", height:"100%", display:"flex", flexDirection:"column", gap:"16px" }}>
       <div>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", letterSpacing:"0.15em", color:`${accent}80`, textTransform:"uppercase" }}>Engagement Funnel</div>
         <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"22px", color:"white", marginTop:"4px" }}>250K+ Engagements</div>
@@ -318,7 +324,7 @@ function ChillMindsViz({ accent }: { accent: string }) {
   const p1 = ["#f472b6","#60a5fa","#34d399","#fbbf24","#a78bfa","#f87171"];
   const p2 = ["#6ee7b7","#93c5fd","#fca5a5","#fde68a","#c4b5fd","#86efac"];
   return (
-    <div style={{ padding:"28px", height:"100%", display:"flex", flexDirection:"column", gap:"16px" }}>
+    <div style={{ padding:"clamp(16px,3vw,28px)", height:"100%", display:"flex", flexDirection:"column", gap:"16px" }}>
       <div>
         <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"8px", letterSpacing:"0.15em", color:`${accent}80`, textTransform:"uppercase" }}>Editorial System</div>
         <div style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"22px", color:"white", marginTop:"4px" }}>72 Pages Solo</div>
@@ -370,7 +376,7 @@ function GhostNetViz({ accent }: { accent: string }) {
     { rank:3, name:"n3t_phr34k", xp:4210, badge:"🟡" },
   ];
   return (
-    <div style={{ padding:"24px", height:"100%", display:"flex", flexDirection:"column", gap:"14px", fontFamily:"var(--font-syne-mono)" }}>
+    <div style={{ padding:"clamp(16px,3vw,24px)", height:"100%", display:"flex", flexDirection:"column", gap:"14px", fontFamily:"var(--font-syne-mono)" }}>
       {/* Header */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
         <div>
@@ -615,6 +621,7 @@ export default function Work() {
   const [tab, setTab] = useState<"portfolio"|"services">("portfolio");
   const [active, setActive] = useState("All");
   const [expanded, setExpanded] = useState<string | null>(null);
+  const isMobile = useIsMobile();
   const filtered = active === "All" ? PROJECTS : PROJECTS.filter(p => p.category === active);
 
   return (
@@ -645,7 +652,7 @@ export default function Work() {
           Production systems, AI tools, digital agencies, editorial design. Every project is real. Every metric is earned.
         </p>
         {/* ── TOGGLE ── */}
-        <div style={{ display:"flex", alignItems:"center", gap:"24px", paddingBottom:"40px" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"16px", paddingBottom:"40px", flexWrap:"wrap" }}>
           <div style={{ display:"inline-flex", background:"#0c0a07", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"5px", padding:"5px", gap:"4px" }}>
             {([
               { id:"portfolio", label:"Portfolio", sub:"5 Projects",   accent:"#7c3aed", glow:"rgba(124,58,237,0.45)" },
@@ -684,21 +691,21 @@ export default function Work() {
 
       {tab === "portfolio" && (
         <>
-          <div style={{ background:"var(--bg)", padding:"28px 48px 32px", borderBottom:"1px solid var(--border)" }}>
+          <div style={{ background:"var(--bg)", padding:`20px clamp(16px,4vw,48px) 24px`, borderBottom:"1px solid var(--border)" }}>
             <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
               {CATS.map(c => (
                 <button key={c} onClick={() => setActive(c)}
-                  style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"8px 18px", background:active===c?"var(--purple)":"transparent", border:`1px solid ${active===c?"var(--purple)":"var(--border)"}`, color:active===c?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}
+                  style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", padding:"8px 14px", background:active===c?"var(--purple)":"transparent", border:`1px solid ${active===c?"var(--purple)":"var(--border)"}`, color:active===c?"white":"var(--text-3)", cursor:"pointer", transition:"all 0.2s", borderRadius:"2px" }}
                 >{c}</button>
               ))}
             </div>
           </div>
-          <div style={{ background:"var(--bg)", padding:"56px 48px 80px", display:"flex", flexDirection:"column", gap:"56px" }}>
+          <div style={{ background:"var(--bg)", padding:`clamp(28px,5vw,56px) clamp(16px,4vw,48px) 80px`, display:"flex", flexDirection:"column", gap:"clamp(32px,5vw,56px)" }}>
             {filtered.map((p, idx) => (
               <ProjectCard key={p.id} p={p} idx={idx} expanded={expanded===p.id} onToggle={() => setExpanded(expanded===p.id?null:p.id)} />
             ))}
           </div>
-          <div style={{ background:"#0a0805", textAlign:"center", padding:"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+          <div style={{ background:"#0a0805", textAlign:"center", padding:`clamp(48px,8vw,80px) clamp(16px,4vw,48px)`, borderTop:"1px solid rgba(255,255,255,0.06)" }}>
             <div style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Next Mission</div>
             <h2 style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(32px,5vw,60px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"32px" }}>
               Want to be<br /><span style={{ color:"#a855f7" }}>the next project?</span>
@@ -715,14 +722,14 @@ export default function Work() {
       {tab === "services" && (
         <>
           <div style={{ background:"var(--bg)", padding:"clamp(16px,3vw,32px) clamp(16px,4vw,48px)", borderBottom:"1px solid var(--border)" }}>
-            <div style={{ display:"flex", gap:"16px", alignItems:"center", flexWrap:"wrap" }}>
+            <div style={{ display:"flex", gap:"clamp(12px,3vw,24px)", alignItems:"center", flexWrap:"wrap" }}>
               {[{v:"7",l:"Service areas"},{v:"36",l:"Specific services"},{v:"4+",l:"Years shipping"}].map(s => (
-                <div key={s.l} style={{ display:"flex", gap:"10px", alignItems:"baseline" }}>
-                  <span style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"28px", color:"var(--purple)", lineHeight:1 }}>{s.v}</span>
+                <div key={s.l} style={{ display:"flex", gap:"8px", alignItems:"baseline" }}>
+                  <span style={{ fontFamily:"var(--font-syne)", fontWeight:800, fontSize:"clamp(20px,4vw,28px)", color:"var(--purple)", lineHeight:1 }}>{s.v}</span>
                   <span style={{ fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.12em", textTransform:"uppercase", whiteSpace:"nowrap" }}>{s.l}</span>
                 </div>
               ))}
-              <div style={{ marginLeft:"auto", fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.1em", maxWidth:"280px", textAlign:"right", display:"var(--show-tagline, block)", lineHeight:1.7 }}>Remote-first. Async-friendly. Nairobi → World.</div>
+              {!isMobile && <div style={{ marginLeft:"auto", fontFamily:"var(--font-syne-mono)", fontSize:"9px", color:"var(--text-4)", letterSpacing:"0.1em", maxWidth:"280px", textAlign:"right", lineHeight:1.7 }}>Remote-first. Async-friendly. Nairobi → World.</div>}
             </div>
           </div>
           {SERVICES.map((s, i) => <ServiceBand key={s.id} s={s} idx={i} />)}
