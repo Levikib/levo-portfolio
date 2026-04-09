@@ -1,17 +1,17 @@
 <div align="center">
 
 ```
-██╗     ███████╗██╗   ██╗██╗███████╗    ██╗  ██╗██╗██████╗ ██╗███████╗██████╗ ██╗███████╗
-██║     ██╔════╝██║   ██║██║██╔════╝    ██║ ██╔╝██║██╔══██╗██║██╔════╝██╔══██╗██║██╔════╝
-██║     █████╗  ██║   ██║██║███████╗    █████╔╝ ██║██████╔╝██║█████╗  ██████╔╝██║█████╗  
-██║     ██╔══╝  ╚██╗ ██╔╝██║╚════██║    ██╔═██╗ ██║██╔══██╗██║██╔══╝  ██╔══██╗██║██╔══╝  
-███████╗███████╗ ╚████╔╝ ██║███████║    ██║  ██╗██║██████╔╝██║███████╗██║  ██║██║███████╗
-╚══════╝╚══════╝  ╚═══╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝
+██╗     ███████╗██╗   ██╗██╗███████╗    ██╗  ██╗██╗██████╗ ██╗██████╗ ██╗███████╗
+██║     ██╔════╝██║   ██║██║██╔════╝    ██║ ██╔╝██║██╔══██╗██║██╔══██╗██║██╔════╝
+██║     █████╗  ██║   ██║██║███████╗    █████╔╝ ██║██████╔╝██║██████╔╝██║█████╗  
+██║     ██╔══╝  ╚██╗ ██╔╝██║╚════██║    ██╔═██╗ ██║██╔══██╗██║██╔══██╗██║██╔══╝  
+███████╗███████╗ ╚████╔╝ ██║███████║    ██║  ██╗██║██████╔╝██║██║  ██║██║███████╗
+╚══════╝╚══════╝  ╚═══╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝╚══════╝
 ```
 
-**Personal portfolio · levis.makejahomes.co.ke · Built with Next.js 14 · Nairobi, Kenya**
+**Personal portfolio · levikibirie.dev · Built with Next.js 14 · Nairobi, Kenya**
 
-[![Live](https://img.shields.io/badge/live-levis.makejahomes.co.ke-7c3aed?style=flat-square)](https://levis.makejahomes.co.ke)
+[![Live](https://img.shields.io/badge/live-levikibirie.dev-7c3aed?style=flat-square)](https://levikibirie.dev)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![Deployed on Vercel](https://img.shields.io/badge/deployed-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
@@ -23,60 +23,60 @@
 
 ## Overview
 
-This is the source code for my personal portfolio — a production-grade, animated, multi-page site built entirely from scratch in Next.js 14 with TypeScript. No UI kits. No templates. Every component, animation, and interaction is custom.
+This is the source for my personal engineering portfolio. Not a template, not a Webflow export — a fully custom Next.js 14 site built to the same standard I apply to production SaaS products. Every component, animation, and interaction written from scratch.
 
-**Live:** [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke)
+**Live:** [levikibirie.dev](https://levikibirie.dev)
 
 ---
 
 ## What Makes This Different
 
-Most developer portfolios are Bootstrap clones or Webflow exports. This one is a **fully engineered product** — same standard I apply to Makeja Homes.
-
 | Feature | Implementation |
 |---------|----------------|
-| Motion graphic intro | RAF loop, per-character scramble decode, canvas constellation |
-| Galaxy background | 6 drifting nebula clouds + 180 twinkling stars, all canvas-drawn |
-| Chromatic aberration | CSS `text-shadow` animation with async red/cyan offset |
-| 3D mouse tilt | `perspective()` + lerped `rotateX/rotateY` directly on DOM |
-| Smooth scroll | Lenis scroll engine with custom easing |
+| Scramble / glitch motion graphic | RAF loop, per-character decode, multi-color streams, hexPulse particle breathing, chromatic aberration, shimmer sweep |
+| 3D mouse tilt | CSS `perspective()` + lerped `rotateX/rotateY` applied directly to DOM |
+| Interactive terminal | Full browser terminal with 15+ commands, history navigation, tab autocomplete |
+| Career timeline | Alternating 3-column grid layout, staggered IntersectionObserver reveals |
+| Canvas data visualisations | Live charts per project: bar graphs, candlestick charts, funnel animations, GhostNet module tracker |
 | Custom cursor | White dot + purple ring with `mix-blend-mode: difference` |
-| Particle field | 70-particle system with inter-particle connection lines |
-| Design system | Full CSS variable system, cream/dark alternating sections |
-| Contact form | Resend API integration with server-side route handler |
-| Zero JS frameworks for animation | Pure RAF + canvas, no Three.js, no GSAP dependency |
+| Design system | Full CSS variable system, warm cream / near-black alternating sections |
+| Security headers | `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` |
+| Contact form | Resend API with server-side route handler |
+| SEO | Per-page `metadata`, JSON-LD Person schema, auto-generated `sitemap.xml` + `robots.txt` |
+| Performance | AVIF/WebP images, 1-year cache TTL, `compress: true`, hero image compressed 308KB → 65KB |
 
 ---
 
 ## Pages
 
 ### `/` — Home
-Full landing page with animated hero, role tag cycling, parallax photo, marquee ticker, 4-project featured work grid, skills radar chart, animated stat counters, how-I-work principles, design work showcase, blog preview cards, and full contact form.
+Hero with scramble name reveal → marquee ticker → 5-project featured work grid → skills radar + bars → animated stat counters → career timeline → interactive terminal → design showcase → blog preview → contact form.
 
-### `/work` — Work Portfolio + Services
+### `/work` — Work & Services
 Toggle between two views:
 
-**Work Portfolio view** — 4 projects with alternating left/right layout, live SVG data visualizations, category filter (All / Engineering / AI & Data / Agency / Design), status badges, and expandable Deep Dive panels.
+**Projects view** — 5 projects (Makeja Homes, GhostNet, NSE Agent, ShanTech, Chill Minds) with alternating left/right layout, live canvas data visualisations, status badges, expandable Deep Dive panels, live site + GitHub links where available.
 
-**Services view** — 7 service categories, 36 individual services. Alternating full-width light/dark section bands. Checkable service cards for enquiry building. Lead generation form at the bottom that submits to the contact API.
+**Services view** — 7 service categories, 35+ individual services. Full-width alternating light/dark bands. Lead generation form at the bottom.
 
 ### `/about` — About
-Split hero (bio copy left, galaxy motion graphic right). The right panel features:
-- Canvas-rendered galaxy: 6 nebula clouds with drift + pulse, 180 twinkling stars with glow halos
-- Per-character scramble decode with Greek/Japanese/Latin glyph cycling
-- Chromatic aberration on key words after resolve
-- Shimmer light sweep on resolved words
-- 3D mouse-tracked tilt on entire text container
-- Resolve flash (`brightness(3.2)` spike) on word completion
-- Auto-looping script with configurable timing
+The key feature is the **MotionGraphic** — a canvas + DOM animation panel on the right side featuring:
+- 35 particle system with size-breathing (hexPulse)
+- 7 data streams cycling through purple + emerald colours
+- Per-character scramble decode with Greek, Japanese, Latin, and Unicode block glyphs
+- Chromatic aberration on key resolved words
+- Shimmer sweep overlay (250% gradient)
+- `brightness(3)` resolve flash on word completion
+- 3D mouse-tracked tilt (±7 degrees)
+- Auto-looping SCRIPT with custom timing per word group
 
-Below the hero: animated stat counters, filterable career timeline, 8-category stack grid, "Beyond the Code" interest cards, CTA.
+Below: animated stat counters, career timeline, full tech stack grid, beyond-the-code section.
 
 ### `/blog` — Thoughts
-Featured 2-post dark/light split layout, full post list with numbered index, category filter tabs, newsletter capture form.
+Featured 2-post dark/light split, full post index with category filter, LinkedIn + contact CTAs.
 
 ### `/store` — Digital Products
-4 digital products with expandable "What's Inside" panels, alternating dark/light rows, price in KSH + USD, custom work CTA.
+4 digital products (SaaS starter kit, Meta ads playbook, editorial design system, CV template) with expandable contents, KSH + USD pricing, enquiry links.
 
 ---
 
@@ -84,16 +84,16 @@ Featured 2-post dark/light split layout, full post list with numbered index, cat
 
 | Layer | Choice | Why |
 |-------|--------|-----|
-| Framework | Next.js 14 (App Router) | RSC + server actions, excellent DX |
-| Language | TypeScript 5 | Full type safety, caught 30+ bugs before deploy |
-| Styling | Tailwind CSS + inline styles | System styles via Tailwind, component styles inline for precision |
-| Smooth scroll | Lenis | Most natural feel, lightweight |
-| Animation | Custom RAF loops + CSS | Zero overhead, full control |
-| Canvas | Native Canvas 2D API | No abstraction layer needed |
-| Email | Resend | First-class Next.js support, reliable delivery |
-| CMS | Sanity (configured) | Ready for blog content when needed |
-| Deployment | Vercel | Instant CI/CD on push to main |
-| DNS | Cloudflare CNAME → Vercel | Custom domain on levis.makejahomes.co.ke |
+| Framework | Next.js 14 (App Router) | RSC, server actions, Metadata API, file-based routing |
+| Language | TypeScript 5 | Full type safety across all components |
+| Styling | Tailwind CSS + inline styles | System utilities via Tailwind, component precision via inline |
+| Animation | Custom RAF loops + CSS | Zero overhead, full control, no abstraction layer |
+| Canvas | Native Canvas 2D API | Particle systems, data visualisations, motion graphic |
+| Smooth scroll | Lenis | Natural easing, lightweight |
+| Email | Resend | First-class Next.js support |
+| Fonts | Syne + Syne Mono + DM Sans | Via `next/font/google` — zero layout shift |
+| Image optimisation | Sharp (devDep) | JPEG compression pipeline + favicon generation |
+| Deployment | Vercel | Automatic CI/CD on push to `main` |
 
 ---
 
@@ -103,51 +103,63 @@ Featured 2-post dark/light split layout, full post list with numbered index, cat
 levo-portfolio/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx              # Root layout: Nav + Footer + SmoothScroll wrapper
-│   │   ├── page.tsx                # Home page — all section components
-│   │   ├── globals.css             # CSS variable system + animations
+│   │   ├── layout.tsx              # Root layout — Nav, Footer, SmoothScroll, JSON-LD
+│   │   ├── page.tsx                # Home — all section components assembled
+│   │   ├── globals.css             # CSS variable system, keyframes, base styles
+│   │   ├── mobile.css              # Mobile-specific overrides
+│   │   ├── robots.ts               # Auto-generates /robots.txt
+│   │   ├── sitemap.ts              # Auto-generates /sitemap.xml
 │   │   ├── about/
-│   │   │   └── page.tsx            # About page with galaxy motion graphic
+│   │   │   ├── layout.tsx          # /about metadata + OG
+│   │   │   └── page.tsx            # About page with MotionGraphic
 │   │   ├── work/
-│   │   │   └── page.tsx            # Work portfolio + services toggle
+│   │   │   ├── layout.tsx          # /work metadata + OG
+│   │   │   └── page.tsx            # Projects + Services toggle
 │   │   ├── blog/
-│   │   │   └── page.tsx            # Blog listing with featured posts
+│   │   │   ├── layout.tsx          # /blog metadata + OG
+│   │   │   └── page.tsx            # Blog listing
 │   │   ├── store/
+│   │   │   ├── layout.tsx          # /store metadata + OG
 │   │   │   └── page.tsx            # Digital products store
 │   │   └── api/
 │   │       └── contact/
-│   │           └── route.ts        # POST handler → Resend API
+│   │           └── route.ts        # POST → Resend API
 │   │
 │   ├── components/
 │   │   ├── layout/
-│   │   │   ├── Nav.tsx             # Dark nav, rainbow top line, availability pill
+│   │   │   ├── Nav.tsx             # Sticky nav, rainbow accent line, mobile menu
 │   │   │   └── Footer.tsx          # Dark footer, 3-column layout
 │   │   │
 │   │   ├── home/
-│   │   │   ├── Hero.tsx            # Split hero: bio left, organic blob photo right
-│   │   │   └── Marquee.tsx         # Neon ticker strip
+│   │   │   ├── Hero.tsx            # Split hero with profile photo + role cycling
+│   │   │   └── Marquee.tsx         # Neon marquee ticker strip
 │   │   │
 │   │   ├── sections/
-│   │   │   ├── FeaturedWork.tsx    # 2×2 project grid
-│   │   │   ├── SkillsStack.tsx     # Radar chart + skill bars (dark)
-│   │   │   ├── ByTheNumbers.tsx    # 6 stat cards with SVG circular progress
-│   │   │   ├── HowIWork.tsx        # 4 working principle cards
+│   │   │   ├── FeaturedWork.tsx    # 5-project grid with live/github links
+│   │   │   ├── SkillsStack.tsx     # Canvas radar chart + skill category grid
+│   │   │   ├── ByTheNumbers.tsx    # Animated stat counters
+│   │   │   ├── Timeline.tsx        # Career timeline, 8 events, alternating layout
+│   │   │   ├── Terminal.tsx        # Interactive browser terminal
 │   │   │   ├── DesignWork.tsx      # Editorial + brand design cards
-│   │   │   ├── BlogPreview.tsx     # 3 latest posts (dark)
-│   │   │   └── ContactSection.tsx  # Intent selector + glass form
+│   │   │   ├── BlogPreview.tsx     # 3 latest post cards
+│   │   │   └── ContactSection.tsx  # Intent selector + contact form
 │   │   │
 │   │   └── ui/
 │   │       ├── CustomCursor.tsx    # Dot + ring cursor with blend mode
-│   │       ├── ParticleField.tsx   # 70-particle canvas system
+│   │       ├── WhatsAppFloat.tsx   # Floating WhatsApp CTA button
 │   │       └── SmoothScroll.tsx    # Lenis scroll wrapper
 │   │
-│   └── lib/
-│       └── sanity.ts               # Sanity client (projectId pending)
+│   └── hooks/
+│       └── useIsMobile.ts          # Mobile breakpoint detection hook
 │
 ├── public/
-│   └── levo.jpg                    # Profile photo
+│   ├── levo.jpg                    # Profile photo (compressed, 65KB)
+│   ├── favicon-16.png              # Generated via sharp
+│   ├── favicon-32.png
+│   ├── apple-touch-icon.png
+│   └── og-image.png                # OpenGraph social card (1200×630)
 │
-├── next.config.mjs                 # Image domains config
+├── next.config.mjs                 # Security headers, image config, compression
 ├── tailwind.config.ts              # Custom font variable extensions
 ├── tsconfig.json
 └── package.json
@@ -161,102 +173,142 @@ levo-portfolio/
 
 ```css
 /* Backgrounds */
---bg:        #faf7f0   /* cream — primary light background */
---bg-2:      #f4efe4   /* warm cream — secondary surfaces */
---surface:   #ffffff   /* pure white cards */
+--bg:      #faf7f0   /* warm cream — primary background */
+--bg-2:    #f4efe4   /* slightly darker cream — secondary surfaces */
 
 /* Dark sections */
-                       /* #0a0805 — near-black, used for dark bands */
-                       /* #05020f — deep galaxy dark for motion graphic */
+           #0a0805   /* near-black warm — dark section bands */
+           #05020f   /* deep galaxy dark — motion graphic background */
 
-/* Accent colours */
+/* Accents */
 --purple:       #7c3aed
 --purple-light: #a855f7
---forest:       #1a5c2e
---forest-mid:   #2d7a45
---forest-light: #4ead6a
+--forest:       #4ead6a
+--emerald:      #10b981
 --amber:        #d97706
 --rose:         #e11d48
+--cyan:         #0891b2
 
 /* Text */
 --text:   #1a1208   /* near-black warm */
 --text-3: #7a6e5f   /* secondary */
---text-4: #b5a99a   /* tertiary / labels */
+--text-4: #b5a99a   /* labels / tertiary */
 ```
 
 ### Typography
 
 ```css
---font-display: 'Syne'      /* headings — geometric, strong */
---font-mono:    'Syne Mono' /* labels, tags, terminal text */
---font-body:    'DM Sans'   /* body copy */
+--font-display: 'Syne'       /* headings — geometric, heavy */
+--font-mono:    'Syne Mono'  /* labels, tags, terminal, code blocks */
+--font-body:    'DM Sans'    /* body copy, descriptions */
 ```
 
-### Section Flow (Home)
+### Section Rhythm (Home)
 
 ```
-Hero        → light (cream)
-Marquee     → dark strip
-FeaturedWork → light
-SkillsStack  → dark  
-ByTheNumbers → dark (same band)
-HowIWork     → light
-DesignWork   → light
-BlogPreview  → dark
-Contact      → light
-Footer       → dark
+Hero            → cream (light)
+Marquee         → dark strip
+FeaturedWork    → cream (light)
+SkillsStack     → dark
+ByTheNumbers    → dark (continued)
+Timeline        → cream (light)
+Terminal        → dark
+DesignWork      → cream (light)
+BlogPreview     → dark
+Contact         → cream (light)
+Footer          → dark
 ```
 
-The alternating rhythm creates visual breathing room and ensures every dark section has maximum contrast for stat numbers and code snippets.
+Alternating bands create visual breathing room and frame stats/code against maximum contrast backgrounds.
 
 ---
 
-## Galaxy Motion Graphic — Technical Detail
+## MotionGraphic — Technical Detail
 
-The `/about` right panel renders a real-time canvas animation loop at 60fps. Architecture:
-
-### Canvas Pipeline (per frame)
-```
-1. clearRect
-2. Deep space radial gradient base
-3. Nebula clouds — 6 drifting elliptical radial gradients
-4. Stars — 180 points with individual twinkle sine waves + glow halos
-5. Scanlines — subtle horizontal lines at 3px intervals (0.07 opacity)
-6. Vignette — radial gradient darkening edges
-```
-
-### Nebula System
-Each nebula has independent:
-- Starting position (seeded randomly)
-- Drift velocity (driftX, driftY — sub-pixel per frame)
-- Pulse phase offset (prevents synchronised breathing)
-- Pulse speed (varies 2–4x range)
-- Colour from the design palette (purple, green, cyan, rose, amber)
-
-Nebulas wrap around canvas edges for seamless infinite drift.
+The `/about` right panel runs a real-time canvas + DOM animation at 60fps. Architecture:
 
 ### Scramble Decode System
+
 ```
-Timeline builder  →  flat array of WordTiming items with absolute startTimes
-RAF loop          →  elapsed = now - seqStart
-Per word          →  charsResolved = floor(elapsed / charMs)
-Resolved chars    →  real character, inherits word colour
-Unresolved chars  →  random glyph from Greek/Japanese/Latin set, purple-tinted
-Word complete     →  resolveFlash keyframe fires (brightness 3.2×)
-Chromatic words   →  CSS animation: red/cyan text-shadow oscillates
-Shimmer words     →  overlay gradient sweeps every 3s
-Cursor            →  follows last active word, glows purple
-Loop              →  restarts with 700ms pause after sequence complete
+SCRIPT array  →  word groups with timing, colour, effects config
+RAF loop      →  elapsed = performance.now() - seqStart
+Per word      →  charsResolved = floor(elapsed / charMs)
+Resolved      →  real character with word colour applied
+Unresolved    →  random glyph from GLYPHS set (Latin, Greek, Japanese, Unicode blocks)
+Word complete →  resolveFlash: brightness(3) spike fires
+Chromatic     →  CSS animation: red/cyan text-shadow oscillates async
+Shimmer       →  linear-gradient overlay sweeps at 250% width every 3s
+Cursor        →  positioned after last active word, glows purple
+Loop          →  700ms pause, then restarts from top
+```
+
+### Particle + Stream System
+
+```
+35 particles  →  random position, velocity, size, opacity
+hexPulse      →  per-particle size breathing via sine wave (phase offset per particle)
+7 streams     →  vertical data columns cycling through STREAM_COLORS
+               →  ["#7c3aed", "#a855f7", "#10b981", "#4ead6a"]
+Each frame    →  stream chars fall, fade, and cycle glyphs
 ```
 
 ### 3D Tilt
-Mouse position normalised 0–1. Each frame:
+
+Mouse position normalised 0–1, applied to container per frame:
+
 ```js
-tiltX += (targetX - tiltX) * 0.055  // lerp factor
+tiltX += (targetX - tiltX) * 0.055   // lerped approach
 tiltY += (targetY - tiltY) * 0.055
-textRef.style.transform = `perspective(820px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`
+container.style.transform = `perspective(820px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`
 ```
-Applied directly to DOM (not via React state) to avoid render overhead.
+
+Direct DOM mutation — zero React state, zero re-renders.
+
+---
+
+## Interactive Terminal — Command Reference
+
+The `/` home page includes a fully functional browser terminal. Available commands:
+
+| Command | Output |
+|---------|--------|
+| `help` | All available commands |
+| `whoami` | Engineer bio |
+| `makeja` | Makeja Homes metrics + stack |
+| `ghostnet` | GhostNet platform details |
+| `skills` | Full tech stack list |
+| `stack` | Same as skills |
+| `contact` | Email + LinkedIn + GitHub |
+| `hire levis` | Availability + CTA |
+| `ls` | Directory listing |
+| `pwd` | Current path |
+| `date` | Current date |
+| `sudo` | Easter egg |
+| `clear` | Clears terminal |
+| `exit` | Terminal goodbye |
+
+Supports ↑↓ history navigation, Tab autocomplete, and quick-fire buttons below the prompt.
+
+---
+
+## SEO Setup
+
+```
+/robots.txt    → auto-generated via app/robots.ts
+/sitemap.xml   → auto-generated via app/sitemap.ts (5 routes, priority weights)
+JSON-LD        → Person schema in root layout.tsx
+Per-page meta  → layout.tsx in each route segment
+```
+
+### Per-Page Metadata Coverage
+
+| Route | Title | Description | OG Image | Canonical |
+|-------|-------|-------------|----------|-----------|
+| `/` | Levis Kibirie — Fullstack Engineer & SaaS Founder | ✓ | `/og-image.png` | `levikibirie.dev` |
+| `/about` | About \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/about` |
+| `/work` | Work & Services \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/work` |
+| `/blog` | Blog \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/blog` |
+| `/store` | Store \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/store` |
 
 ---
 
@@ -267,21 +319,19 @@ User submits form
        │
        ▼
 POST /api/contact
-  → Validates required fields
+  → Validates name, email, message
   → Calls Resend API
-  → Sends to leviskibirie2110@gmail.com
+  → Delivers to leviskibirie2110@gmail.com
   → Returns { success: true }
        │
        ▼
-Toast confirmation shown to user
+UI shows confirmation state
 ```
 
-**Environment variable required:**
+**Required environment variable:**
 ```env
 RESEND_API_KEY=re_xxxxxxxxxxxx
 ```
-
-Set in Vercel: Settings → Environment Variables → Add → Redeploy.
 
 ---
 
@@ -296,66 +346,43 @@ cd levo-portfolio
 npm install
 
 # Environment
-cp .env.example .env.local
-# Add: RESEND_API_KEY=your_key_here
+echo "RESEND_API_KEY=your_key_here" > .env.local
 
 # Run
 npm run dev
 # → http://localhost:3000
 ```
 
-**Node version:** 18+ required (for App Router and server components).
+**Requires Node 18+.**
 
 ---
 
 ## Deployment
 
-The repo is connected to Vercel with automatic deployments on every push to `main`.
+Auto-deploys to Vercel on every push to `main`.
 
 ```bash
-# Standard deploy workflow
 git add .
 git commit -m "feat: description"
 git push
-# → Vercel auto-deploys in ~60s
-```
-
-### Custom Domain Setup
-Domain `levis.makejahomes.co.ke` points to Vercel via Cloudflare CNAME:
-```
-CNAME  levis  →  69cf7dee79a89c19.vercel-dns-017.com
+# → live in ~60s
 ```
 
 ### Environment Variables (Vercel)
+
 | Variable | Purpose |
 |----------|---------|
-| `RESEND_API_KEY` | Contact form email delivery |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | CMS (when configured) |
-| `NEXT_PUBLIC_SANITY_DATASET` | CMS dataset (production) |
+| `RESEND_API_KEY` | Contact form delivery via Resend |
 
----
+### Security Headers (next.config.mjs)
 
-## Performance Notes
-
-- All canvas animations use `requestAnimationFrame` — never `setInterval`
-- 3D tilt uses direct DOM mutation (not React state) for zero-overhead 60fps
-- Text scramble state updates throttled to ~30fps (`now - lastUpdate >= 33ms`) while canvas continues at 60fps
-- Images served from `/public` — no external CDN required for portfolio photos
-- Lenis smooth scroll uses native scroll events with custom easing
-- No jQuery, no Bootstrap, no animation library dependencies
-
----
-
-## Pending / Roadmap
-
-- [ ] `RESEND_API_KEY` → add to Vercel env vars and redeploy
-- [ ] Mobile responsive pass — not yet optimised for phones
-- [ ] LinkedIn rewrite to match portfolio positioning
-- [ ] Sanity CMS setup — create project at sanity.io, add `NEXT_PUBLIC_SANITY_PROJECT_ID`
-- [ ] Write blog posts (SaaS post, NSE agent post)
-- [ ] SEO — OG image (1200×630) for social sharing
-- [ ] Vercel Analytics — enable in dashboard
-- [ ] NSE Research Agent — Python + TypeScript + NSE data APIs
+```
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+Cache-Control: public, max-age=31536000, immutable  (/_next/static, images, fonts)
+```
 
 ---
 
@@ -363,16 +390,17 @@ CNAME  levis  →  69cf7dee79a89c19.vercel-dns-017.com
 
 | Project | Repo | Live |
 |---------|------|------|
-| **Makeja Homes** — Production SaaS | [github.com/Levikib/makeja-homes](https://github.com/Levikib/makeja-homes) | [makejahomes.co.ke](https://makejahomes.co.ke) |
-| **Levo Portfolio** — This repo | [github.com/Levikib/levo-portfolio](https://github.com/Levikib/levo-portfolio) | [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke) |
+| **Makeja Homes** — Property management SaaS (247+ tenants, KSH 1.5M/mo) | [github.com/Levikib/makeja-homes](https://github.com/Levikib/makeja-homes) | [makejahomes.co.ke](https://makejahomes.co.ke) |
+| **GhostNet** — Cybersecurity research & training platform (13 modules, GHOST AI) | — | [ghostnet-pi.vercel.app](https://ghostnet-pi.vercel.app) |
+| **Levo Portfolio** — This repo | [github.com/Levikib/levo-portfolio](https://github.com/Levikib/levo-portfolio) | [levikibirie.dev](https://levikibirie.dev) |
 
 ---
 
 ## Builder
 
-**Levis Kibirie** — Founding Fullstack Engineer · Nairobi, Kenya
+**Levis Kibirie** — Fullstack Engineer & SaaS Founder · Nairobi, Kenya
 
-- 🌐 [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke)
+- 🌐 [levikibirie.dev](https://levikibirie.dev)
 - 💼 [linkedin.com/in/levis-kibirie-6bba13344](https://linkedin.com/in/levis-kibirie-6bba13344)
 - 🐙 [github.com/Levikib](https://github.com/Levikib)
 - ✉️ leviskibirie2110@gmail.com
@@ -381,7 +409,7 @@ CNAME  levis  →  69cf7dee79a89c19.vercel-dns-017.com
 
 ## License
 
-MIT — feel free to use as reference or inspiration. If you build something with it, a mention is appreciated but not required.
+MIT — use it as reference or inspiration. A mention is appreciated but not required.
 
 ---
 
