@@ -53,7 +53,7 @@ const STACK_LINES = [
   "  Realtime    Supabase Realtime · WebSockets",
   "  Payments    Paystack · Webhooks · Resend",
   "  Infra       VPS · Nginx · Vercel · Docker · CI/CD",
-  "  Security    ISC2 CC · CEH · OWASP · Pen Testing",
+  "  Security    CEH · OWASP · Pen Testing · Secure Architecture",
   "  Design      Figma · InDesign · Typography Systems",
 ];
 
@@ -63,7 +63,7 @@ const WHOAMI_LINES = [
   "",
   "  Built Makeja Homes from scratch: 247+ tenants, KSH 1.5M/mo.",
   "  Built GhostNet: cybersec platform with AI, 13 modules, 9 tools.",
-  "  ISC2 Certified · Certified Ethical Hacker · Forbes Africa ready.",
+  "  Certified Ethical Hacker · Forbes Africa ready.",
   "",
   "  Open to: senior remote engineering, SaaS collabs, interesting problems.",
 ];
@@ -151,11 +151,12 @@ export default function Terminal() {
   const [histIdx, setHistIdx] = useState(-1);
   const [booted, setBooted] = useState(false);
   const [visible, setVisible] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Boot sequence on first visibility
+  // Boot sequence fires only when user scrolls to this section
+  // rootMargin keeps it from triggering while the section is off-screen at load
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !booted) {
@@ -169,15 +170,17 @@ export default function Terminal() {
           i++;
           setTimeout(addLine, 280);
         };
-        setTimeout(addLine, 300);
+        setTimeout(addLine, 200);
       }
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2, rootMargin: "0px 0px -80px 0px" });
     if (sectionRef.current) obs.observe(sectionRef.current);
     return () => obs.disconnect();
   }, [booted]);
 
+  // Scroll only inside the output div — never the page
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = outputRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [lines]);
 
   const submit = useCallback(() => {
@@ -277,6 +280,7 @@ export default function Terminal() {
 
           {/* Output area */}
           <div
+            ref={outputRef}
             style={{ padding:"20px 20px 8px", minHeight:"280px", maxHeight:"420px", overflowY:"auto", fontFamily:"'Courier New', monospace", fontSize:"13px", lineHeight:"1.75", cursor:"text" }}
           >
             {visible && lines.map((l, i) => {
@@ -291,7 +295,6 @@ export default function Terminal() {
                 <div key={i} style={{ color: l.color ?? "rgba(255,255,255,0.65)", whiteSpace:"pre-wrap", fontFamily:"'Courier New', monospace" }}>{l.text}</div>
               );
             })}
-            <div ref={bottomRef} />
           </div>
 
           {/* Input row */}

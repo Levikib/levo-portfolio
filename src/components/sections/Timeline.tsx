@@ -13,9 +13,9 @@ const events = [
   },
   {
     year: "2018",
-    title: "ISC2 Certified in Cybersecurity",
-    sub: "ISC2 CC · Ethical Hacking",
-    desc: "Earned ISC2 CC and CEH certifications. Built first security tools. Discovered the intersection of systems thinking and attack surface design.",
+    title: "Deep Dive into Cybersecurity",
+    sub: "CEH · Ethical Hacking · Security Tools",
+    desc: "Earned Certified Ethical Hacker (CEH) certification. Built first security tools and penetration testing scripts. Discovered the intersection of systems thinking and attack surface design.",
     color: "#10b981",
     icon: "🔐",
     side: "right",

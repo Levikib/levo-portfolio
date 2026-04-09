@@ -20,8 +20,8 @@ const principles = [
     color: "var(--forest)",
     colorRgb: "45,122,69",
     points: [
-      "ISC2 Certified in Cybersecurity (CC)",
       "Certified Ethical Hacker (CEH)",
+      "GhostNet — built a live cybersec platform",
       "Secure-by-design API architecture",
       "Webhook verification, auth hardening",
     ],

@@ -7,7 +7,7 @@ const categories = [
   { name: "Backend",      color: "#4ead6a", rgb:"78,173,106",  level: 88, skills: ["Node.js","Prisma ORM","PostgreSQL","REST APIs","Supabase Realtime","Webhooks"] },
   { name: "AI / LLM",     color: "#d97706", rgb:"217,119,6",   level: 82, skills: ["Groq llama-3.3-70b","Supabase AI","LLM Integration","Prompt Engineering","RAG"] },
   { name: "Design",       color: "#a855f7", rgb:"168,85,247",  level: 85, skills: ["Graphic Design","Editorial Layout","Brand Identity","Typography","InDesign"] },
-  { name: "Security",     color: "#10b981", rgb:"16,185,129",  level: 80, skills: ["ISC2 CC","CEH","Pen Testing","OWASP","Secure Architecture","GhostNet Platform"] },
+  { name: "Security",     color: "#10b981", rgb:"16,185,129",  level: 80, skills: ["CEH","Pen Testing","OWASP","Secure Architecture","GhostNet Platform","Auth Hardening"] },
 ];
 
 function RadarChart({ size }: { size: number }) {
