@@ -488,11 +488,11 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
     </div>
   );
   const vizPanel = (
-    <div style={{ background:p.vizBg, position:"relative", overflow:"hidden" }}>
+    <div style={{ background:p.vizBg, position:"relative", overflow:"hidden", minHeight:"340px" }}>
       <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(${p.accent}12 1px, transparent 1px)`, backgroundSize:"20px 20px", opacity:0.7, pointerEvents:"none" }} />
       <div style={{ position:"absolute", top:"-40px", right:"-40px", width:"220px", height:"220px", background:`radial-gradient(circle, ${p.accent}15, transparent 70%)`, filter:"blur(40px)", pointerEvents:"none" }} />
       <div style={{ position:"absolute", bottom:"-20px", left:"-20px", width:"150px", height:"150px", background:`radial-gradient(circle, ${p.accent}08, transparent 70%)`, filter:"blur(30px)", pointerEvents:"none" }} />
-      <div style={{ position:"relative", zIndex:1, height:"100%" }}><Viz accent={p.accent} /></div>
+      <div style={{ position:"absolute", inset:0, zIndex:1 }}><Viz accent={p.accent} /></div>
     </div>
   );
   return (
