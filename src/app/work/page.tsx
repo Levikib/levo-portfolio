@@ -463,7 +463,7 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
             </div>
           ))}
         </div>
-        <div style={{ display:"flex", gap:"8px" }}>
+        <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
           <button onClick={onToggle}
             style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.1em", textTransform:"uppercase", background:"transparent", border:`1px solid ${p.accent}60`, color:p.accent, padding:"9px 18px", cursor:"pointer", transition:"all 0.2s" }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background=`${p.accent}10`; }}

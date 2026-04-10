@@ -64,9 +64,7 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
-  cursor: none;
 }
-*, *::before, *::after { cursor: none !important; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }
@@ -203,5 +201,7 @@ body::after {
   padding:4px 12px; display:inline-block;
 }
 
-/* Hide native cursor — custom cursor takes over */
-*, *::before, *::after { cursor: none !important; }
+/* Hide native cursor on desktop — custom cursor takes over */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}

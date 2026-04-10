@@ -98,7 +98,7 @@ export default function ContactSection() {
                   onFocus={e => e.target.style.borderColor="var(--purple)"}
                   onBlur={e => e.target.style.borderColor="var(--border)"}
                 />
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4" style={{ flexWrap:"wrap" }}>
                   <button onClick={handleSubmit} disabled={status==="sending"}
                     style={{ background:"var(--purple)", color:"white", fontFamily:"var(--font-display)", fontWeight:700, fontSize:"13px", letterSpacing:"0.08em", textTransform:"uppercase", padding:"15px 32px", border:"none", cursor:"pointer", opacity:status==="sending"?0.7:1, transition:"all 0.2s", boxShadow:"0 4px 20px rgba(124,58,237,0.25)" }}
                     onMouseEnter={e => { (e.currentTarget.style.background="#5b21b6"); }}

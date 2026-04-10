@@ -51,7 +51,7 @@ export default function DesignWork() {
 
   return (
     <section ref={ref} className="relative px-8 md:px-12 py-24" style={{ background:"var(--bg)" }}>
-      <div className="reveal flex justify-between items-end mb-12">
+      <div className="reveal flex justify-between items-end mb-12" style={{ flexWrap:"wrap", gap:"16px" }}>
         <div>
           <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--rose)", textTransform:"uppercase", marginBottom:"12px" }}>// Creative Work</div>
           <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(32px,5vw,56px)", lineHeight:1, letterSpacing:"-0.02em", color:"var(--text)" }}>Design & Editorial</div>
