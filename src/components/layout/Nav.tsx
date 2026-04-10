@@ -182,90 +182,106 @@ export default function Nav() {
       {/* ─── MOBILE OVERLAY ─── */}
       <div style={{
         position: "fixed", inset: 0, zIndex: 9985,
-        background: "rgba(3,1,8,0.98)",
+        background: "rgba(4,2,10,0.97)",
+        backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
         display: "flex", flexDirection: "column",
-        padding: "0",
-        transform: open ? "translateX(0)" : "translateX(100%)",
+        transform: open ? "translateY(0)" : "translateY(-100%)",
         pointerEvents: open ? "auto" : "none",
         visibility: open ? "visible" : "hidden",
-        transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)",
+        transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
         overflowY: "auto",
       }}>
-        <GridBackground />
+        {/* Subtle grid pattern */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
+          backgroundImage: "radial-gradient(rgba(168,85,247,0.08) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}/>
+        {/* Corner glow */}
+        <div style={{
+          position: "absolute", bottom: "-10%", right: "-10%", zIndex: 0, pointerEvents: "none",
+          width: "50vw", height: "50vw",
+          background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 65%)",
+          filter: "blur(60px)",
+        }}/>
+        <div style={{
+          position: "absolute", top: "20%", left: "-5%", zIndex: 0, pointerEvents: "none",
+          width: "30vw", height: "30vw",
+          background: "radial-gradient(circle, rgba(78,173,106,0.07) 0%, transparent 65%)",
+          filter: "blur(50px)",
+        }}/>
 
-        {/* Top bar inside overlay */}
+        {/* Top bar */}
         <div style={{
           position: "relative", zIndex: 2,
           height: "52px", display: "flex", alignItems: "center",
           padding: "0 20px",
-          borderBottom: "1px solid rgba(168,85,247,0.12)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          flexShrink: 0,
         }}>
-          <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "18px", letterSpacing: "-0.02em", color: "white" }}>
-            LK<span style={{ color: "#a855f7" }}>.</span>
+          <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "17px", letterSpacing: "-0.02em", color: "white" }}>
+            LK<span style={{ color: "#a855f7", textShadow: "0 0 10px rgba(168,85,247,0.8)" }}>.</span>
           </span>
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "6px" }}>
             <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#4ead6a", boxShadow: "0 0 6px #4ead6a", animation: "navBlink 2.5s ease-in-out infinite" }}/>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.14em", color: "rgba(78,173,106,0.8)", textTransform: "uppercase" }}>Available</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.16em", color: "rgba(78,173,106,0.7)", textTransform: "uppercase" }}>Available</span>
           </div>
         </div>
 
-        {/* Nav links — VISIBLE, BOLD, BEAUTIFUL */}
-        <nav style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 28px", position: "relative", zIndex: 2 }}>
+        {/* Nav links */}
+        <nav style={{
+          flex: 1, display: "flex", flexDirection: "column", justifyContent: "center",
+          padding: "8px 24px", position: "relative", zIndex: 2, gap: "2px",
+        }}>
           {LINKS.map(({ label, href, accent }, i) => {
             const active = pathname === href;
             return (
               <Link key={label} href={href}
                 style={{
-                  display: "flex", alignItems: "center", gap: "16px",
+                  display: "flex", alignItems: "center", gap: "14px",
                   textDecoration: "none",
-                  padding: "18px 0",
-                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  padding: "13px 14px",
+                  borderRadius: "6px",
+                  background: active ? `${accent}12` : "transparent",
+                  border: `1px solid ${active ? accent + "30" : "transparent"}`,
                   opacity: open ? 1 : 0,
-                  transform: open ? "translateX(0)" : "translateX(40px)",
-                  transition: `opacity 0.45s ${i * 0.07}s ease, transform 0.45s ${i * 0.07}s cubic-bezier(0.16,1,0.3,1)`,
-                  position: "relative",
-                  overflow: "hidden",
+                  transform: open ? "translateY(0)" : "translateY(-12px)",
+                  transition: `opacity 0.35s ${i * 0.055}s ease, transform 0.35s ${i * 0.055}s cubic-bezier(0.16,1,0.3,1), background 0.2s`,
                 }}
-                onTouchStart={e => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = `${accent}10`;
-                }}
+                onTouchStart={e => { (e.currentTarget as HTMLElement).style.background = `${accent}18`; }}
                 onTouchEnd={e => {
                   const el = e.currentTarget as HTMLElement;
-                  setTimeout(() => { el.style.background = "transparent"; }, 200);
+                  setTimeout(() => { el.style.background = active ? `${accent}12` : "transparent"; }, 180);
                 }}
               >
-                {/* Active indicator */}
-                {active && (
-                  <div style={{
-                    position: "absolute", left: 0, top: 0, bottom: 0, width: "2px",
-                    background: `linear-gradient(to bottom, ${accent}, transparent)`,
-                    boxShadow: `0 0 8px ${accent}`,
-                  }}/>
-                )}
-                {/* Number */}
+                {/* Number badge */}
                 <span style={{
-                  fontFamily: "var(--font-mono)", fontSize: "10px",
-                  letterSpacing: "0.2em",
-                  color: active ? accent : "rgba(168,85,247,0.4)",
-                  flexShrink: 0, minWidth: "24px",
+                  fontFamily: "var(--font-mono)", fontSize: "9px",
+                  letterSpacing: "0.1em",
+                  color: active ? accent : "rgba(255,255,255,0.18)",
+                  flexShrink: 0, width: "20px",
                 }}>0{i + 1}</span>
-                {/* Label — FULLY VISIBLE */}
+
+                {/* Divider */}
+                <span style={{ width: "1px", height: "18px", background: active ? `${accent}50` : "rgba(255,255,255,0.07)", flexShrink: 0 }}/>
+
+                {/* Label */}
                 <span style={{
-                  fontFamily: "var(--font-display)", fontWeight: 800,
-                  fontSize: "clamp(28px,8vw,44px)", letterSpacing: "-0.02em",
+                  fontFamily: "var(--font-display)", fontWeight: 700,
+                  fontSize: "15px", letterSpacing: "0.04em",
                   textTransform: "uppercase",
-                  color: active ? "white" : "rgba(255,255,255,0.75)",
-                  lineHeight: 1.1,
+                  color: active ? "white" : "rgba(255,255,255,0.55)",
+                  flex: 1,
                   transition: "color 0.2s",
                 }}>{label}</span>
-                {/* Active arrow */}
-                {active && (
-                  <span style={{
-                    marginLeft: "auto", color: accent, fontSize: "18px",
-                    animation: "nudgeDrift 2s ease-in-out infinite",
-                  }}>→</span>
-                )}
+
+                {/* Right indicator */}
+                <span style={{
+                  fontFamily: "var(--font-mono)", fontSize: "10px",
+                  color: active ? accent : "rgba(255,255,255,0.12)",
+                  transition: "color 0.2s, transform 0.2s",
+                  transform: active ? "translateX(0)" : "translateX(-4px)",
+                }}>→</span>
               </Link>
             );
           })}
@@ -274,37 +290,37 @@ export default function Nav() {
         {/* Bottom strip */}
         <div style={{
           position: "relative", zIndex: 2,
-          padding: "24px 28px 36px",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          display: "flex", flexDirection: "column", gap: "10px",
+          padding: "16px 24px 32px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          display: "flex", flexDirection: "column", gap: "8px",
           opacity: open ? 1 : 0,
-          transform: open ? "translateY(0)" : "translateY(20px)",
-          transition: "all 0.45s 0.36s ease",
+          transform: open ? "translateY(0)" : "translateY(12px)",
+          transition: "all 0.35s 0.3s ease",
+          flexShrink: 0,
         }}>
-          {/* Location tag */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.16em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>📍 Nairobi, Kenya → World</span>
-          </div>
-
           <a href="#contact" onClick={() => setOpen(false)}
             style={{
-              fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "13px",
-              letterSpacing: "0.12em", textTransform: "uppercase",
+              fontFamily: "var(--font-mono)", fontWeight: 700, fontSize: "10px",
+              letterSpacing: "0.16em", textTransform: "uppercase",
               textDecoration: "none", textAlign: "center", color: "white",
-              padding: "16px",
+              padding: "13px",
               background: "linear-gradient(135deg, #6d28d9 0%, #a855f7 100%)",
-              boxShadow: "0 8px 32px rgba(124,58,237,0.45), inset 0 1px 0 rgba(255,255,255,0.15)",
-              display: "block",
+              boxShadow: "0 4px 20px rgba(124,58,237,0.35)",
+              display: "block", borderRadius: "4px",
             }}
           >Let&apos;s Work Together →</a>
 
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "6px" }}>
             <a href="https://github.com/Levikib" target="_blank" rel="noopener noreferrer"
-              style={{ flex: 1, fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", textDecoration: "none", textAlign: "center", padding: "12px", border: "1px solid rgba(255,255,255,0.08)" }}
+              style={{ flex: 1, fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", textDecoration: "none", textAlign: "center", padding: "10px", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "4px" }}
             >GitHub ↗</a>
             <a href="https://linkedin.com/in/levis-kibirie-6bba13344" target="_blank" rel="noopener noreferrer"
-              style={{ flex: 1, fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", textDecoration: "none", textAlign: "center", padding: "12px", border: "1px solid rgba(255,255,255,0.08)" }}
+              style={{ flex: 1, fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", textDecoration: "none", textAlign: "center", padding: "10px", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "4px" }}
             >LinkedIn ↗</a>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "10px", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "4px", gap: "2px" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "7px", color: "rgba(255,255,255,0.18)", letterSpacing: "0.1em", textTransform: "uppercase" }}>📍</span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "7px", color: "rgba(78,173,106,0.6)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Nairobi</span>
+            </div>
           </div>
         </div>
       </div>
