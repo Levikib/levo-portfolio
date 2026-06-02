@@ -245,7 +245,7 @@ export default function Terminal() {
   return (
     <section ref={sectionRef} id="terminal"
       className="relative overflow-hidden"
-      style={{ background: "#010508", padding: "80px clamp(16px,4vw,48px)" }}
+      style={{ background: "var(--abyss)", padding: "80px clamp(16px,4vw,48px)" }}
     >
       {/* Scanline overlay */}
       <div style={{ position:"absolute", inset:0, backgroundImage:"repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,100,0.015) 2px, rgba(0,255,100,0.015) 4px)", pointerEvents:"none", zIndex:1 }} />
@@ -256,6 +256,7 @@ export default function Terminal() {
 
         {/* Section header */}
         <div style={{ marginBottom: "32px" }}>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:"8px", letterSpacing:"0.2em", color:"rgba(6,182,212,0.3)", textTransform:"uppercase", marginBottom:"8px" }}>Scene — The Deep</div>
           <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(16,185,129,0.7)", textTransform:"uppercase", marginBottom:"10px" }}>// Interactive</div>
           <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(28px,4vw,48px)", lineHeight:1, letterSpacing:"-0.02em", color:"white" }}>
             Try the Terminal

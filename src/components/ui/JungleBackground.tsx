@@ -22,7 +22,7 @@ export default function JungleBackground() {
     for (let i = 0; i < 18; i++) {
       const el = document.createElement("div");
       const shape = leafShapes[Math.floor(Math.random() * leafShapes.length)];
-      const hue = Math.random() > 0.5 ? "26,92,46" : "77,173,106";
+      const hue = Math.random() > 0.5 ? "3,105,161" : "6,182,212";
       const isPurple = Math.random() > 0.75;
       const color = isPurple ? "124,58,237" : hue;
       const size = Math.random() * 40 + 20;
@@ -50,7 +50,7 @@ export default function JungleBackground() {
     for (let i = 0; i < 5; i++) {
       const el = document.createElement("div");
       const isPurple = i % 2 === 0;
-      const color = isPurple ? "124,58,237" : "45,122,69";
+      const color = isPurple ? "124,58,237" : "3,105,161";
       const size = Math.random() * 300 + 200;
       el.style.cssText = `
         position:fixed;pointer-events:none;z-index:0;

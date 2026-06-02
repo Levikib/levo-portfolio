@@ -1,6 +1,8 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
+import { Canvas } from "@react-three/fiber";
+import { useGLTF, Float, Environment, ContactShadows } from "@react-three/drei";
 
 // ── SCRAMBLE ENGINE ───────────────────────────────────────────────────────────
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*<>?/\\|ΛΨΩΦΞΣΔΘアイウエカキクケコサシスセソ█▓▒░▄▀■□";
@@ -433,6 +435,16 @@ function MotionGraphic() {
   );
 }
 
+// ── AVATAR MODEL ─────────────────────────────────────────────────────────────
+function AvatarModel() {
+  const { scene } = useGLTF("/models/avatar.glb");
+  return (
+    <Float speed={1.0} floatIntensity={0.4}>
+      <primitive object={scene} scale={2.0} position={[0, -1.2, 0]} />
+    </Float>
+  );
+}
+
 // ── PAGE DATA ─────────────────────────────────────────────────────────────────
 const JOURNEY = [
   { year: "2017",      label: "Education", accent: "#7c3aed", title: "Software Development Certificate", org: "ICT Authority Kenya",                  desc: "First formal grounding in software engineering. The start of everything." },
@@ -533,6 +545,65 @@ export default function About() {
               <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{s.label}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ── AVATAR / IN PERSON ── */}
+      <div style={{ background: "var(--bg-2)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "72px clamp(20px,4vw,48px)" }}>
+        <div className="about-avatar-grid" style={{ display: "grid", maxWidth: "1100px", margin: "0 auto", alignItems: "center", gap: "clamp(32px,5vw,64px)" }}>
+
+          {/* Left: 3D canvas */}
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ width: "360px", height: "480px", maxWidth: "100%" }}>
+              <Canvas
+                camera={{ position: [0, 1, 4], fov: 45 }}
+                gl={{ alpha: true, antialias: true }}
+                style={{ background: "transparent", width: "100%", height: "100%" }}
+              >
+                <ambientLight intensity={0.7} />
+                <directionalLight position={[3, 5, 3]} intensity={1.2} color="#e0f2fe" />
+                <pointLight position={[-2, 3, 2]} intensity={0.5} color="#7c3aed" />
+                <Environment preset="city" />
+                <Suspense fallback={null}>
+                  <AvatarModel />
+                  <ContactShadows position={[0, -1.6, 0]} opacity={0.3} scale={4} blur={2} far={2} />
+                </Suspense>
+              </Canvas>
+            </div>
+          </div>
+
+          {/* Right: bio text */}
+          <div>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--ocean)", textTransform: "uppercase", marginBottom: "12px" }}>// In Person</div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(36px,4.5vw,64px)", lineHeight: 0.9, letterSpacing: "-0.03em", color: "var(--ocean)", marginBottom: "28px" }}>
+              Levis Kibirie.
+            </h2>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "480px", marginBottom: "16px" }}>
+              8+ years in tech. Started with a Software Development Certificate from ICT Authority Kenya. Pen testing at Zalego. BSc IT at Kenyatta University (2nd Upper). IT Intern at Ministry of Foreign &amp; Diaspora Affairs. Then ShanTech Agency, then Makeja Homes, then GhostNet, then Akili Markets. Each one deeper than the last.
+            </p>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "480px", marginBottom: "28px" }}>
+              Oracle Cloud AI Foundations certified. Building for the Nairobi Securities Exchange. Based in Nairobi, Kenya. Available worldwide.
+            </p>
+
+            {/* Badges */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "32px" }}>
+              {[
+                { label: "Nairobi, KE 🌊" },
+                { label: "Oracle AI Certified ✓" },
+                { label: "Open to Remote" },
+              ].map(b => (
+                <span key={b.label} style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.08em", color: "var(--ocean)", background: "rgba(3,105,161,0.08)", border: "1px solid rgba(3,105,161,0.25)", padding: "5px 12px" }}>
+                  {b.label}
+                </span>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              <a href="/work" className="btn-primary">See My Work →</a>
+              <a href="/#contact" className="btn-secondary">Get In Touch</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -643,6 +714,7 @@ export default function About() {
         .about-stats-grid  { grid-template-columns: repeat(2, 1fr); }
         .about-stack-grid  { grid-template-columns: repeat(2, 1fr); }
         .about-beyond-grid { grid-template-columns: repeat(2, 1fr); }
+        .about-avatar-grid { grid-template-columns: 1fr; }
         @media (min-width: 640px) {
           .about-stats-grid  { grid-template-columns: repeat(3, 1fr); }
           .about-stack-grid  { grid-template-columns: repeat(3, 1fr); }
@@ -652,8 +724,11 @@ export default function About() {
           .about-stats-grid  { grid-template-columns: repeat(5, 1fr); }
           .about-stack-grid  { grid-template-columns: repeat(4, 1fr); }
           .about-beyond-grid { grid-template-columns: repeat(4, 1fr); }
+          .about-avatar-grid { grid-template-columns: 1fr 1fr; }
         }
       `}</style>
     </div>
   );
 }
+
+useGLTF.preload("/models/avatar.glb");

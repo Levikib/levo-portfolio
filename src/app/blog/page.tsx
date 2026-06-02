@@ -55,7 +55,7 @@ export default function Blog() {
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:"12px", marginBottom:"48px" }}>
             {featured.map((post, i) => (
               <div key={post.slug}
-                style={{ background:i===0?"#0a0805":"var(--bg-2)", border:`1px solid ${i===0?"rgba(255,255,255,0.08)":"var(--border)"}`, padding:isMobile?"24px":"40px", position:"relative", overflow:"hidden", cursor:"pointer", transition:"all 0.25s" }}
+                style={{ background:i===0?"var(--abyss)":"var(--bg-2)", border:`1px solid ${i===0?"rgba(255,255,255,0.08)":"var(--border)"}`, padding:isMobile?"24px":"40px", position:"relative", overflow:"hidden", cursor:"pointer", transition:"all 0.25s" }}
                 onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.transform="translateY(-2px)";(e.currentTarget as HTMLElement).style.boxShadow=`0 12px 40px ${post.accent}20`;}}
                 onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.transform="translateY(0)";(e.currentTarget as HTMLElement).style.boxShadow="none";}}>
                 <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background:`linear-gradient(90deg,${post.accent},${post.accent}40,transparent)` }}/>
@@ -105,11 +105,11 @@ export default function Blog() {
       </div>
 
       {/* NEWSLETTER */}
-      <div style={{ background:"#0a0805", padding:isMobile?"48px 20px":"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?"40px":"64px", alignItems:"center" }}>
+      <div style={{ background:"var(--abyss)", padding:isMobile?"48px 20px":"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?"40px":"64px", alignItems:"center" }}>
         <div>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(124,58,237,0.6)", textTransform:"uppercase", marginBottom:"16px" }}>// Stay Sharp</div>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(6,182,212,0.7)", textTransform:"uppercase", marginBottom:"16px" }}>// Stay Sharp</div>
           <h2 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(22px,5vw,48px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"16px" }}>
-            Articles drop when<br /><span style={{ color:"#a855f7" }}>there&apos;s something real to say.</span>
+            Articles drop when<br /><span style={{ color:"var(--aqua)" }}>there&apos;s something real to say.</span>
           </h2>
           <p style={{ fontFamily:"var(--font-body)", fontSize:"14px", color:"rgba(255,255,255,0.4)", lineHeight:1.8 }}>
             Engineering deep dives, Kenya tech scene takes, and lessons learned shipping real products. No filler.
@@ -122,9 +122,9 @@ export default function Blog() {
           </p>
           <div style={{ display:"flex", gap:"10px", flexWrap:"wrap" }}>
             <a href="https://linkedin.com/in/levis-kibirie-6bba13344" target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"12px 24px", textDecoration:"none", transition:"all 0.2s" }}
-              onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="#6d28d9";}}
-              onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="#7c3aed";}}>
+              style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", background:"var(--ocean)", color:"white", padding:"12px 24px", textDecoration:"none", transition:"all 0.2s" }}
+              onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="var(--ocean-mid)";}}
+              onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="var(--ocean)";}}>
               Follow on LinkedIn →
             </a>
             <a href="/#contact"

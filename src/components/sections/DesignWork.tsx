@@ -33,9 +33,9 @@ const pieces = [
     year: "2024–2025",
     desc: "Logo systems, colour palettes, and visual identity for Kenyan SMEs through ShanTech Agency. Built brands that communicate before a word is read.",
     tags: ["Branding", "Logo", "Identity"],
-    accent: "var(--amber)",
-    accentRgb: "217,119,6",
-    bg: "#fffbf0",
+    accent: "var(--ocean)",
+    accentRgb: "3,105,161",
+    bg: "#e0f2fe",
     emoji: "🎨",
     stat: "12+ clients",
   },
@@ -53,7 +53,7 @@ export default function DesignWork() {
     <section ref={ref} className="relative px-8 md:px-12 py-24" style={{ background:"var(--bg)" }}>
       <div className="reveal flex justify-between items-end mb-12" style={{ flexWrap:"wrap", gap:"16px" }}>
         <div>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--rose)", textTransform:"uppercase", marginBottom:"12px" }}>// Creative Work</div>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--ocean)", textTransform:"uppercase", marginBottom:"12px" }}>// Creative Work</div>
           <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(32px,5vw,56px)", lineHeight:1, letterSpacing:"-0.02em", color:"var(--text)" }}>Design & Editorial</div>
         </div>
         <Link href="/store" style={{ fontFamily:"var(--font-display)", fontWeight:700, fontSize:"12px", letterSpacing:"0.08em", textTransform:"uppercase", border:"1.5px solid var(--border)", color:"var(--text-3)", padding:"10px 20px", textDecoration:"none" }}>View Store →</Link>

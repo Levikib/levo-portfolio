@@ -52,7 +52,7 @@ export default function Store() {
             const isExpanded = expandedProduct === product.id;
             const isDark     = idx % 2 !== 0;
             return (
-              <div key={product.id} style={{ border:`1px solid ${isDark?"rgba(255,255,255,0.08)":"var(--border)"}`, overflow:"hidden", background:isDark?"#0a0805":"#ffffff", transition:"all 0.2s" }}>
+              <div key={product.id} style={{ border:`1px solid ${isDark?"rgba(255,255,255,0.08)":"var(--border)"}`, overflow:"hidden", background:isDark?"var(--abyss)":"#ffffff", transition:"all 0.2s" }}>
 
                 {/* Accent stripe */}
                 <div style={{ height:"3px", background:`linear-gradient(90deg,${product.accent},${product.accent}50,transparent)` }}/>
@@ -129,20 +129,20 @@ export default function Store() {
       </div>
 
       {/* CUSTOM WORK CTA */}
-      <div style={{ background:"#0a0805", padding:isMobile?"48px 20px":"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr auto", gap:isMobile?"32px":"48px", alignItems:"center" }}>
+      <div style={{ background:"var(--abyss)", padding:isMobile?"48px 20px":"80px 48px", borderTop:"1px solid rgba(255,255,255,0.06)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr auto", gap:isMobile?"32px":"48px", alignItems:"center" }}>
         <div>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(168,85,247,0.6)", textTransform:"uppercase", marginBottom:"12px" }}>// Need Something Custom?</div>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"rgba(6,182,212,0.7)", textTransform:"uppercase", marginBottom:"12px" }}>// Need Something Custom?</div>
           <h2 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(22px,5vw,48px)", lineHeight:1, letterSpacing:"-0.02em", color:"white", marginBottom:"12px" }}>
-            Don&apos;t see what you need.<br /><span style={{ color:"#a855f7" }}>Let&apos;s build it together.</span>
+            Don&apos;t see what you need.<br /><span style={{ color:"var(--aqua)" }}>Let&apos;s build it together.</span>
           </h2>
           <p style={{ fontFamily:"var(--font-body)", fontSize:"14px", color:"rgba(255,255,255,0.4)", lineHeight:1.8, maxWidth:"560px" }}>
             These products are packaged versions of real work. If you need a custom build — a full SaaS, a specific integration, a tailored playbook — check the services page or reach out directly.
           </p>
         </div>
         <div style={{ display:"flex", flexDirection:isMobile?"row":"column", gap:"10px", flexShrink:0, flexWrap:"wrap" }}>
-          <a href="/work#services" style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"#7c3aed", color:"white", padding:"14px 28px", textDecoration:"none", whiteSpace:"nowrap", transition:"all 0.2s", textAlign:"center", boxShadow:"0 0 24px rgba(124,58,237,0.3)", flex: isMobile ? "1" : "none" }}
-            onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="white";(e.currentTarget as HTMLElement).style.color="#7c3aed";}}
-            onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="#7c3aed";(e.currentTarget as HTMLElement).style.color="white";}}>
+          <a href="/work#services" style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"var(--ocean)", color:"white", padding:"14px 28px", textDecoration:"none", whiteSpace:"nowrap", transition:"all 0.2s", textAlign:"center", boxShadow:"0 0 24px rgba(3,105,161,0.3)", flex: isMobile ? "1" : "none" }}
+            onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background="white";(e.currentTarget as HTMLElement).style.color="var(--ocean)";}}
+            onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="var(--ocean)";(e.currentTarget as HTMLElement).style.color="white";}}>
             View Services →
           </a>
           <a href="/#contact" style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"12px", letterSpacing:"0.1em", textTransform:"uppercase", background:"transparent", color:"rgba(255,255,255,0.4)", padding:"14px 28px", textDecoration:"none", border:"1px solid rgba(255,255,255,0.1)", whiteSpace:"nowrap", transition:"all 0.2s", textAlign:"center", flex: isMobile ? "1" : "none" }}
