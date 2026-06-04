@@ -4,21 +4,22 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Float, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 
-// ── WATER DROPLET 3D MODEL ────────────────────────────────────────────────────
-function WaterDroplet() {
-  const { scene } = useGLTF("/models/water-droplet.glb");
+// ── AVATAR 3D MODEL ───────────────────────────────────────────────────────────
+function AvatarModel() {
+  const { scene } = useGLTF("/models/avatar.glb");
   const ref = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (!ref.current) return;
     const t = state.clock.elapsedTime;
-    ref.current.rotation.y = t * 0.18;
-    ref.current.rotation.x = Math.sin(t * 0.3) * 0.08;
+    // Gentle idle sway — feels alive, not mechanical
+    ref.current.rotation.y = Math.sin(t * 0.4) * 0.12;
+    ref.current.position.y = -1.1 + Math.sin(t * 0.6) * 0.04;
   });
 
   return (
-    <Float speed={1.4} rotationIntensity={0.2} floatIntensity={0.8}>
-      <primitive ref={ref} object={scene} scale={1.8} position={[0, -0.3, 0]} />
+    <Float speed={0.8} rotationIntensity={0.08} floatIntensity={0.3}>
+      <primitive ref={ref} object={scene} scale={2.2} position={[0, -1.1, 0]} />
     </Float>
   );
 }
@@ -188,25 +189,31 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT — 3D Water Droplet + floating badges ── */}
-        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "500px", opacity: loaded ? 1 : 0, transition: "opacity 1s 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+        {/* ── RIGHT — Avatar 3D + floating badges ── */}
+        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "520px", opacity: loaded ? 1 : 0, transition: "opacity 1s 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
 
-          {/* Caustic ring behind model */}
-          <div style={{ position: "absolute", width: "340px", height: "340px", borderRadius: "50%", border: "1px solid rgba(6,182,212,0.15)", animation: "spinSlow 40s linear infinite", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", width: "260px", height: "260px", borderRadius: "50%", border: "1px dashed rgba(3,105,161,0.12)", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", width: "420px", height: "420px", borderRadius: "50%", background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
+          {/* Ambient glow rings */}
+          <div style={{ position: "absolute", width: "360px", height: "360px", borderRadius: "50%", border: "1px solid rgba(6,182,212,0.12)", animation: "spinSlow 50s linear infinite", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", width: "280px", height: "280px", borderRadius: "50%", border: "1px dashed rgba(3,105,161,0.1)", pointerEvents: "none" }} />
+          {/* Caustic floor glow */}
+          <div style={{ position: "absolute", bottom: "40px", width: "280px", height: "80px", background: "radial-gradient(ellipse, rgba(6,182,212,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
+          {/* Purple rim glow */}
+          <div style={{ position: "absolute", width: "440px", height: "440px", borderRadius: "50%", background: "radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 65%)", pointerEvents: "none" }} />
 
           {/* Three.js canvas */}
-          <div style={{ width: "320px", height: "380px", position: "relative", zIndex: 2 }}>
-            <Canvas camera={{ position: [0, 0, 4], fov: 45 }} style={{ background: "transparent" }} gl={{ alpha: true, antialias: true }}>
-              <ambientLight intensity={0.6} />
-              <directionalLight position={[5, 8, 5]} intensity={1.2} color="#e0f2fe" />
-              <directionalLight position={[-4, 2, -4]} intensity={0.5} color="#7c3aed" />
-              <pointLight position={[0, 4, 2]} intensity={0.8} color="#06b6d4" />
+          <div style={{ width: "340px", height: "460px", position: "relative", zIndex: 2 }}>
+            <Canvas camera={{ position: [0, 0.5, 4.5], fov: 42 }} style={{ background: "transparent" }} gl={{ alpha: true, antialias: true }}>
+              <ambientLight intensity={0.8} />
+              {/* Key light — warm front */}
+              <directionalLight position={[3, 6, 4]} intensity={1.4} color="#e0f2fe" />
+              {/* Fill light — purple rim */}
+              <directionalLight position={[-4, 2, -2]} intensity={0.6} color="#a855f7" />
+              {/* Ground bounce — aqua */}
+              <pointLight position={[0, -1, 3]} intensity={0.5} color="#06b6d4" />
               <Environment preset="city" />
               <Suspense fallback={null}>
-                <WaterDroplet />
-                <ContactShadows position={[0, -2.2, 0]} opacity={0.12} scale={4} blur={2.5} />
+                <AvatarModel />
+                <ContactShadows position={[0, -2.4, 0]} opacity={0.15} scale={5} blur={2} color="#0369a1" />
               </Suspense>
             </Canvas>
           </div>
@@ -255,7 +262,7 @@ export default function Hero() {
 
       {/* Scene label */}
       <div style={{ position: "absolute", bottom: "32px", right: "clamp(24px,5vw,64px)", zIndex: 10 }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--border-2)", textTransform: "uppercase" }}>Scene 01 — Ocean Surface</span>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--border-2)", textTransform: "uppercase" }}>Scene 01 — The Source</span>
       </div>
 
       <style>{`
@@ -268,4 +275,4 @@ export default function Hero() {
   );
 }
 
-useGLTF.preload("/models/water-droplet.glb");
+useGLTF.preload("/models/avatar.glb");
