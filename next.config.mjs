@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Transpile Three.js ESM packages for Next.js SSR compatibility
-  transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
-
   // Compress responses
   compress: true,
 

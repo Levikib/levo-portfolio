@@ -17,8 +17,8 @@ const principles = [
   {
     icon: "🔐",
     title: "Security is Not an Afterthought",
-    color: "var(--aqua)",
-    colorRgb: "6,182,212",
+    color: "var(--forest)",
+    colorRgb: "45,122,69",
     points: [
       "GhostNet — built a live cybersec platform",
       "OWASP-aware, pen testing experience",
@@ -29,8 +29,8 @@ const principles = [
   {
     icon: "🌍",
     title: "Remote-Native by Design",
-    color: "var(--ocean)",
-    colorRgb: "3,105,161",
+    color: "var(--amber)",
+    colorRgb: "217,119,6",
     points: [
       "Async-first communication style",
       "Documented decisions, not just code",
@@ -63,7 +63,7 @@ export default function HowIWork() {
   return (
     <section ref={ref} className="relative px-8 md:px-12 py-24" style={{ background:"var(--bg-2)" }}>
       <div className="reveal mb-14">
-        <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--ocean)", textTransform:"uppercase", marginBottom:"12px" }}>// Working Style</div>
+        <div style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.25em", color:"var(--forest)", textTransform:"uppercase", marginBottom:"12px" }}>// Working Style</div>
         <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(32px,5vw,56px)", lineHeight:1, letterSpacing:"-0.02em", color:"var(--text)" }}>How I Work</div>
         <p style={{ fontFamily:"var(--font-body)", fontSize:"16px", color:"var(--text-3)", marginTop:"16px", maxWidth:"480px", lineHeight:1.8 }}>
           Four things that make me different from an engineer who just writes code and disappears.

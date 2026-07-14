@@ -8,7 +8,7 @@ const events = [
     title: "First Line of Code",
     sub: "Self-taught · Nairobi",
     desc: "Started with HTML/CSS during school. Built first website for a local business. Charged KSH 3,000. Never looked back.",
-    color: "#0ea5e9",
+    color: "#4ead6a",
     icon: "⌨",
     side: "left",
   },
@@ -17,7 +17,7 @@ const events = [
     title: "Deep Dive into Cybersecurity",
     sub: "Ethical Hacking · Security Tools · Pen Testing",
     desc: "Studied ethical hacking and penetration testing. Built first security tools and scripts. Discovered the intersection of systems thinking and attack surface design.",
-    color: "#06b6d4",
+    color: "#10b981",
     icon: "🔐",
     side: "right",
   },
@@ -44,7 +44,7 @@ const events = [
     title: "Chill Minds Magazine",
     sub: "72 Pages · Print · 2 Volumes",
     desc: "Designed 72-page children's mental wellness magazine. Every page, every colour system, every typography decision. Proof that engineering precision applies to design too.",
-    color: "#0369a1",
+    color: "#d97706",
     icon: "📖",
     side: "left",
   },
@@ -63,7 +63,7 @@ const events = [
     title: "GhostNet Launched",
     sub: "Cybersec Platform · AI · Live",
     desc: "Built a full-stack cybersecurity research and training platform. 13 modules, 243 lab steps, 5450 XP, 9 live hacking tools, real-time leaderboard, and GHOST AI powered by Groq llama-3.3-70b. Cinematic entry. Zero compromises.",
-    color: "#06b6d4",
+    color: "#10b981",
     icon: "👻",
     side: "left",
     highlight: true,
@@ -73,7 +73,7 @@ const events = [
     title: "Open. Building. Shipping.",
     sub: "Remote · Worldwide",
     desc: "NSE Research Agent in development. Open to senior remote engineering roles and SaaS collaborations that actually matter. Based in Nairobi. Available everywhere.",
-    color: "#0ea5e9",
+    color: "#4ead6a",
     icon: "🌍",
     side: "right",
     now: true,
@@ -227,7 +227,7 @@ export default function Timeline() {
   return (
     <section ref={ref} className="relative overflow-hidden" style={{ background: "var(--bg-2)", padding: "80px clamp(16px,4vw,48px)" }}>
       {/* Subtle dot grid */}
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(3,105,161,0.07) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(124,58,237,0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
 
       <div className="relative z-10" style={{ maxWidth: "860px", margin: "0 auto" }}>
         {/* Header */}
@@ -237,7 +237,7 @@ export default function Timeline() {
           transform: headerVisible ? "translateY(0)" : "translateY(24px)",
           transition: "all 0.8s cubic-bezier(0.16,1,0.3,1)",
         }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--ocean)", textTransform: "uppercase", marginBottom: "12px" }}>// The Journey</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--forest)", textTransform: "uppercase", marginBottom: "12px" }}>// The Journey</div>
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1, letterSpacing: "-0.02em", color: "var(--text)" }}>
             8 Years.<br />
             <span style={{ color: "var(--purple)" }}>One Direction.</span>

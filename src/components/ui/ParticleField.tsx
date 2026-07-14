@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-const COLORS = ["#0ea5e9", "#06b6d4", "#7c3aed", "#0369a1", "#bae6fd"];
+const COLORS = ["#ff4d00", "#00ff88", "#ff0080", "#ffe600", "#0088ff"];
 
 export default function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -56,7 +56,7 @@ export default function ParticleField() {
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(6,182,212,${0.06 * (1 - dist / CONNECT_DIST)})`;
+              ctx.strokeStyle = `rgba(255,77,0,${0.04 * (1 - dist / CONNECT_DIST)})`;
               ctx.lineWidth = 0.5;
               ctx.stroke();
             }

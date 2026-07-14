@@ -1,8 +1,6 @@
 "use client";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, Float, Environment, ContactShadows } from "@react-three/drei";
 
 // ── SCRAMBLE ENGINE ───────────────────────────────────────────────────────────
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*<>?/\\|ΛΨΩΦΞΣΔΘアイウエカキクケコサシスセソ█▓▒░▄▀■□";
@@ -435,16 +433,6 @@ function MotionGraphic() {
   );
 }
 
-// ── AVATAR MODEL ─────────────────────────────────────────────────────────────
-function AvatarModel() {
-  const { scene } = useGLTF("/models/avatar.glb");
-  return (
-    <Float speed={1.0} floatIntensity={0.4}>
-      <primitive object={scene} scale={2.0} position={[0, -1.2, 0]} />
-    </Float>
-  );
-}
-
 // ── PAGE DATA ─────────────────────────────────────────────────────────────────
 const JOURNEY = [
   { year: "2017",      label: "Education", accent: "#7c3aed", title: "Software Development Certificate", org: "ICT Authority Kenya",                  desc: "First formal grounding in software engineering. The start of everything." },
@@ -459,28 +447,28 @@ const JOURNEY = [
 ];
 
 const STACK = [
-  { cat: "Frontend",       accent: "#0ea5e9", items: ["TypeScript", "Next.js 14", "React", "Tailwind CSS", "GSAP", "Three.js / R3F"] },
-  { cat: "Backend",        accent: "#06b6d4", items: ["Node.js", "FastAPI", "Prisma ORM", "PostgreSQL", "REST APIs", "Supabase"] },
-  { cat: "AI & Data",      accent: "#7c3aed", items: ["Groq llama-3.3-70b", "Python", "Binance API", "Technical Analysis", "LLM APIs"] },
-  { cat: "Payments",       accent: "#f59e0b", items: ["Paystack", "M-Pesa Daraja", "Webhooks", "Resend"] },
-  { cat: "Infrastructure", accent: "#0369a1", items: ["VPS / Nginx", "Vercel", "Docker", "GitHub Actions", "CI/CD"] },
-  { cat: "Security",       accent: "#22c55e", items: ["OWASP", "Pen Testing", "Auth Hardening", "Webhook Security"] },
-  { cat: "Design",         accent: "#a855f7", items: ["Figma", "InDesign", "Typography Systems", "Brand Identity", "Editorial"] },
+  { cat: "Frontend",       accent: "#7c3aed", items: ["TypeScript", "Next.js 14", "React", "Tailwind CSS", "GSAP"] },
+  { cat: "Backend",        accent: "#0891b2", items: ["Node.js", "Prisma ORM", "PostgreSQL", "REST APIs", "Supabase"] },
+  { cat: "AI & Data",      accent: "#a855f7", items: ["Groq llama-3.3-70b", "Python", "LLM APIs", "LangChain"] },
+  { cat: "Payments",       accent: "#e11d48", items: ["Paystack", "M-Pesa Daraja", "Webhooks", "Resend"] },
+  { cat: "Infrastructure", accent: "#d97706", items: ["VPS / Nginx", "Vercel", "Docker", "GitHub Actions"] },
+  { cat: "Security",       accent: "#10b981", items: ["OWASP", "Pen Testing", "Auth Hardening", "Webhook Security"] },
+  { cat: "Design",         accent: "#059669", items: ["Figma", "InDesign", "Typography Systems", "Brand Identity"] },
 ];
 
 const BEYOND = [
-  { icon: "🎌", title: "Anime",            body: "FMA, Attack on Titan, Vinland Saga. The philosophy in these is real — don't argue. Alchemy, war ethics, and conquest are not casual topics." },
-  { icon: "📈", title: "Markets",          body: "NSE and crypto investor. Built Akili Markets because I wanted the tool I always wished existed. Now it exists." },
-  { icon: "📖", title: "Editorial",        body: "Designed Chill Minds Magazine — 72 pages across two volumes. Printed, distributed, real. Kids' mental wellness is underserved." },
-  { icon: "🌍", title: "Nairobi → World",  body: "Proving world-class products ship from anywhere. Not aspirationally. Actually — with live revenue, live users, and live stakes." },
+  { icon: "🎌", title: "Anime",           body: "FMA, Attack on Titan, Vinland Saga. The philosophy in these is real — don't argue." },
+  { icon: "📈", title: "Markets",         body: "NSE investor building the tool I always wished existed." },
+  { icon: "📖", title: "Editorial",       body: "Designed Chill Minds Magazine — 72 pages. Printed, distributed, real." },
+  { icon: "🌍", title: "Nairobi → World", body: "Proving that world-class products ship from anywhere." },
 ];
 
 const STATS = [
-  { val: "247+",    label: "Active Tenants",   accent: "#0369a1" },
-  { val: "KSH 1.5M", label: "Monthly Volume", accent: "#06b6d4" },
-  { val: "13",      label: "GhostNet Modules", accent: "#0ea5e9" },
-  { val: "8+",      label: "Years in Tech",    accent: "#7c3aed" },
-  { val: "3",       label: "Live Projects",    accent: "#a855f7" },
+  { val: "247+",    label: "Active Tenants",   accent: "#7c3aed" },
+  { val: "KSH 1.5M", label: "Monthly Volume", accent: "#4ead6a" },
+  { val: "13",      label: "GhostNet Modules", accent: "#10b981" },
+  { val: "8+",      label: "Years in Tech",    accent: "#d97706" },
+  { val: "2",       label: "Production SaaS",  accent: "#a855f7" },
 ];
 
 const LABEL_COLORS: Record<string, string> = {
@@ -500,19 +488,18 @@ export default function About() {
       <div style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="about-hero-grid" style={{ display: "grid" }}>
 
-          {/* Left: info — water palette */}
-          <div style={{ padding: "clamp(96px,12vw,140px) clamp(20px,4vw,48px) clamp(40px,5vw,72px)", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "var(--bg)" }}>
+          {/* Left: info */}
+          <div style={{ padding: "clamp(96px,12vw,140px) clamp(20px,4vw,48px) clamp(40px,5vw,72px)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <div>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--border-2)", textTransform: "uppercase" }}>Scene 02 — Rain · Origin</span>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--ocean)", textTransform: "uppercase", marginBottom: "20px", marginTop: "12px" }}>// Who I Am</div>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--purple)", textTransform: "uppercase", marginBottom: "20px" }}>// Who I Am</div>
               <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(52px,6vw,84px)", lineHeight: 0.9, letterSpacing: "-0.03em", color: "var(--text)", marginBottom: "28px" }}>
-                Levis.<br /><span style={{ color: "var(--ocean)" }}>Kibirie.</span>
+                Levis.<br /><span style={{ color: "var(--purple)" }}>Kibirie.</span>
               </h1>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "14px" }}>
                 Founding Fullstack Engineer from Nairobi, Kenya. I build production systems that handle real money and real users — then I make them look good.
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "36px" }}>
-                Makeja Homes (247+ tenants, KSH 1.5M/mo), GhostNet (cybersec AI platform), Akili Markets (algorithmic trading) — all live and in production.
+                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI) — both live and in production.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href="/work" className="btn-primary">See My Work →</a>
@@ -530,102 +517,43 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: MotionGraphic scramble (fully preserved) */}
+          {/* Right: motion graphic */}
           <MotionGraphic />
         </div>
       </div>
 
-      {/* ── STATS BAND ── */}
-      <div style={{ background: "var(--abyss)", borderBottom: "1px solid rgba(6,182,212,0.08)" }}>
+      {/* ── STATS ── */}
+      <div style={{ background: "#0a0805", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="about-stats-grid" style={{ display: "grid" }}>
           {STATS.map((s, i) => (
-            <div key={s.label} style={{ padding: "28px 20px", textAlign: "center", position: "relative", borderRight: i < STATS.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+            <div key={s.label} style={{ padding: "32px 24px", textAlign: "center", position: "relative", borderRight: i < STATS.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${s.accent}, transparent)` }} />
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(20px,2.5vw,34px)", color: s.accent, lineHeight: 1, marginBottom: "6px", filter: `drop-shadow(0 0 12px ${s.accent}60)` }}>{s.val}</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{s.label}</div>
+              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(22px,2.5vw,36px)", color: s.accent, lineHeight: 1, marginBottom: "6px" }}>{s.val}</div>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── AVATAR / IN PERSON ── */}
-      <div style={{ background: "var(--bg-2)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "72px clamp(20px,4vw,48px)" }}>
-        <div className="about-avatar-grid" style={{ display: "grid", maxWidth: "1100px", margin: "0 auto", alignItems: "center", gap: "clamp(32px,5vw,64px)" }}>
-
-          {/* Left: 3D canvas */}
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ width: "360px", height: "480px", maxWidth: "100%" }}>
-              <Canvas
-                camera={{ position: [0, 1, 4], fov: 45 }}
-                gl={{ alpha: true, antialias: true }}
-                style={{ background: "transparent", width: "100%", height: "100%" }}
-              >
-                <ambientLight intensity={0.7} />
-                <directionalLight position={[3, 5, 3]} intensity={1.2} color="#e0f2fe" />
-                <pointLight position={[-2, 3, 2]} intensity={0.5} color="#7c3aed" />
-                <Environment preset="city" />
-                <Suspense fallback={null}>
-                  <AvatarModel />
-                  <ContactShadows position={[0, -1.6, 0]} opacity={0.3} scale={4} blur={2} far={2} />
-                </Suspense>
-              </Canvas>
-            </div>
-          </div>
-
-          {/* Right: bio text */}
-          <div>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--ocean)", textTransform: "uppercase", marginBottom: "12px" }}>// In Person</div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(36px,4.5vw,64px)", lineHeight: 0.9, letterSpacing: "-0.03em", color: "var(--ocean)", marginBottom: "28px" }}>
-              Levis Kibirie.
-            </h2>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "480px", marginBottom: "16px" }}>
-              8+ years in tech. Started with a Software Development Certificate from ICT Authority Kenya. Pen testing at Zalego. BSc IT at Kenyatta University (2nd Upper). IT Intern at Ministry of Foreign &amp; Diaspora Affairs. Then ShanTech Agency, then Makeja Homes, then GhostNet, then Akili Markets. Each one deeper than the last.
-            </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "480px", marginBottom: "28px" }}>
-              Oracle Cloud AI Foundations certified. Building for the Nairobi Securities Exchange. Based in Nairobi, Kenya. Available worldwide.
-            </p>
-
-            {/* Badges */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "32px" }}>
-              {[
-                { label: "Nairobi, KE 🌊" },
-                { label: "Oracle AI Certified ✓" },
-                { label: "Open to Remote" },
-              ].map(b => (
-                <span key={b.label} style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.08em", color: "var(--ocean)", background: "rgba(3,105,161,0.08)", border: "1px solid rgba(3,105,161,0.25)", padding: "5px 12px" }}>
-                  {b.label}
-                </span>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              <a href="/work" className="btn-primary">See My Work →</a>
-              <a href="/#contact" className="btn-secondary">Get In Touch</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── TIMELINE / JOURNEY ── */}
+      {/* ── TIMELINE ── */}
       <div style={{ background: "var(--bg)", padding: "72px clamp(20px,4vw,48px)" }}>
         <div style={{ maxWidth: "840px", margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px", flexWrap: "wrap", gap: "16px" }}>
             <div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--ocean)", textTransform: "uppercase", marginBottom: "10px" }}>// Journey</div>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--purple)", textTransform: "uppercase", marginBottom: "10px" }}>// Journey</div>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", letterSpacing: "-0.02em", color: "var(--text)", lineHeight: 1 }}>How I Got Here.</h2>
             </div>
             <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
               {[null, "Education", "Work", "Founded", "Built"].map(f => (
                 <button key={String(f)} onClick={() => setFilter(f)}
-                  style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 12px", background: filter === f ? "var(--ocean)" : "transparent", border: `1px solid ${filter === f ? "var(--ocean)" : "var(--border)"}`, color: filter === f ? "white" : "var(--text-3)", cursor: "pointer", transition: "all 0.2s" }}>
+                  style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 12px", background: filter === f ? "var(--text)" : "transparent", border: `1px solid ${filter === f ? "var(--text)" : "var(--border)"}`, color: filter === f ? "white" : "var(--text-3)", cursor: "pointer", transition: "all 0.2s" }}>
                   {f ?? "All"}
                 </button>
               ))}
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <div style={{ position: "absolute", left: "clamp(64px,10vw,96px)", top: 0, bottom: 0, width: "1px", background: "linear-gradient(to bottom, var(--ocean-light), var(--border))" }} />
+            <div style={{ position: "absolute", left: "clamp(64px,10vw,96px)", top: 0, bottom: 0, width: "1px", background: "var(--border)" }} />
             {filtered.map((item, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "clamp(56px,10vw,80px) 1fr", position: "relative" }}>
                 <div style={{ paddingTop: "30px", paddingRight: "16px", textAlign: "right" }}>
@@ -647,20 +575,20 @@ export default function About() {
       </div>
 
       {/* ── STACK ── */}
-      <div style={{ background: "var(--abyss)", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(6,182,212,0.08)" }}>
+      <div style={{ background: "#0a0805", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(6,182,212,0.65)", textTransform: "uppercase", marginBottom: "10px" }}>// Stack</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(124,58,237,0.6)", textTransform: "uppercase", marginBottom: "10px" }}>// Stack</div>
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", letterSpacing: "-0.02em", color: "white", lineHeight: 1, marginBottom: "40px" }}>The Toolkit.</h2>
-          <div className="about-stack-grid" style={{ display: "grid", gap: "1px", background: "rgba(255,255,255,0.05)" }}>
+          <div className="about-stack-grid" style={{ display: "grid", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
             {STACK.map(cat => (
-              <div key={cat.cat} style={{ background: "var(--abyss)", padding: "24px 20px", position: "relative", overflow: "hidden" }}>
+              <div key={cat.cat} style={{ background: "#0a0805", padding: "28px 24px", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg,${cat.accent},transparent)` }} />
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.15em", textTransform: "uppercase", color: cat.accent, marginBottom: "12px", opacity: 0.85 }}>{cat.cat}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: cat.accent, marginBottom: "14px", opacity: 0.8 }}>{cat.cat}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                   {cat.items.map(item => (
-                    <div key={item} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                      <div style={{ width: "3px", height: "3px", borderRadius: "50%", background: cat.accent, flexShrink: 0 }} />
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "rgba(255,255,255,0.55)" }}>{item}</span>
+                    <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: cat.accent, flexShrink: 0, opacity: 0.7 }} />
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "13px", color: "rgba(255,255,255,0.6)" }}>{item}</span>
                     </div>
                   ))}
                 </div>
@@ -673,14 +601,11 @@ export default function About() {
       {/* ── BEYOND THE CODE ── */}
       <div style={{ background: "var(--bg-2)", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid var(--border)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--aqua)", textTransform: "uppercase", marginBottom: "10px" }}>// Beyond the Code</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--forest)", textTransform: "uppercase", marginBottom: "10px" }}>// Beyond the Code</div>
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", letterSpacing: "-0.02em", color: "var(--text)", lineHeight: 1, marginBottom: "40px" }}>Who I Actually Am.</h2>
           <div className="about-beyond-grid" style={{ display: "grid", gap: "12px" }}>
             {BEYOND.map(b => (
-              <div key={b.title} style={{ background: "rgba(255,255,255,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid var(--border)", padding: "28px 24px", transition: "all 0.3s" }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--border-glow)"; el.style.boxShadow = "0 4px 24px rgba(6,182,212,0.1)"; }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--border)"; el.style.boxShadow = "none"; }}
-              >
+              <div key={b.title} style={{ background: "var(--surface)", border: "1px solid var(--border)", padding: "28px 24px" }}>
                 <div style={{ fontSize: "28px", marginBottom: "12px" }}>{b.icon}</div>
                 <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "16px", color: "var(--text)", marginBottom: "8px" }}>{b.title}</div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "13px", color: "var(--text-3)", lineHeight: 1.75 }}>{b.body}</p>
@@ -691,17 +616,23 @@ export default function About() {
       </div>
 
       {/* ── CTA ── */}
-      <div style={{ background: "var(--abyss)", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(6,182,212,0.08)", textAlign: "center" }}>
-        <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(6,182,212,0.6)", textTransform: "uppercase", marginBottom: "16px" }}>// Open to Work</div>
+      <div style={{ background: "#05020f", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,0.06)", textAlign: "center" }}>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(168,85,247,0.6)", textTransform: "uppercase", marginBottom: "16px" }}>// Open to Work</div>
         <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(32px,5vw,64px)", lineHeight: 0.95, letterSpacing: "-0.03em", color: "white", marginBottom: "20px" }}>
-          Let&apos;s build<br /><span style={{ color: "var(--ocean-light)" }}>something real.</span>
+          Let&apos;s build<br /><span style={{ color: "#a855f7" }}>something real.</span>
         </h2>
         <p style={{ fontFamily: "var(--font-body)", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.8, maxWidth: "460px", margin: "0 auto 36px" }}>
           Open to senior remote engineering roles, SaaS collaborations, and problems worth solving.
         </p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="/#contact" className="btn-primary">Get In Touch →</a>
-          <a href="/work" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "12px", letterSpacing: "0.08em", textTransform: "uppercase", background: "transparent", color: "rgba(255,255,255,0.5)", padding: "13px 28px", textDecoration: "none", border: "1px solid rgba(255,255,255,0.12)", transition: "all 0.2s", display: "inline-flex", alignItems: "center" }}
+          <a href="/#contact"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "12px", letterSpacing: "0.08em", textTransform: "uppercase", background: "#7c3aed", color: "white", padding: "14px 32px", textDecoration: "none", transition: "all 0.2s", boxShadow: "0 0 24px rgba(124,58,237,0.3)" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "white"; (e.currentTarget as HTMLElement).style.color = "#7c3aed"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#7c3aed"; (e.currentTarget as HTMLElement).style.color = "white"; }}>
+            Get In Touch →
+          </a>
+          <a href="/work"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "12px", letterSpacing: "0.08em", textTransform: "uppercase", background: "transparent", color: "rgba(255,255,255,0.5)", padding: "14px 32px", textDecoration: "none", border: "1px solid rgba(255,255,255,0.12)", transition: "all 0.2s" }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "white"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.4)"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.12)"; }}>
             See My Work
@@ -714,7 +645,6 @@ export default function About() {
         .about-stats-grid  { grid-template-columns: repeat(2, 1fr); }
         .about-stack-grid  { grid-template-columns: repeat(2, 1fr); }
         .about-beyond-grid { grid-template-columns: repeat(2, 1fr); }
-        .about-avatar-grid { grid-template-columns: 1fr; }
         @media (min-width: 640px) {
           .about-stats-grid  { grid-template-columns: repeat(3, 1fr); }
           .about-stack-grid  { grid-template-columns: repeat(3, 1fr); }
@@ -724,11 +654,8 @@ export default function About() {
           .about-stats-grid  { grid-template-columns: repeat(5, 1fr); }
           .about-stack-grid  { grid-template-columns: repeat(4, 1fr); }
           .about-beyond-grid { grid-template-columns: repeat(4, 1fr); }
-          .about-avatar-grid { grid-template-columns: 1fr 1fr; }
         }
       `}</style>
     </div>
   );
 }
-
-useGLTF.preload("/models/avatar.glb");

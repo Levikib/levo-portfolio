@@ -40,7 +40,7 @@ export default function WhatsAppFloat() {
       >
         {/* Label pill — slides in on hover */}
         <div style={{
-          background: "rgba(5,13,26,0.97)",
+          background: "#0a0805",
           border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: "4px",
           padding: "8px 14px",

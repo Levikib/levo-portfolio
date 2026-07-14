@@ -1,39 +1,17 @@
 const items = [
-  { text:"TypeScript",       color:"#0ea5e9" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Next.js 14",       color:"#06b6d4" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"SaaS Founder",     color:"#7c3aed" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Paystack",         color:"#0369a1" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"PostgreSQL",       color:"#0ea5e9" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Makeja Homes",     color:"#7c3aed" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"GhostNet",         color:"#06b6d4" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Akili Markets",    color:"#f59e0b" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Three.js / R3F",   color:"#0ea5e9" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Nairobi → World",  color:"#0369a1" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Groq llama-3.3",   color:"#a855f7" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"FastAPI",          color:"#06b6d4" },{ text:"·",color:"rgba(3,105,161,0.3)" },
-  { text:"Binance Futures",  color:"#f59e0b" },{ text:"·",color:"rgba(3,105,161,0.3)" },
+  {text:"TypeScript",color:"#ff4d00"},{text:"·",color:"#444"},{text:"Next.js",color:"#00ff88"},{text:"·",color:"#444"},
+  {text:"SaaS Founder",color:"#ff0080"},{text:"·",color:"#444"},{text:"Paystack",color:"#ffe600"},{text:"·",color:"#444"},
+  {text:"PostgreSQL",color:"#ff4d00"},{text:"·",color:"#444"},{text:"React",color:"#00ff88"},{text:"·",color:"#444"},
+  {text:"Graphic Design",color:"#ff0080"},{text:"·",color:"#444"},{text:"Node.js",color:"#ffe600"},{text:"·",color:"#444"},
+  {text:"VPS / Nginx",color:"#ff4d00"},{text:"·",color:"#444"},{text:"Nairobi → World",color:"#00ff88"},{text:"·",color:"#444"},
 ];
-
 export default function Marquee() {
-  const doubled = [...items, ...items];
-  return (
-    <div style={{
-      position: "relative", zIndex: 10, overflow: "hidden",
-      borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)",
-      padding: "14px 0",
-      background: "linear-gradient(135deg, rgba(240,248,255,0.95) 0%, rgba(224,242,254,0.95) 100%)",
-      backdropFilter: "blur(8px)",
-    }}>
-      {/* Water shimmer overlay */}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%)", pointerEvents: "none", zIndex: 1 }} />
-      <div style={{ display: "flex", width: "max-content", animation: "marquee 32s linear infinite" }}>
-        {doubled.map((item, i) => (
-          <span key={i} style={{
-            padding: "0 20px", whiteSpace: "nowrap",
-            fontFamily: "var(--font-display)", fontWeight: 800,
-            fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase",
-            color: item.color,
-          }}>{item.text}</span>
+  const doubled = [...items,...items];
+  return(
+    <div className="relative z-10 overflow-hidden border-t border-b border-[#1a1a1a] py-4" style={{background:"#0e0e0e"}}>
+      <div className="flex w-max" style={{animation:"marquee 25s linear infinite"}}>
+        {doubled.map((item,i)=>(
+          <span key={i} className="px-8 whitespace-nowrap" style={{fontFamily:"var(--font-syne)",fontWeight:800,fontSize:"12px",letterSpacing:"0.2em",textTransform:"uppercase",color:item.color}}>{item.text}</span>
         ))}
       </div>
     </div>

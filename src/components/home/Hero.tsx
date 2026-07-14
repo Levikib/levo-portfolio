@@ -1,278 +1,210 @@
 "use client";
-import { useEffect, useRef, useState, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Float, Environment, ContactShadows } from "@react-three/drei";
-import * as THREE from "three";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import ParticleField from "@/components/ui/ParticleField";
 
-// ── AVATAR 3D MODEL ───────────────────────────────────────────────────────────
-function AvatarModel() {
-  const { scene } = useGLTF("/models/avatar.glb");
-  const ref = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime;
-    // Gentle idle sway — feels alive, not mechanical
-    ref.current.rotation.y = Math.sin(t * 0.4) * 0.12;
-    ref.current.position.y = -1.1 + Math.sin(t * 0.6) * 0.04;
-  });
-
-  return (
-    <Float speed={0.8} rotationIntensity={0.08} floatIntensity={0.3}>
-      <primitive ref={ref} object={scene} scale={2.2} position={[0, -1.1, 0]} />
-    </Float>
-  );
-}
-
-// ── RAIN PARTICLES (canvas 2D) ────────────────────────────────────────────────
-type Drop = { x: number; y: number; speed: number; length: number; opacity: number };
-
-function RainCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const stateRef  = useRef<{ drops: Drop[]; raf: number }>({ drops: [], raf: 0 });
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const N = 80;
-    stateRef.current.drops = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      speed: 1.2 + Math.random() * 2.2,
-      length: 8 + Math.random() * 16,
-      opacity: 0.04 + Math.random() * 0.1,
-    }));
-
-    const loop = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (const d of stateRef.current.drops) {
-        ctx.beginPath();
-        ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x - d.length * 0.15, d.y + d.length);
-        ctx.strokeStyle = `rgba(3,105,161,${d.opacity})`;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-        d.y += d.speed;
-        if (d.y > canvas.height + d.length) {
-          d.y = -d.length;
-          d.x = Math.random() * canvas.width;
-        }
-      }
-      stateRef.current.raf = requestAnimationFrame(loop);
-    };
-    stateRef.current.raf = requestAnimationFrame(loop);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(stateRef.current.raf);
-    };
-  }, []);
-
-  return (
-    <canvas ref={canvasRef} style={{
-      position: "absolute", inset: 0, width: "100%", height: "100%",
-      pointerEvents: "none", zIndex: 1,
-    }} />
-  );
-}
-
-// ── HERO ──────────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const [loaded, setLoaded]   = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const photoRef   = useRef<HTMLDivElement>(null);
   const badge1Ref  = useRef<HTMLDivElement>(null);
   const badge2Ref  = useRef<HTMLDivElement>(null);
   const badge3Ref  = useRef<HTMLDivElement>(null);
   const badge4Ref  = useRef<HTMLDivElement>(null);
+  const ringRef    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLoaded(true);
     const onScroll = () => {
-      const s  = window.scrollY;
+      const s  = window.pageYOffset;
       const sH = sectionRef.current?.offsetHeight ?? window.innerHeight;
-      if (s > sH) return;
+      if (s > sH) {
+        // reset everything cleanly when past section
+        [photoRef, ringRef, badge1Ref, badge2Ref, badge3Ref, badge4Ref].forEach(r => {
+          if (r.current) r.current.style.transform = "translateY(0px)";
+        });
+        return;
+      }
+      if (photoRef.current)  photoRef.current.style.transform  = `translateY(${s * 0.08}px)`;
+      if (ringRef.current)   ringRef.current.style.transform   = `translateY(${s * 0.04}px)`;
       if (badge1Ref.current) badge1Ref.current.style.transform = `translateY(${s * 0.14}px)`;
       if (badge2Ref.current) badge2Ref.current.style.transform = `translateY(${s * 0.18}px)`;
       if (badge3Ref.current) badge3Ref.current.style.transform = `translateY(${s * 0.11}px)`;
       if (badge4Ref.current) badge4Ref.current.style.transform = `translateY(${s * 0.16}px)`;
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const BLOB = "40% 60% 55% 45% / 45% 40% 60% 55%";
+
   return (
-    <section ref={sectionRef} style={{
-      position: "relative", minHeight: "100vh",
-      background: "var(--bg)", overflow: "hidden",
-      display: "flex", flexDirection: "column",
-    }}>
-      {/* Rain layer */}
-      <RainCanvas />
+    <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden"
+      style={{ background: "var(--bg)" }}>
+      <ParticleField />
 
-      {/* Ocean depth glow — top right */}
-      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: "55%", height: "70%", background: "radial-gradient(ellipse at 80% 20%, rgba(3,105,161,0.1) 0%, transparent 65%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0 }} />
-      {/* Aqua glow — bottom left */}
-      <div style={{ position: "absolute", bottom: "0", left: "-5%", width: "45%", height: "50%", background: "radial-gradient(ellipse at 20% 80%, rgba(6,182,212,0.08) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0 }} />
-      {/* Purple accent — mid */}
-      <div style={{ position: "absolute", top: "40%", left: "40%", width: "30%", height: "40%", background: "radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0 }} />
+      {/* Ambient washes */}
+      <div className="absolute top-0 right-0 w-[55%] h-full pointer-events-none z-0" style={{
+        background: "radial-gradient(ellipse at 80% 40%, rgba(77,173,106,0.07) 0%, transparent 70%)"
+      }}/>
+      <div className="absolute bottom-0 left-0 w-[40%] h-[50%] pointer-events-none z-0" style={{
+        background: "radial-gradient(ellipse at 20% 80%, rgba(124,58,237,0.06) 0%, transparent 60%)"
+      }}/>
 
-      <div style={{ height: "96px" }} />
+      <div className="h-24" />
 
-      <div style={{
-        position: "relative", zIndex: 10, flex: 1,
-        display: "grid", gridTemplateColumns: "1fr 1fr",
-        gap: 0, padding: "0 clamp(24px,5vw,64px)", paddingBottom: "48px",
-        alignItems: "center",
-      }} className="hero-grid">
+      <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0 px-8 md:px-12 pb-12 items-center">
 
         {/* ── LEFT ── */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "32px 0" }}>
+        <div className="flex flex-col justify-center py-8">
 
-          {/* Status badge */}
-          <div style={{
-            display: "flex", alignItems: "center", gap: "8px", marginBottom: "28px",
-            flexWrap: "wrap",
+          <div className="flex items-center gap-3 mb-8" style={{
             opacity: loaded ? 1 : 0,
             transform: loaded ? "translateY(0)" : "translateY(20px)",
             transition: "all 0.7s cubic-bezier(0.16,1,0.3,1)",
+            fontFamily:"var(--font-mono)", fontSize:"10px",
+            letterSpacing:"0.25em", textTransform:"uppercase",
+            flexWrap:"wrap",
           }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e", animation: "blink 2s ease-in-out infinite", flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.2em", color: "rgba(34,197,94,0.9)", textTransform: "uppercase" }}>Available for work</span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--text-4)" }}>·</span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.12em", color: "var(--text-3)", textTransform: "uppercase" }}>Nairobi → World</span>
+            <span className="w-2 h-2 rounded-full" style={{ background:"var(--forest-light)", animation:"blink 2s ease-in-out infinite", flexShrink:0 }}/>
+            <span style={{ color:"var(--forest)" }}>Available</span>
+            <span style={{ color:"var(--text-4)" }}>·</span>
+            <span style={{ color:"var(--text-3)" }}>Nairobi, Kenya</span>
+            <span style={{ color:"var(--text-4)" }}>→</span>
+            <span style={{ color:"var(--purple)" }}>World</span>
           </div>
 
-          {/* Name */}
-          <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s 0.1s cubic-bezier(0.16,1,0.3,1)", marginBottom: "20px" }}>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", letterSpacing: "0.3em", color: "var(--text-4)", textTransform: "uppercase", marginBottom: "8px" }}>Hi, I&apos;m</div>
-            <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(48px,6.5vw,84px)", lineHeight: 0.95, letterSpacing: "-0.03em", color: "var(--text)", marginBottom: "4px" }}>Levis</h1>
-            <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(48px,6.5vw,84px)", lineHeight: 0.95, letterSpacing: "-0.03em", color: "var(--ocean)", display: "block", marginBottom: "4px" }}>Kibirie.</h1>
-            {/* Water metaphor tagline */}
-            <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--aqua)", letterSpacing: "0.18em", textTransform: "uppercase", marginTop: "12px", opacity: 0.85 }}>
-              Different containers. Same force.
-            </p>
+          <div style={{ opacity:loaded?1:0, transform:loaded?"translateY(0)":"translateY(30px)", transition:"all 0.8s 0.1s cubic-bezier(0.16,1,0.3,1)" }}>
+            <div style={{ fontFamily:"var(--font-mono)", fontSize:"11px", letterSpacing:"0.3em", color:"var(--text-4)", textTransform:"uppercase", marginBottom:"8px" }}>Hi, I&apos;m</div>
+            <h1 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(52px,7vw,88px)", lineHeight:0.95, letterSpacing:"-0.03em", color:"var(--text)", marginBottom:"4px" }}>Levis</h1>
+            <h1 style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"clamp(52px,7vw,88px)", lineHeight:0.95, letterSpacing:"-0.03em", color:"var(--purple)", display:"block", marginBottom:"28px" }}>Kibirie.</h1>
           </div>
 
-          {/* Role pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "24px", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
+          <div className="flex flex-wrap gap-2 mb-8" style={{ opacity:loaded?1:0, transform:loaded?"translateY(0)":"translateY(20px)", transition:"all 0.8s 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
             {[
-              { label: "Fullstack Engineer", c: "var(--ocean)",  bg: "var(--ocean-pale)" },
-              { label: "SaaS Founder",       c: "var(--purple)", bg: "var(--purple-pale)" },
-              { label: "Graphic Designer",   c: "var(--aqua)",   bg: "var(--aqua-pale)" },
-              { label: "Creative",           c: "var(--text-2)", bg: "rgba(255,255,255,0.7)" },
+              { label:"Fullstack Engineer", color:"var(--purple)", bg:"var(--purple-pale)" },
+              { label:"SaaS Founder",       color:"var(--forest)", bg:"var(--forest-pale)" },
+              { label:"Graphic Designer",   color:"var(--earth)",  bg:"var(--earth-pale)"  },
+              { label:"Creative",           color:"var(--purple)", bg:"var(--purple-pale)" },
             ].map(r => (
-              <span key={r.label} style={{ background: r.bg, color: r.c, fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", textTransform: "uppercase", padding: "5px 12px", border: "1px solid rgba(3,105,161,0.1)" }}>{r.label}</span>
+              <span key={r.label} style={{ background:r.bg, color:r.color, fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", padding:"5px 12px" }}>{r.label}</span>
             ))}
           </div>
 
-          {/* Description */}
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.85, maxWidth: "460px", marginBottom: "36px", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
-            Engineer who builds systems that move real money. Designer who makes things people feel.
-            <strong style={{ color: "var(--text)" }}> 8+ years</strong> in tech —
-            Makeja Homes, GhostNet, Akili Markets. Production. Always.
+          <p className="max-w-sm mb-10" style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", lineHeight:1.8, opacity:loaded?1:0, transform:loaded?"translateY(0)":"translateY(20px)", transition:"all 0.8s 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+            Engineer who builds systems that move real money. Designer who makes things people actually feel.
+            <strong style={{ color:"var(--text)" }}> 8+ years</strong> turning ideas into production.
           </p>
 
-          {/* CTAs */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
+          <div className="flex flex-wrap gap-3" style={{ opacity:loaded?1:0, transform:loaded?"translateY(0)":"translateY(20px)", transition:"all 0.8s 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
             <a href="#contact" className="btn-primary">Let&apos;s Work →</a>
             <a href="/work"    className="btn-secondary">See My Work</a>
           </div>
         </div>
 
-        {/* ── RIGHT — Avatar 3D + floating badges ── */}
-        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "520px", opacity: loaded ? 1 : 0, transition: "opacity 1s 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+        {/* ── RIGHT — pure layout column, zero bg/shadow/border ── */}
+        <div style={{
+          position:"relative",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          padding:"90px 70px",
+          opacity: loaded ? 1 : 0,
+          transition:"opacity 1s 0.3s cubic-bezier(0.16,1,0.3,1)",
+          background:"transparent", boxShadow:"none", border:"none",
+        }}>
 
-          {/* Ambient glow rings */}
-          <div style={{ position: "absolute", width: "360px", height: "360px", borderRadius: "50%", border: "1px solid rgba(6,182,212,0.12)", animation: "spinSlow 50s linear infinite", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", width: "280px", height: "280px", borderRadius: "50%", border: "1px dashed rgba(3,105,161,0.1)", pointerEvents: "none" }} />
-          {/* Caustic floor glow */}
-          <div style={{ position: "absolute", bottom: "40px", width: "280px", height: "80px", background: "radial-gradient(ellipse, rgba(6,182,212,0.12) 0%, transparent 70%)", filter: "blur(20px)", pointerEvents: "none" }} />
-          {/* Purple rim glow */}
-          <div style={{ position: "absolute", width: "440px", height: "440px", borderRadius: "50%", background: "radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 65%)", pointerEvents: "none" }} />
-
-          {/* Three.js canvas */}
-          <div style={{ width: "340px", height: "460px", position: "relative", zIndex: 2 }}>
-            <Canvas camera={{ position: [0, 0.5, 4.5], fov: 42 }} style={{ background: "transparent" }} gl={{ alpha: true, antialias: true }}>
-              <ambientLight intensity={0.8} />
-              {/* Key light — warm front */}
-              <directionalLight position={[3, 6, 4]} intensity={1.4} color="#e0f2fe" />
-              {/* Fill light — purple rim */}
-              <directionalLight position={[-4, 2, -2]} intensity={0.6} color="#a855f7" />
-              {/* Ground bounce — aqua */}
-              <pointLight position={[0, -1, 3]} intensity={0.5} color="#06b6d4" />
-              <Environment preset="city" />
-              <Suspense fallback={null}>
-                <AvatarModel />
-                <ContactShadows position={[0, -2.4, 0]} opacity={0.15} scale={5} blur={2} color="#0369a1" />
-              </Suspense>
-            </Canvas>
+          {/* Rings layer — slowest parallax */}
+          <div ref={ringRef} style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center", pointerEvents:"none", willChange:"transform" }}>
+            <div style={{ position:"absolute", width:"360px", height:"360px", borderRadius:"50%", border:"1px dashed rgba(77,173,106,0.22)", animation:"spinSlow 40s linear infinite" }}/>
+            <div style={{ position:"absolute", width:"295px", height:"295px", borderRadius:"50%", border:"1.5px solid rgba(124,58,237,0.13)" }}/>
           </div>
 
-          {/* Floating badges — parallax */}
+          {/* Photo layer — medium parallax */}
+          <div ref={photoRef} style={{ position:"relative", zIndex:2, willChange:"transform" }}>
 
-          {/* Nairobi KE — top left */}
-          <div ref={badge1Ref} style={{ position: "absolute", top: "30px", left: "0px", zIndex: 5, willChange: "transform" }}>
-            <div style={{ background: "rgba(240,248,255,0.9)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(3,105,161,0.15)", padding: "8px 16px", display: "flex", alignItems: "center", gap: "8px", animation: "float 5s ease-in-out infinite", boxShadow: "0 4px 20px rgba(3,105,161,0.08)" }}>
-              <span style={{ fontSize: "13px" }}>🌊</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", color: "var(--ocean)", textTransform: "uppercase" }}>Nairobi, KE</span>
+            {/* Outer glow ring — same border-radius as photo, NO overflow */}
+            <div style={{
+              position:"absolute", inset:"-4px",
+              borderRadius: BLOB,
+              border:"2px solid rgba(124,58,237,0.22)",
+              pointerEvents:"none",
+            }}/>
+
+            {/* White outline ring */}
+            <div style={{
+              position:"absolute", inset:"-2px",
+              borderRadius: BLOB,
+              border:"2px solid rgba(255,255,255,0.85)",
+              pointerEvents:"none",
+              zIndex:3,
+            }}/>
+
+            {/* Photo — overflow:hidden clips image to shape cleanly */}
+            <div style={{
+              position:"relative",
+              width:"260px", height:"320px",
+              borderRadius: BLOB,
+              overflow:"hidden",
+            }}>
+              <Image
+                src="/levo.jpg"
+                alt="Levis Kibirie — Fullstack Engineer & SaaS Founder from Nairobi, Kenya"
+                width={260}
+                height={320}
+                priority
+                style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 20%", filter:"saturate(1.1) contrast(1.03)", display:"block" }}
+              />
+              {/* Gradient overlay — INSIDE overflow:hidden so it clips perfectly */}
+              <div style={{
+                position:"absolute", bottom:0, left:0, right:0, height:"45%",
+                background:"linear-gradient(to top, rgba(15,61,31,0.3) 0%, transparent 100%)",
+                pointerEvents:"none",
+              }}/>
+            </div>
+          </div>
+
+          {/* ── BADGES — each on own layer with own ref ── */}
+
+          {/* Nairobi — top left */}
+          <div ref={badge1Ref} style={{ position:"absolute", top:"16px", left:"4px", zIndex:5, willChange:"transform" }}>
+            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid rgba(45,122,69,0.2)", borderRadius:"999px", padding:"7px 14px", display:"flex", alignItems:"center", gap:"7px", animation:"float 5s ease-in-out infinite" }}>
+              <span style={{ fontSize:"13px" }}>🌿</span>
+              <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--forest)", textTransform:"uppercase", fontWeight:600 }}>Nairobi</span>
             </div>
           </div>
 
           {/* 247+ tenants — top right */}
-          <div ref={badge2Ref} style={{ position: "absolute", top: "40px", right: "0px", zIndex: 5, willChange: "transform" }}>
-            <div style={{ background: "rgba(240,248,255,0.9)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(3,105,161,0.15)", padding: "14px 18px", animation: "float 4s ease-in-out infinite", minWidth: "120px", boxShadow: "0 4px 20px rgba(3,105,161,0.08)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "26px", color: "var(--ocean)", lineHeight: 1 }}>247+</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "3px" }}>Tenants Managed</div>
+          <div ref={badge2Ref} style={{ position:"absolute", top:"24px", right:"4px", zIndex:5, willChange:"transform" }}>
+            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid var(--border)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s ease-in-out infinite", minWidth:"108px" }}>
+              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"24px", color:"var(--purple)", lineHeight:1 }}>247+</div>
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Tenants Managed</div>
             </div>
           </div>
 
           {/* GhostNet — bottom right */}
-          <div ref={badge3Ref} style={{ position: "absolute", bottom: "50px", right: "0px", zIndex: 5, willChange: "transform" }}>
-            <div style={{ background: "rgba(240,248,255,0.9)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(6,182,212,0.2)", padding: "14px 18px", animation: "float 4s 1.2s ease-in-out infinite", minWidth: "120px", boxShadow: "0 4px 20px rgba(6,182,212,0.1)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "16px", color: "var(--aqua)", lineHeight: 1 }}>GhostNet</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "3px" }}>Cybersec · Live ●</div>
+          <div ref={badge3Ref} style={{ position:"absolute", bottom:"24px", right:"4px", zIndex:5, willChange:"transform" }}>
+            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid rgba(16,185,129,0.25)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s 1.2s ease-in-out infinite", minWidth:"108px" }}>
+              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"18px", color:"#059669", lineHeight:1 }}>GhostNet</div>
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>Cybersec · Live</div>
             </div>
           </div>
 
           {/* 8+ Yrs — bottom left */}
-          <div ref={badge4Ref} style={{ position: "absolute", bottom: "60px", left: "0px", zIndex: 5, willChange: "transform" }}>
-            <div style={{ background: "rgba(240,248,255,0.9)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(124,58,237,0.15)", padding: "14px 18px", animation: "float 4s 2.2s ease-in-out infinite", boxShadow: "0 4px 20px rgba(124,58,237,0.08)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "20px", color: "var(--purple)", lineHeight: 1 }}>8+ Yrs</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "3px" }}>In Tech</div>
+          <div ref={badge4Ref} style={{ position:"absolute", bottom:"36px", left:"4px", zIndex:5, willChange:"transform" }}>
+            <div style={{ background:"rgba(255,255,255,0.85)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", border:"1px solid rgba(45,122,69,0.2)", borderRadius:"12px", padding:"12px 16px", animation:"float 4s 2.2s ease-in-out infinite" }}>
+              <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"18px", color:"var(--forest)", lineHeight:1 }}>8+ Yrs</div>
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.12em", color:"var(--text-4)", textTransform:"uppercase", marginTop:"3px" }}>In Tech</div>
             </div>
           </div>
+
         </div>
       </div>
 
       {/* Scroll cue */}
-      <div style={{ position: "absolute", bottom: "32px", left: "clamp(24px,5vw,64px)", zIndex: 10, display: "flex", alignItems: "center", gap: "12px", animation: "float 3s ease-in-out infinite" }}>
-        <div style={{ width: "1px", height: "36px", background: "linear-gradient(to bottom, var(--ocean-light), transparent)" }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.2em", color: "var(--text-4)", textTransform: "uppercase" }}>Scroll to explore</span>
+      <div className="absolute bottom-8 left-12 z-10 flex items-center gap-3" style={{ animation:"float 3s ease-in-out infinite" }}>
+        <div className="w-px h-10 bg-gradient-to-b from-[var(--forest-light)] to-transparent"/>
+        <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.2em", color:"var(--text-4)", textTransform:"uppercase" }}>Scroll to explore</span>
       </div>
-
-      {/* Scene label */}
-      <div style={{ position: "absolute", bottom: "32px", right: "clamp(24px,5vw,64px)", zIndex: 10 }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.2em", color: "var(--border-2)", textTransform: "uppercase" }}>Scene 01 — The Source</span>
-      </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-        }
-        @keyframes spinSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-      `}</style>
     </section>
   );
 }
-
-useGLTF.preload("/models/avatar.glb");
