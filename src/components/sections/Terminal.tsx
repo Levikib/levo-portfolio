@@ -20,11 +20,11 @@ const GHOSTNET_ASCII = `
   ╔═══════════════════════════════╗
   ║     GHOSTNET · ACTIVE         ║
   ╠═══════════════════════════════╣
-  ║  Modules     13    complete   ║
+  ║  Modules     13    total      ║
   ║  Lab Steps   243   guided     ║
   ║  XP Economy  5450  points     ║
-  ║  Live Tools  9     hacking    ║
-  ║  GHOST AI    ●ONLINE          ║
+  ║  Tools       9     standalone ║
+  ║  GHOST Agent ●ONLINE          ║
   ╚═══════════════════════════════╝`;
 
 const SKILLS_ASCII = `
@@ -95,7 +95,7 @@ function processCommand(raw: string): Line[] {
   } else if (cmd === "ghostnet") {
     out.push({ type: "output", text: GHOSTNET_ASCII, color: "#10b981" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Live at ghostnet-pi.vercel.app — GHOST AI is online.", color: "#10b981" });
+    out.push({ type: "output", text: "  ● Live at ghostnet-pi.vercel.app — GHOST Agent is online.", color: "#10b981" });
   } else if (cmd === "skills") {
     out.push({ type: "output", text: SKILLS_ASCII, color: "#a855f7" });
     out.push({ type: "blank", text: "" });

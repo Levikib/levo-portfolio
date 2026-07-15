@@ -62,7 +62,7 @@ const events = [
     year: "2025",
     title: "GhostNet Launched",
     sub: "Cybersec Platform · AI · Live",
-    desc: "Built a full-stack cybersecurity research and training platform. 13 modules, 243 lab steps, 5450 XP, 9 live hacking tools, real-time leaderboard, and GHOST AI powered by Groq llama-3.3-70b. Cinematic entry. Zero compromises.",
+    desc: "Built a full-stack cybersecurity research and training platform. 13 modules, 243 lab steps, 5450 XP, 9 standalone tools, real-time leaderboard, and GHOST Agent powered by Groq llama-3.3-70b. Cinematic entry. Zero compromises.",
     color: "#10b981",
     icon: "👻",
     side: "left",

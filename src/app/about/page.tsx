@@ -442,7 +442,7 @@ const JOURNEY = [
   { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder — ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
   { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder — Makeja Homes",           org: "Production SaaS",                       desc: "Built a full multi-tenant property management SaaS. 247+ tenants, KSH 1.5M/month." },
   { year: "2025",      label: "Cert",      accent: "#d97706", title: "Oracle Cloud AI Foundations",      org: "Oracle",                                desc: "Validated cloud and AI fundamentals with an internationally recognised Oracle certification." },
-  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 live tools, GHOST AI. Built from scratch." },
+  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 standalone tools, GHOST Agent. Built from scratch." },
   { year: "2026",      label: "Building",  accent: "#a855f7", title: "NSE Research Agent",               org: "In Development",                        desc: "AI-powered market intelligence for the Nairobi Securities Exchange." },
 ];
 
