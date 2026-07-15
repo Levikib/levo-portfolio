@@ -13,12 +13,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Terminal />
       <Marquee />
       <FeaturedWork />
       <SkillsStack />
       <ByTheNumbers />
       <Timeline />
-      <Terminal />
       <DesignWork />
       <BlogPreview />
       <ContactSection />
