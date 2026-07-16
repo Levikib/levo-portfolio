@@ -99,7 +99,7 @@ export default function Hero() {
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 45vw"
-            style={{ objectFit: "cover", objectPosition: "60% center" }}
+            style={{ objectFit: "cover", objectPosition: "70% top" }}
           />
           {/* soft edge fade into the page on the left, on large screens where the panel meets the text column */}
           <div className="hidden lg:block" style={{
