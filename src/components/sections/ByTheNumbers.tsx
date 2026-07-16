@@ -6,9 +6,9 @@ const stats = [
   { val:247, suffix:"+", label:"Active Tenants", sub:"Live on Makeja Homes", color:"#a855f7" },
   { val:1.5, suffix:"M+", prefix:"KSH ", label:"Monthly Volume", sub:"Processed via Paystack", color:"#d97706" },
   { val:13, suffix:"", label:"Cybersec Modules", sub:"243 lab steps · 9 tools", color:"#10b981" },
-  { val:5450, suffix:"", label:"XP Economy", sub:"GhostNet gamified learning", color:"#10b981" },
+  { val:5450, suffix:"", label:"XP Economy", sub:"GhostNet gamified learning", color:"#06b6d4" },
   { val:8, suffix:"+", label:"Years in Tech", sub:"From cert to SaaS founder", color:"#4ead6a" },
-  { val:2, suffix:"", label:"SaaS Live", sub:"Makeja Homes · GhostNet", color:"#a855f7" },
+  { val:2, suffix:"", label:"SaaS Live", sub:"Makeja Homes · GhostNet", color:"#e11d48" },
 ];
 
 // Positions around the hub, as px offsets from center. Tuned for a 720x640 stage.
@@ -45,16 +45,23 @@ function useCount(target: number, start: boolean, delay: number) {
   return count;
 }
 
+const HUB_RADIUS = 94;
+
 // Curved path from hub edge to node — bows outward along the tangent, like a power conduit, not a straight wire.
+// Starts on the hub's circumference (not its dead-center point) so multiple conduits don't visually
+// bundle into one overlapping knot where they meet.
 function conduitPath(cx: number, cy: number, dx: number, dy: number) {
   const x2 = cx + dx, y2 = cy + dy;
-  const mx = (cx + x2) / 2, my = (cy + y2) / 2;
-  // perpendicular offset for the bow, direction alternates by quadrant for variety
   const len = Math.hypot(dx, dy) || 1;
-  const nx = -dy / len, ny = dx / len;
+  const ux = dx / len, uy = dy / len;
+  const x1 = cx + ux * HUB_RADIUS, y1 = cy + uy * HUB_RADIUS;
+
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+  // perpendicular offset for the bow, direction alternates by quadrant for variety
+  const nx = -uy, ny = ux;
   const bow = 46 * (dx < 0 ? -1 : 1);
   const cx1 = mx + nx * bow, cy1 = my + ny * bow;
-  return `M ${cx} ${cy} Q ${cx1} ${cy1} ${x2} ${y2}`;
+  return `M ${x1} ${y1} Q ${cx1} ${cy1} ${x2} ${y2}`;
 }
 
 function Node({ stat, index, active, onEnter, onLeave }: {
@@ -156,13 +163,21 @@ function HubDiagram() {
       {/* Connecting conduits */}
       <svg width={STAGE_W} height={STAGE_H} style={{ position:"absolute", inset:0, overflow:"visible" }}>
         <defs>
-          {stats.map((s, i) => (
-            <linearGradient key={i} id={`conduit-grad-${i}`} gradientUnits="userSpaceOnUse"
-              x1={cx} y1={cy} x2={cx + layout[i].x} y2={cy + layout[i].y}>
-              <stop offset="0%" stopColor={s.color} stopOpacity="0.9" />
-              <stop offset="100%" stopColor={s.color} stopOpacity="0.15" />
-            </linearGradient>
-          ))}
+          {stats.map((s, i) => {
+            const p = layout[i];
+            const len = Math.hypot(p.x, p.y) || 1;
+            const ux = p.x / len, uy = p.y / len;
+            const x1 = cx + ux * HUB_RADIUS, y1 = cy + uy * HUB_RADIUS;
+            const x2 = cx + p.x, y2 = cy + p.y;
+            return (
+              <linearGradient key={i} id={`conduit-grad-${i}`} gradientUnits="userSpaceOnUse"
+                x1={x1} y1={y1} x2={x2} y2={y2}>
+                <stop offset="0%" stopColor={s.color} stopOpacity="0" />
+                <stop offset="22%" stopColor={s.color} stopOpacity="0.75" />
+                <stop offset="100%" stopColor={s.color} stopOpacity="0.9" />
+              </linearGradient>
+            );
+          })}
           <filter id="conduitGlow" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
@@ -174,32 +189,36 @@ function HubDiagram() {
         {layout.map((p, i) => {
           const d = conduitPath(cx, cy, p.x, p.y);
           const isActive = activeIdx === i;
+          // stagger each conduit's pulse so all 6 don't fire in lockstep
+          const dur = 2.2 + (i % 3) * 0.35;
+          const delay = i * 0.32;
           return (
             <g key={i}>
               {/* base conduit line, dim */}
               <path d={d} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" />
-              {/* energized overlay, only meaningfully visible when active */}
+              {/* energized overlay — always on, brightens on hover */}
               <path
                 d={d} fill="none"
                 stroke={`url(#conduit-grad-${i})`}
-                strokeWidth={isActive ? 2.75 : 1.5}
+                strokeWidth={isActive ? 2.75 : 1.75}
                 strokeLinecap="round"
-                opacity={isActive ? 1 : 0.28}
+                opacity={isActive ? 1 : 0.55}
                 filter={isActive ? "url(#conduitGlow)" : undefined}
                 style={{ transition: "opacity 0.3s, stroke-width 0.3s" }}
               />
-              {/* traveling energy pulse */}
+              {/* traveling energy pulse — always animating, intensifies on hover */}
               <path
                 d={d} fill="none"
                 stroke={stats[i].color}
-                strokeWidth={isActive ? 5 : 3}
+                strokeWidth={isActive ? 5 : 2.5}
                 strokeLinecap="round"
                 strokeDasharray="1 90"
-                opacity={isActive ? 0.95 : 0}
+                opacity={isActive ? 1 : 0.55}
                 filter="url(#conduitGlow)"
                 style={{
-                  transition: "opacity 0.25s",
-                  animation: isActive ? `conduitFlow 1.1s linear infinite` : "none",
+                  transition: "opacity 0.25s, stroke-width 0.25s",
+                  animation: `conduitFlow ${isActive ? 1.1 : dur}s linear infinite`,
+                  animationDelay: `${delay}s`,
                 }}
               />
             </g>
