@@ -86,7 +86,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT — large portrait panel, dark backdrop, zero decoration ── */}
+        {/* ── RIGHT — full original photo, grayscale, untouched background ── */}
         <div className="relative" style={{
           minHeight: "clamp(420px, 60vh, 900px)",
           opacity: loaded ? 1 : 0,
@@ -95,18 +95,12 @@ export default function Hero() {
         }}>
           <Image
             src="/levo-hero.jpg"
-            alt="Levis Kibirie — Fullstack Engineer and SaaS Founder from Nairobi, Kenya"
+            alt="Levis Kibirie at a waterfall in Kenya — Fullstack Engineer and SaaS Founder"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 45vw"
-            style={{ objectFit: "cover", objectPosition: "70% top" }}
+            style={{ objectFit: "cover", objectPosition: "center 12%" }}
           />
-          {/* soft edge fade into the page on the left, on large screens where the panel meets the text column */}
-          <div className="hidden lg:block" style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(90deg, rgba(10,9,16,0.5) 0%, transparent 12%)",
-            pointerEvents: "none",
-          }} />
         </div>
       </div>
 
