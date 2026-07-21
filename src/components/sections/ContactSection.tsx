@@ -29,7 +29,7 @@ export default function ContactSection() {
       {/* Subtle purple glow top-center */}
       <div style={{ position:"absolute", top:0, left:"50%", transform:"translateX(-50%)", width:"800px", height:"300px", background:"radial-gradient(ellipse, rgba(124,58,237,0.05) 0%, transparent 70%)", pointerEvents:"none", zIndex:0 }} />
 
-      {/* Dot grid — very faint */}
+      {/* Dot grid, very faint */}
       <div style={{ position:"absolute", inset:0, zIndex:0, backgroundImage:"radial-gradient(rgba(124,58,237,0.07) 1px, transparent 1px)", backgroundSize:"28px 28px", pointerEvents:"none" }} />
 
       <div className="relative z-10 px-8 md:px-12 pt-28 pb-24">
@@ -47,10 +47,10 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 max-w-6xl mx-auto">
 
-          {/* LEFT — Form */}
+          {/* LEFT: Form */}
           <div className="glass-strong rounded-sm overflow-hidden">
 
-            {/* Intent selector — distinct dark strip */}
+            {/* Intent selector, distinct dark strip */}
             <div style={{ background:"var(--text)", padding:"24px 28px" }}>
               <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.25em", color:"rgba(255,255,255,0.4)", textTransform:"uppercase", marginBottom:"14px" }}>What brings you here?</div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -72,7 +72,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Form fields — cream/light */}
+            {/* Form fields, cream/light */}
             {status==="sent" ? (
               <div className="flex flex-col items-center justify-center py-20 text-center px-8">
                 <div style={{ fontSize:"52px", marginBottom:"16px" }}>🌿</div>
@@ -110,7 +110,7 @@ export default function ContactSection() {
             )}
           </div>
 
-          {/* RIGHT — Info */}
+          {/* RIGHT: Info */}
           <div className="flex flex-col gap-3" style={{ background:"rgba(10,8,5,0.97)", border:"1px solid rgba(124,58,237,0.2)", padding:"24px" }}>
             <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.25em", color:"rgba(255,255,255,0.3)", textTransform:"uppercase", marginBottom:"8px", paddingBottom:"12px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>Connect with me</div>
 

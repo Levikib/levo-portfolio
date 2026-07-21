@@ -47,7 +47,7 @@ function useCount(target: number, start: boolean, delay: number) {
 
 const HUB_RADIUS = 94;
 
-// Curved path from hub edge to node — bows outward along the tangent, like a power conduit, not a straight wire.
+// Curved path from hub edge to node, bows outward along the tangent, like a power conduit, not a straight wire.
 // Starts on the hub's circumference (not its dead-center point) so multiple conduits don't visually
 // bundle into one overlapping knot where they meet.
 function conduitPath(cx: number, cy: number, dx: number, dy: number) {
@@ -196,7 +196,7 @@ function HubDiagram() {
             <g key={i}>
               {/* base conduit line, dim */}
               <path d={d} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" />
-              {/* energized overlay — always on, brightens on hover */}
+              {/* energized overlay, always on, brightens on hover */}
               <path
                 d={d} fill="none"
                 stroke={`url(#conduit-grad-${i})`}
@@ -206,7 +206,7 @@ function HubDiagram() {
                 filter={isActive ? "url(#conduitGlow)" : undefined}
                 style={{ transition: "opacity 0.3s, stroke-width 0.3s" }}
               />
-              {/* traveling energy pulse — always animating, intensifies on hover */}
+              {/* traveling energy pulse, always animating, intensifies on hover */}
               <path
                 d={d} fill="none"
                 stroke={stats[i].color}

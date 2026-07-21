@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 const posts = [
-  { title: "Building a SaaS in Public: What 2 Years Taught Me", category: "Engineering", date: "Mar 2026", accent: "var(--purple)", accentRgb:"124,58,237", readTime: "8 min", excerpt: "The real story behind Makeja Homes — wins, 3am debugging sessions, and the moments I almost quit." },
+  { title: "Building a SaaS in Public: What 2 Years Taught Me", category: "Engineering", date: "Mar 2026", accent: "var(--purple)", accentRgb:"124,58,237", readTime: "8 min", excerpt: "The real story behind Makeja Homes: wins, 3am debugging sessions, and the moments I almost quit." },
   { title: "Why Attack on Titan is the Greatest Piece of Fiction Ever Made", category: "Culture", date: "Feb 2026", accent: "var(--rose)", accentRgb:"225,29,72", readTime: "6 min", excerpt: "A fully unhinged, completely defensible argument. The ending was perfect. I will die on this hill." },
   { title: "Nairobi's Tech Scene is About to Explode", category: "Thoughts", date: "Jan 2026", accent: "var(--forest)", accentRgb:"45,122,69", readTime: "5 min", excerpt: "M-Pesa democratised finance. AI is democratising software. What happens when both forces meet in one city?" },
 ];

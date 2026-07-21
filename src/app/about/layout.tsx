@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About Levis Kibirie — Fullstack Engineer, SaaS Founder, and Graphic Designer from Nairobi, Kenya. 8+ years building production systems. Builder of Makeja Homes and GhostNet.",
+    "About Levis Kibirie: Fullstack Engineer, SaaS Founder, and Graphic Designer from Nairobi, Kenya. 8+ years building production systems. Builder of Makeja Homes and GhostNet.",
   keywords: [
     "Levis Kibirie About", "Nairobi Engineer", "Fullstack Developer Kenya",
     "SaaS Founder Kenya", "Remote Engineer Africa", "Cybersecurity Engineer Kenya",

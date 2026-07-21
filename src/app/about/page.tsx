@@ -48,7 +48,7 @@ const SCRIPT: LineDef[] = [
     { text: "You name it.", size: "sm", color: "rgba(255,255,255,0.32)" },
   ], pauseAfter: 900 },
   { words: [
-    { text: "But also —", size: "xxs", color: "rgba(255,255,255,0.2)" },
+    { text: "But also...", size: "xxs", color: "rgba(255,255,255,0.2)" },
   ], pauseAfter: 400 },
   { words: [
     { text: "I",       size: "xxl", color: "white" },
@@ -323,7 +323,7 @@ function MotionGraphic() {
           <div style={{ display: "flex", gap: "5px" }}>
             {["#e11d48","#d97706","#4ead6a"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c, opacity: 0.7 }} />)}
           </div>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", color: "rgba(255,255,255,0.18)", letterSpacing: "0.1em" }}>levo.sh — about.tsx</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "8px", color: "rgba(255,255,255,0.18)", letterSpacing: "0.1em" }}>levo.sh / about.tsx</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
           <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ead6a", animation: "blink 2s ease-in-out infinite" }} />
@@ -331,7 +331,7 @@ function MotionGraphic() {
         </div>
       </div>
 
-      {/* Text — 3D tilt wrapper */}
+      {/* Text: 3D tilt wrapper */}
       <div
         ref={textRef}
         style={{ position: "relative", zIndex: 6, padding: "clamp(56px,6vw,72px) clamp(20px,5vw,56px) clamp(36px,4vw,52px)", transformOrigin: "center center", willChange: "transform", minHeight: "460px", display: "flex", flexDirection: "column", justifyContent: "center", gap: "6px" }}
@@ -377,7 +377,7 @@ function MotionGraphic() {
                       <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.32) 50%, transparent 75%)", backgroundSize: "250% 100%", animation: "shimmerSweep 2.8s ease-in-out infinite", mixBlendMode: "overlay", pointerEvents: "none" }} />
                     )}
 
-                    {/* Characters — scrambled vs resolved */}
+                    {/* Characters: scrambled vs resolved */}
                     {def.emoji ? text : text.split("").map((ch, ci) => (
                       <span
                         key={ci}
@@ -439,10 +439,11 @@ const JOURNEY = [
   { year: "2020",      label: "Education", accent: "#0891b2", title: "Cybersecurity & Pen Testing",      org: "Zalego Institute of Technology",        desc: "Ethical hacking, penetration testing, security fundamentals. Built first security tools." },
   { year: "2020–2024", label: "Education", accent: "#0891b2", title: "BSc Information Technology",       org: "Kenyatta University · 2nd Upper Class", desc: "Full degree: software engineering, networks, databases, systems architecture." },
   { year: "Apr 2022",  label: "Work",      accent: "#059669", title: "IT Intern",                        org: "Ministry of Foreign & Diaspora Affairs", desc: "Government infrastructure, network management, and systems support." },
-  { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder — ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
-  { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder — Makeja Homes",           org: "Production SaaS",                       desc: "Built a full multi-tenant property management SaaS. 247+ tenants, KSH 1.5M/month." },
+  { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder, ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
+  { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder, Makeja Homes",           org: "Production SaaS",                       desc: "Built a full multi-tenant property management SaaS. 247+ tenants, KSH 1.5M/month." },
   { year: "2025",      label: "Cert",      accent: "#d97706", title: "Oracle Cloud AI Foundations",      org: "Oracle",                                desc: "Validated cloud and AI fundamentals with an internationally recognised Oracle certification." },
   { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 standalone tools, GHOST Agent. Built from scratch." },
+  { year: "2026",      label: "Built",     accent: "#9d5cf5", title: "Hookah Rental & Experience",       org: "Live 3D Platform",                      desc: "3D hero model, GPU disassembly shader, orbiting flavour wall, live Paystack checkout." },
   { year: "2026",      label: "Building",  accent: "#a855f7", title: "NSE Research Agent",               org: "In Development",                        desc: "AI-powered market intelligence for the Nairobi Securities Exchange." },
 ];
 
@@ -457,9 +458,9 @@ const STACK = [
 ];
 
 const BEYOND = [
-  { icon: "🎌", title: "Anime",           body: "FMA, Attack on Titan, Vinland Saga. The philosophy in these is real — don't argue." },
+  { icon: "🎌", title: "Anime",           body: "FMA, Attack on Titan, Vinland Saga. The philosophy in these is real, don't argue." },
   { icon: "📈", title: "Markets",         body: "NSE investor building the tool I always wished existed." },
-  { icon: "📖", title: "Editorial",       body: "Designed Chill Minds Magazine — 72 pages. Printed, distributed, real." },
+  { icon: "📖", title: "Editorial",       body: "Designed Chill Minds Magazine, 72 pages. Printed, distributed, real." },
   { icon: "🌍", title: "Nairobi → World", body: "Proving that world-class products ship from anywhere." },
 ];
 
@@ -496,10 +497,10 @@ export default function About() {
                 Levis.<br /><span style={{ color: "var(--purple)" }}>Kibirie.</span>
               </h1>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "14px" }}>
-                Founding Fullstack Engineer from Nairobi, Kenya. I build production systems that handle real money and real users — then I make them look good.
+                Founding Fullstack Engineer from Nairobi, Kenya. I build production systems that handle real money and real users, then I make them look good.
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "36px" }}>
-                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI) — both live and in production.
+                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI), both live and in production.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href="/work" className="btn-primary">See My Work →</a>

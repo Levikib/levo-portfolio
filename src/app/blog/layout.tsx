@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Writing by Levis Kibirie — engineering, SaaS, Nairobi tech, cybersecurity, and creative work. Real thoughts from a builder in Africa.",
+    "Writing by Levis Kibirie: engineering, SaaS, Nairobi tech, cybersecurity, and creative work. Real thoughts from a builder in Africa.",
   keywords: [
     "Levis Kibirie Blog", "Kenya Tech Blog", "SaaS Engineering Blog",
     "Nairobi Developer", "Cybersecurity Writing", "Africa Tech",

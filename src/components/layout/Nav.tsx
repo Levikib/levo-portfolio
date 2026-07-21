@@ -28,14 +28,14 @@ function GridBackground() {
         position: "absolute", inset: 0,
         backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(168,85,247,0.02) 40px, rgba(168,85,247,0.02) 41px)",
       }}/>
-      {/* Radial purple glow — top right */}
+      {/* Radial purple glow, top right */}
       <div style={{
         position: "absolute", top: "-20%", right: "-10%",
         width: "60vw", height: "60vw",
         background: "radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 65%)",
         filter: "blur(40px)",
       }}/>
-      {/* Green glow — bottom left */}
+      {/* Green glow, bottom left */}
       <div style={{
         position: "absolute", bottom: "-10%", left: "-10%",
         width: "50vw", height: "50vw",
@@ -49,7 +49,7 @@ function GridBackground() {
         animation: "navBeam 4s ease-in-out infinite",
         top: "30%",
       }}/>
-      {/* Corner accent — top left */}
+      {/* Corner accent, top left */}
       <div style={{
         position: "absolute", top: 52, left: 0,
         width: "1px", height: "120px",

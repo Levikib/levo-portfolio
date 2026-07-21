@@ -43,7 +43,7 @@ export const icons = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Levis Kibirie — Fullstack Engineer & SaaS Founder",
+    default: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
     template: "%s | Levis Kibirie",
   },
   description:
@@ -66,15 +66,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: BASE_URL,
-    title: "Levis Kibirie — Fullstack Engineer & SaaS Founder",
+    title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
     description: "Engineer who builds systems that move real money. 8+ years. Nairobi → World.",
     siteName: "Levis Kibirie",
     locale: "en_US",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Levis Kibirie — Fullstack Engineer & SaaS Founder" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Levis Kibirie: Fullstack Engineer & SaaS Founder" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Levis Kibirie — Fullstack Engineer & SaaS Founder",
+    title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
     description: "Engineer who builds systems that move real money. 8+ years. Nairobi → World.",
     images: ["/og-image.png"],
     creator: "@levikibirie",

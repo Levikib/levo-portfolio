@@ -15,7 +15,7 @@ export default function Hero() {
 
       <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-stretch">
 
-        {/* ── LEFT — typography does the work ── */}
+        {/* LEFT: typography does the work */}
         <div className="flex flex-col justify-center px-8 md:px-16 py-16 lg:py-0">
 
           <div className="flex items-center gap-3 mb-10" style={{
@@ -52,8 +52,17 @@ export default function Hero() {
 
           <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s 0.18s cubic-bezier(0.16,1,0.3,1)" }}>
             <p className="max-w-md" style={{ fontFamily: "var(--font-body)", fontSize: "clamp(16px,1.6vw,19px)", color: "var(--text-2)", lineHeight: 1.7, marginBottom: "32px" }}>
-              Fullstack engineer and SaaS founder building production systems that move real money —
+              Fullstack engineer and SaaS founder building production systems that move real money,
               <strong style={{ color: "var(--text)" }}> and designing them to feel as good as they work.</strong>
+            </p>
+          </div>
+
+          <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(16px)", transition: "all 0.8s 0.22s cubic-bezier(0.16,1,0.3,1)", borderLeft: "2px solid var(--border)", paddingLeft: "16px", marginBottom: "32px", maxWidth: "380px" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "13px", color: "var(--text-3)", lineHeight: 1.7 }}>
+              &quot;Water shapes its course according to the nature of the ground.&quot;
+            </p>
+            <p style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.12em", color: "var(--text-4)", textTransform: "uppercase", marginTop: "6px" }}>
+              Sun Tzu, The Art of War
             </p>
           </div>
 
@@ -71,7 +80,7 @@ export default function Hero() {
             <a href="/work" className="btn-secondary">See My Work</a>
           </div>
 
-          {/* Quiet stat strip — replaces the floating badge clutter */}
+          {/* Quiet stat strip, replaces the floating badge clutter */}
           <div className="flex flex-wrap gap-x-10 gap-y-4 mt-16" style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s 0.5s ease" }}>
             {[
               { val: "247+", label: "Active Tenants" },
@@ -86,7 +95,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT — full original photo, grayscale, untouched background ── */}
+        {/* RIGHT: full original photo, grayscale, untouched background */}
         <div className="relative" style={{
           minHeight: "clamp(420px, 60vh, 900px)",
           opacity: loaded ? 1 : 0,
@@ -95,7 +104,7 @@ export default function Hero() {
         }}>
           <Image
             src="/levo-hero.jpg"
-            alt="Levis Kibirie at a waterfall in Kenya — Fullstack Engineer and SaaS Founder"
+            alt="Levis Kibirie at a waterfall in Kenya: Fullstack Engineer and SaaS Founder"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 45vw"

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const categories = [
-  { name: "Frontend",     color: "#a855f7", rgb:"168,85,247", level: 95, skills: ["TypeScript","Next.js 14","React","Tailwind CSS","GSAP","Canvas API"] },
+  { name: "Frontend",     color: "#a855f7", rgb:"168,85,247", level: 95, skills: ["TypeScript","Next.js 14","React","Tailwind CSS","GSAP","React Three Fiber","Canvas API"] },
   { name: "Payments",     color: "#e11d48", rgb:"225,29,72",   level: 90, skills: ["Paystack API","Webhook Verification","Resend","Automated Billing","M-Pesa"] },
   { name: "Backend",      color: "#4ead6a", rgb:"78,173,106",  level: 88, skills: ["Node.js","Prisma ORM","PostgreSQL","REST APIs","Supabase Realtime","Webhooks"] },
   { name: "AI / LLM",     color: "#d97706", rgb:"217,119,6",   level: 82, skills: ["Groq llama-3.3-70b","Supabase AI","LLM Integration","Prompt Engineering","RAG"] },
@@ -198,7 +198,7 @@ export default function SkillsStack() {
 
         {/* Responsive layout: stacked on mobile, side-by-side on lg */}
         <div className="reveal skills-grid">
-          {/* Radar — centered on mobile */}
+          {/* Radar, centered on mobile */}
           <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:"12px" }}>
             <RadarChart size={radarSize} />
             <div style={{ fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.18em", color:"rgba(255,255,255,0.2)", textTransform:"uppercase" }}>Skill Proficiency Radar</div>

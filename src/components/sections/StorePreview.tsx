@@ -3,8 +3,8 @@ import Link from "next/link";
 const products=[
   {title:"Chill Minds Vol. 1",price:"KSH 299",tag:"Magazine",accent:"var(--rose)"},
   {title:"Chill Minds Vol. 2",price:"KSH 299",tag:"Magazine",accent:"var(--purple)"},
-  {title:"Coming Soon",price:"—",tag:"Digital Products",accent:"var(--sage)"},
-  {title:"Coming Soon",price:"—",tag:"Brand Assets",accent:"var(--amber)"},
+  {title:"Coming Soon",price:"TBD",tag:"Digital Products",accent:"var(--sage)"},
+  {title:"Coming Soon",price:"TBD",tag:"Brand Assets",accent:"var(--amber)"},
 ];
 export default function StorePreview(){return(
   <section id="store" className="relative z-10 px-8 md:px-12 py-24" style={{background:"var(--bg)",borderTop:"1px solid var(--border)"}}>

@@ -55,7 +55,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
           }
           animFrameId = requestAnimationFrame(raf);
         } catch {
-          // Smooth scroll unavailable — page scrolls normally
+          // Smooth scroll unavailable, page scrolls normally
         }
       }
     }

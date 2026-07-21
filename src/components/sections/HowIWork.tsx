@@ -11,7 +11,7 @@ const principles = [
       "Production-first thinking from day one",
       "Every feature designed for real users",
       "Scalable architecture, not clever hacks",
-      "Any context — same standard applies",
+      "Any context, same standard applies",
     ],
   },
   {
@@ -20,7 +20,7 @@ const principles = [
     color: "var(--forest)",
     colorRgb: "45,122,69",
     points: [
-      "GhostNet — built a live cybersec platform",
+      "GhostNet, built a live cybersec platform",
       "OWASP-aware, pen testing experience",
       "Secure-by-design API architecture",
       "Webhook verification, auth hardening",
@@ -35,7 +35,7 @@ const principles = [
       "Async-first communication style",
       "Documented decisions, not just code",
       "Self-directed and deadline-driven",
-      "Nairobi timezone — flexible overlap",
+      "Nairobi timezone, flexible overlap",
     ],
   },
   {

@@ -66,6 +66,16 @@ const CHILLMINDS_ASCII = `
   ║  Audience    Kids   wellness  ║
   ╚═══════════════════════════════╝`;
 
+const HOOKAH_ASCII = `
+  ╔═══════════════════════════════╗
+  ║   HOOKAH · 3D EXPERIENCE      ║
+  ╠═══════════════════════════════╣
+  ║  Hero Model  GLB   Draco      ║
+  ║  Flavours    25    orbiting   ║
+  ║  Disassembly 7     parts      ║
+  ║  Payments    Paystack ✓LIVE   ║
+  ╚═══════════════════════════════╝`;
+
 const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: string }[] }[] = [
   {
     label: "PROJECTS", color: "#a855f7",
@@ -76,6 +86,7 @@ const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: s
       { cmd: "nse", desc: "→  NSE Research Agent stats" },
       { cmd: "shantech", desc: "→  ShanTech Agency stats" },
       { cmd: "chillminds", desc: "→  Chill Minds Magazine stats" },
+      { cmd: "hookah", desc: "→  Hookah 3D experience stats" },
     ],
   },
   {
@@ -114,7 +125,7 @@ const MAN_PAGES: Record<string, string[]> = {
     "  MAKEJA(1)                 User Commands                MAKEJA(1)",
     "",
     "  NAME",
-    "         makeja — print Makeja Homes production stats",
+    "         makeja: print Makeja Homes production stats",
     "",
     "  DESCRIPTION",
     "         Multi-tenant residential property management SaaS.",
@@ -129,14 +140,14 @@ const MAN_PAGES: Record<string, string[]> = {
     "  GHOSTNET(1)                User Commands               GHOSTNET(1)",
     "",
     "  NAME",
-    "         ghostnet — print GhostNet platform stats",
+    "         ghostnet: print GhostNet platform stats",
     "",
     "  DESCRIPTION",
     "         Full-stack cybersecurity research & training platform.",
     "         13 modules (concept page + interactive lab each), 243",
     "         guided lab steps, ~5,450 XP economy with a 5-tier rank",
     "         system, 9 standalone tools, live leaderboard, and GHOST",
-    "         Agent — a Groq llama-3.3-70b assistant embedded in-app.",
+    "         Agent, a Groq llama-3.3-70b assistant embedded in-app.",
     "         Module pages are open to browse; labs and the agent",
     "         require a free account.",
     "",
@@ -147,7 +158,7 @@ const MAN_PAGES: Record<string, string[]> = {
     "  HIRE(1)                    User Commands                   HIRE(1)",
     "",
     "  NAME",
-    "         hire — scroll to the contact form",
+    "         hire: scroll to the contact form",
     "",
     "  SYNOPSIS",
     "         hire",
@@ -168,7 +179,7 @@ const STACK_LINES = [
 ];
 
 const WHOAMI_LINES = [
-  "  Levis Kibirie — Fullstack Engineer · SaaS Founder · Designer",
+  "  Levis Kibirie: Fullstack Engineer · SaaS Founder · Designer",
   "  Based in Nairobi, Kenya. 8+ years in tech.",
   "",
   "  Built Makeja Homes from scratch: 247+ tenants, KSH 1.5M/mo.",
@@ -195,6 +206,7 @@ const SOCIALS_LINES = [
   "",
   "  Makeja Homes   makejahomes.co.ke",
   "  GhostNet       ghostnet-pi.vercel.app",
+  "  Hookah         hookah-website-two.vercel.app",
 ];
 
 const PROJECTS_LINES = [
@@ -203,17 +215,18 @@ const PROJECTS_LINES = [
   "  03  NSE Research Agent   In Dev · AI Tool    Nairobi Securities Exchange intel",
   "  04  ShanTech Agency      2024–25 · Agency    12+ clients, 250K+ engagements",
   "  05  Chill Minds Magazine Published · Design  2 volumes, 72 pages",
+  "  06  Hookah Rental       Live · 3D           GLB hero model, 25 flavours, Paystack",
   "",
-  "  Run a project name to see its stats. e.g. `ghostnet`, `makeja`, `nse`",
+  "  Run a project name to see its stats. e.g. `ghostnet`, `makeja`, `hookah`",
 ];
 
 const TIMELINE_LINES = [
-  "  2017        Software Development Certificate — ICT Authority Kenya",
-  "  2020        Cybersecurity & Pen Testing — Zalego Institute of Technology",
-  "  2020–2024   BSc Information Technology — Kenyatta University (2nd Upper)",
-  "  Apr 2022    IT Intern — Ministry of Foreign & Diaspora Affairs",
-  "  May 2024    Founder — ShanTech Agency",
-  "  2024        Founder — Makeja Homes",
+  "  2017        Software Development Certificate, ICT Authority Kenya",
+  "  2020        Cybersecurity & Pen Testing, Zalego Institute of Technology",
+  "  2020–2024   BSc Information Technology, Kenyatta University (2nd Upper)",
+  "  Apr 2022    IT Intern, Ministry of Foreign & Diaspora Affairs",
+  "  May 2024    Founder, ShanTech Agency",
+  "  2024        Founder, Makeja Homes",
   "  2025        Oracle Cloud AI Foundations certification",
   "  2025        Launched GhostNet",
   "  2026        Building NSE Research Agent",
@@ -222,23 +235,23 @@ const TIMELINE_LINES = [
 const BEYOND_LINES = [
   "  🎌  Anime      FMA, Attack on Titan, Vinland Saga. Don't argue.",
   "  📈  Markets    NSE investor building the tool I always wished existed.",
-  "  📖  Editorial  Designed Chill Minds Magazine — 72 pages, printed & distributed.",
+  "  📖  Editorial  Designed Chill Minds Magazine, 72 pages, printed & distributed.",
   "  🌍  Nairobi    Proving world-class products ship from anywhere.",
 ];
 
 const ABOUT_LINES = [
   "  Founding Fullstack Engineer from Nairobi, Kenya.",
-  "  I build production systems that handle real money and real users —",
+  "  I build production systems that handle real money and real users,",
   "  then I make them look good.",
   "",
   "  8+ years in tech: from a first certificate in 2017, through a BSc in",
   "  IT, into founding two live products. Makeja Homes moves real rent",
   "  money every month. GhostNet teaches cybersecurity through a live,",
-  "  gamified platform I built myself — backend, frontend, and the",
+  "  gamified platform I built myself: backend, frontend, and the",
   "  in-app AI agent.",
   "",
-  "  Also a designer. Chill Minds Magazine — 72 pages, two volumes,",
-  "  100% design ownership — proves the eye isn't separate from the code.",
+  "  Also a designer. Chill Minds Magazine, 72 pages, two volumes,",
+  "  100% design ownership, proves the eye isn't separate from the code.",
   "",
   "  Run `timeline` for the full journey, `stack` for the toolbox.",
 ];
@@ -248,7 +261,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   const out: Line[] = [];
 
   if (cmd === "help" || cmd === "") {
-    out.push({ type: "output", text: "  Available commands — grouped. Type `man <cmd>` for details on some.", color: "rgba(255,255,255,0.5)" });
+    out.push({ type: "output", text: "  Available commands, grouped. Type `man <cmd>` for details on some.", color: "rgba(255,255,255,0.5)" });
     for (const g of HELP_GROUPS) {
       out.push({ type: "blank", text: "" });
       out.push({ type: "output", text: `  ${g.label}`, color: g.color });
@@ -263,7 +276,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "ghostnet") {
     out.push({ type: "output", text: GHOSTNET_ASCII, color: "#10b981" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Live at ghostnet-pi.vercel.app — GHOST Agent is online.", color: "#10b981" });
+    out.push({ type: "output", text: "  ● Live at ghostnet-pi.vercel.app. GHOST Agent is online.", color: "#10b981" });
   } else if (cmd === "nse") {
     out.push({ type: "output", text: NSE_ASCII, color: "#d97706" });
     out.push({ type: "blank", text: "" });
@@ -276,6 +289,10 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
     out.push({ type: "output", text: CHILLMINDS_ASCII, color: "#059669" });
     out.push({ type: "blank", text: "" });
     out.push({ type: "output", text: "  ● Vol. 1 & 2 published. Printed and distributed.", color: "#059669" });
+  } else if (cmd === "hookah") {
+    out.push({ type: "output", text: HOOKAH_ASCII, color: "#9d5cf5" });
+    out.push({ type: "blank", text: "" });
+    out.push({ type: "output", text: "  ● Live at hookah-website-two.vercel.app. 3D hero, live Paystack checkout.", color: "#9d5cf5" });
   } else if (cmd === "projects") {
     out.push({ type: "output", text: "  // All Projects", color: "#a855f7" });
     out.push({ type: "blank", text: "" });
@@ -303,7 +320,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
       out.push({ type: "output", text: l, color: l.startsWith("  Run") ? "rgba(255,255,255,0.35)" : undefined });
     }
   } else if (cmd === "timeline" || cmd === "journey") {
-    out.push({ type: "output", text: "  // Career Timeline — 2017 → Now", color: "#0891b2" });
+    out.push({ type: "output", text: "  // Career Timeline: 2017 → Now", color: "#0891b2" });
     out.push({ type: "blank", text: "" });
     for (const l of TIMELINE_LINES) {
       out.push({ type: "output", text: l, color: undefined });
@@ -328,9 +345,9 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "neofetch") {
     const info = [
       ["OS", "Levis Kibirie OS v2.0 (Nairobi)"],
-      ["Host", "Portfolio — Next.js 14"],
+      ["Host", "Portfolio, Next.js 14"],
       ["Uptime", "8+ years in tech"],
-      ["Projects", "5 (2 live, 1 in dev, 2 completed)"],
+      ["Projects", "6 (3 live, 1 in dev, 2 completed)"],
       ["Languages", "TypeScript, Python, SQL"],
       ["Shell", "levis@portfolio:~$"],
       ["Terminal", "GhostNet-inspired, custom-built"],
@@ -378,14 +395,14 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "clear" || cmd === "cls") {
     return [{ type: "blank", text: "__CLEAR__" }];
   } else if (cmd === "ls" || cmd === "dir") {
-    out.push({ type: "output", text: "  makeja/    ghostnet/   nse-agent/   shantech/   chill-minds/", color: "#4ead6a" });
+    out.push({ type: "output", text: "  makeja/    ghostnet/   nse-agent/   shantech/   chill-minds/   hookah/", color: "#4ead6a" });
   } else if (cmd === "pwd") {
     out.push({ type: "output", text: "  /home/levis/portfolio/projects", color: "rgba(255,255,255,0.5)" });
   } else if (cmd === "date") {
     out.push({ type: "output", text: `  ${new Date().toUTCString()}`, color: "rgba(255,255,255,0.5)" });
   } else if (cmd === "whoami --verbose" || cmd === "sudo whoami") {
     out.push({ type: "output", text: "  root", color: "#e11d48" });
-    out.push({ type: "output", text: "  (you wish — try `whoami` instead)", color: "rgba(255,255,255,0.35)" });
+    out.push({ type: "output", text: "  (you wish, try `whoami` instead)", color: "rgba(255,255,255,0.35)" });
   } else if (cmd === "sudo" || cmd.startsWith("sudo ")) {
     out.push({ type: "output", text: "  Nice try. You don't have sudo here.", color: "#e11d48" });
   } else if (cmd === "hire levis" || cmd === "hire") {
@@ -395,7 +412,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "exit" || cmd === "quit") {
     out.push({ type: "output", text: "  There is no exit from greatness.", color: "#d97706" });
   } else {
-    out.push({ type: "error", text: `  command not found: ${cmd} — try 'help'`, color: "#e11d48" });
+    out.push({ type: "error", text: `  command not found: ${cmd}, try 'help'`, color: "#e11d48" });
   }
 
   return out;
@@ -403,13 +420,13 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
 
 const BOOT_SEQUENCE = [
   { text: "Initializing Levis Kibirie OS v2.0...", color: "rgba(255,255,255,0.3)" },
-  { text: "Loading projects: makeja ✓  ghostnet ✓  nse ✓  shantech ✓  chillminds ✓", color: "#4ead6a" },
+  { text: "Loading projects: makeja ✓  ghostnet ✓  nse ✓  shantech ✓  chillminds ✓  hookah ✓", color: "#4ead6a" },
   { text: "Mounting skills: typescript ✓  nextjs ✓  supabase ✓  groq ✓", color: "#a855f7" },
   { text: "System ready. Type 'help' to get started.\n", color: "#d97706" },
 ];
 
 const TAB_COMPLETE_CMDS = [
-  "help","projects","makeja","ghostnet","nse","shantech","chillminds",
+  "help","projects","makeja","ghostnet","nse","shantech","chillminds","hookah",
   "whoami","about","timeline","skills","stack","beyond",
   "contact","socials","hire levis","neofetch","history","man ",
   "clear","ls","pwd","date",
@@ -451,7 +468,7 @@ export default function Terminal() {
     return () => obs.disconnect();
   }, [booted]);
 
-  // Scroll only inside the output div — never the page
+  // Scroll only inside the output div, never the page
   useEffect(() => {
     const el = outputRef.current;
     if (el) el.scrollTop = el.scrollHeight;
@@ -594,7 +611,7 @@ export default function Terminal() {
 
         {/* Quick-fire buttons */}
         <div style={{ display:"flex", flexWrap:"wrap", gap:"8px", marginTop:"16px" }}>
-          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
+          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","hookah","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
             <button key={cmd}
               onClick={() => { setInput(cmd); setTimeout(() => { setInput(""); setLines(prev => [...prev, { type:"input", text:cmd }, ...processCommand(cmd, history), { type:"blank", text:"" }]); setHistory(prev => [cmd, ...prev.slice(0, 49)]); }, 10); }}
               style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"rgba(16,185,129,0.05)", border:"1px solid rgba(16,185,129,0.18)", color:"rgba(16,185,129,0.7)", padding:"6px 14px", cursor:"pointer", transition:"all 0.2s" }}

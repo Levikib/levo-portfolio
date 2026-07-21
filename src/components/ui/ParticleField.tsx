@@ -12,7 +12,7 @@ export default function ParticleField() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Reduce particle count heavily on mobile — 90 particles with quadratic
+    // Reduce particle count heavily on mobile, 90 particles with quadratic
     // connection checks (~4000/frame) freezes mobile browsers
     const isMobile = window.innerWidth <= 768;
     const COUNT = isMobile ? 25 : 75;

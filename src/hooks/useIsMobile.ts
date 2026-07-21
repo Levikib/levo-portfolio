@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 
 export function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState<boolean>(() => {
-    // Lazy initializer — runs synchronously on first client render.
+    // Lazy initializer, runs synchronously on first client render.
     // On SSR (window undefined) default to TRUE (mobile-first).
-    // On client, read actual viewport width immediately — no flash.
+    // On client, read actual viewport width immediately, no flash.
     if (typeof window === "undefined") return true;
     return window.innerWidth <= breakpoint;
   });

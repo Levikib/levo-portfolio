@@ -8,7 +8,7 @@ export default function JungleBackground() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Leaf SVG paths — organic shapes
+    // Leaf SVG paths, organic shapes
     const leafShapes = [
       "M10,30 Q20,0 30,10 Q40,20 35,35 Q25,50 10,30Z",
       "M5,25 Q15,-5 28,8 Q38,18 32,38 Q20,52 5,25Z",
@@ -45,7 +45,7 @@ export default function JungleBackground() {
       leaves.push({ el, x, y, vx, vy, rot, vrot, scale, opacity });
     }
 
-    // Organic blob shapes — very subtle, slow morphing
+    // Organic blob shapes, very subtle, slow morphing
     const blobs: { el: HTMLDivElement; x: number; y: number; phase: number; size: number }[] = [];
     for (let i = 0; i < 5; i++) {
       const el = document.createElement("div");
@@ -89,7 +89,7 @@ export default function JungleBackground() {
         leaf.el.style.transform = `translate(${leaf.x}px, ${leaf.y}px) rotate(${leaf.rot}deg) scale(${leaf.scale})`;
       });
 
-      // Animate blobs — slow, organic morphing
+      // Animate blobs, slow, organic morphing
       blobs.forEach((blob, i) => {
         const drift = Math.sin(t + blob.phase) * 30;
         const driftY = Math.cos(t * 0.7 + blob.phase) * 20;

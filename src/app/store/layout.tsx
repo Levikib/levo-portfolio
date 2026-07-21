@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Store & Design Work",
   description:
-    "Design work and resources by Levis Kibirie. Chill Minds Magazine Vol. 1 & 2 — children's mental wellness editorial design. Brand identities, print production, and design systems.",
+    "Design work and resources by Levis Kibirie. Chill Minds Magazine Vol. 1 & 2: children's mental wellness editorial design. Brand identities, print production, and design systems.",
   keywords: [
     "Chill Minds Magazine", "Kenya Design", "Editorial Design", "Print Design",
     "Children Magazine Kenya", "Mental Wellness Kids", "Graphic Design Nairobi",

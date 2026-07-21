@@ -38,7 +38,7 @@ export default function WhatsAppFloat() {
           transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease",
         }}
       >
-        {/* Label pill — slides in on hover */}
+        {/* Label pill, slides in on hover */}
         <div style={{
           background: "#0a0805",
           border: "1px solid rgba(255,255,255,0.1)",

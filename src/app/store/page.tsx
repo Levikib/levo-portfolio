@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const PRODUCTS = [
-  { id:"01", name:"SaaS Starter Kit — Kenya Stack", tagline:"The exact setup I used to ship Makeja Homes.", price:"KSH 4,500", usd:"$35", category:"Templates", accent:"#7c3aed", badge:"Best Seller", desc:"Next.js 14 + Prisma ORM + PostgreSQL (Neon) + Paystack + Resend — fully wired up and ready to build on. Multi-tenant ready, auth included, payment webhooks configured. Skip the 2 weeks of boilerplate.", includes:["Next.js 14 + TypeScript","Prisma + PostgreSQL schema","Paystack integration + webhooks","Resend email templates","Multi-tenant architecture","Auth system (NextAuth)","Dashboard starter","Full documentation"], format:"GitHub repo + Loom walkthrough" },
+  { id:"01", name:"SaaS Starter Kit: Kenya Stack", tagline:"The exact setup I used to ship Makeja Homes.", price:"KSH 4,500", usd:"$35", category:"Templates", accent:"#7c3aed", badge:"Best Seller", desc:"Next.js 14 + Prisma ORM + PostgreSQL (Neon) + Paystack + Resend, fully wired up and ready to build on. Multi-tenant ready, auth included, payment webhooks configured. Skip the 2 weeks of boilerplate.", includes:["Next.js 14 + TypeScript","Prisma + PostgreSQL schema","Paystack integration + webhooks","Resend email templates","Multi-tenant architecture","Auth system (NextAuth)","Dashboard starter","Full documentation"], format:"GitHub repo + Loom walkthrough" },
   { id:"02", name:"Meta Ads Playbook for Kenyan SMEs", tagline:"The campaigns that actually worked. Not the ones that looked good.", price:"KSH 2,200", usd:"$17", category:"Guides", accent:"#e11d48", badge:"New", desc:"12 clients. Hundreds of thousands of shillings in ad spend. This is the distilled playbook: audience targeting for Kenya, creative that converts, budgets that make sense on African CPMs, and the exact campaign structures I run.", includes:["Campaign structure templates","Kenyan audience targeting guide","Creative brief templates","Budget calculator (KSH)","Reporting dashboard template","7 winning ad copy frameworks","Retargeting sequences","Q&A access (30 days)"], format:"PDF + Notion template + Google Sheets" },
-  { id:"03", name:"Editorial Design System — Chill Minds", tagline:"The full design language from a published 72-page magazine.", price:"KSH 3,500", usd:"$27", category:"Design", accent:"#059669", badge:null, desc:"The complete InDesign + brand system used to produce two volumes of Chill Minds Magazine. Typography system, colour palettes, grid layouts, master pages, section templates. Rip the whole system or raid it for parts.", includes:["InDesign master template","Full typography system","2 complete colour palettes","Section layout templates","Cover design system","Image treatment styles","Print production checklist","Source files (.indd)"], format:"InDesign files + PDF style guide" },
-  { id:"04", name:"Technical CV Template — Engineering Edition", tagline:"The exact CV structure that gets senior engineer interviews.", price:"KSH 1,500", usd:"$12", category:"Career", accent:"#d97706", badge:null, desc:"Not a pretty template. A strategically structured document built around how hiring managers at US/European tech companies actually scan CVs. With the positioning framework, metrics language, and project storytelling format that gets past ATS.", includes:["Word + PDF templates","Section-by-section guide","Metrics language cheatsheet","Project description framework","ATS keyword strategy","Cover letter template","LinkedIn alignment guide","1 review round"], format:".docx + PDF + Notion playbook" },
+  { id:"03", name:"Editorial Design System: Chill Minds", tagline:"The full design language from a published 72-page magazine.", price:"KSH 3,500", usd:"$27", category:"Design", accent:"#059669", badge:null, desc:"The complete InDesign + brand system used to produce two volumes of Chill Minds Magazine. Typography system, colour palettes, grid layouts, master pages, section templates. Rip the whole system or raid it for parts.", includes:["InDesign master template","Full typography system","2 complete colour palettes","Section layout templates","Cover design system","Image treatment styles","Print production checklist","Source files (.indd)"], format:"InDesign files + PDF style guide" },
+  { id:"04", name:"Technical CV Template: Engineering Edition", tagline:"The exact CV structure that gets senior engineer interviews.", price:"KSH 1,500", usd:"$12", category:"Career", accent:"#d97706", badge:null, desc:"Not a pretty template. A strategically structured document built around how hiring managers at US/European tech companies actually scan CVs. With the positioning framework, metrics language, and project storytelling format that gets past ATS.", includes:["Word + PDF templates","Section-by-section guide","Metrics language cheatsheet","Project description framework","ATS keyword strategy","Cover letter template","LinkedIn alignment guide","1 review round"], format:".docx + PDF + Notion playbook" },
 ];
 
 const CATS = ["All","Templates","Guides","Design","Career"];
@@ -31,7 +31,7 @@ export default function Store() {
               Packaged<br /><span style={{ color:"var(--purple)" }}>Knowledge.</span>
             </h1>
             <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"480px", lineHeight:1.85 }}>
-              Templates, playbooks, and systems pulled from real projects. Not theory — things that shipped, scaled, and made money.
+              Templates, playbooks, and systems pulled from real projects. Not theory: things that shipped, scaled, and made money.
             </p>
           </div>
           <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
@@ -75,7 +75,7 @@ export default function Store() {
                     </div>
                   </div>
 
-                  {/* Price + CTAs — below on mobile, right column on desktop */}
+                  {/* Price + CTAs: below on mobile, right column on desktop */}
                   <div style={{
                     marginTop: isMobile ? "24px" : "20px",
                     paddingTop: isMobile ? "20px" : "0",
@@ -136,7 +136,7 @@ export default function Store() {
             Don&apos;t see what you need.<br /><span style={{ color:"#a855f7" }}>Let&apos;s build it together.</span>
           </h2>
           <p style={{ fontFamily:"var(--font-body)", fontSize:"14px", color:"rgba(255,255,255,0.4)", lineHeight:1.8, maxWidth:"560px" }}>
-            These products are packaged versions of real work. If you need a custom build — a full SaaS, a specific integration, a tailored playbook — check the services page or reach out directly.
+            These products are packaged versions of real work. If you need a custom build (a full SaaS, a specific integration, a tailored playbook), check the services page or reach out directly.
           </p>
         </div>
         <div style={{ display:"flex", flexDirection:isMobile?"row":"column", gap:"10px", flexShrink:0, flexWrap:"wrap" }}>

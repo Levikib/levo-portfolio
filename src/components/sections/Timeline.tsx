@@ -25,7 +25,7 @@ const events = [
     year: "2020",
     title: "Freelance & Agency Years",
     sub: "Web Dev · Design · Strategy",
-    desc: "Built websites, brand identities, and digital strategies for 30+ Kenyan businesses. Developed the designer's eye and the engineer's discipline — simultaneously.",
+    desc: "Built websites, brand identities, and digital strategies for 30+ Kenyan businesses. Developed the designer's eye and the engineer's discipline, simultaneously.",
     color: "#a855f7",
     icon: "🎨",
     side: "left",

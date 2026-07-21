@@ -7,7 +7,7 @@ const pieces = [
     title: "Chill Minds Vol. 1",
     type: "Editorial Design",
     year: "2024",
-    desc: "36-page mental wellness magazine for children. Complete design ownership — concept, layout, colour theory, typography, illustration direction.",
+    desc: "36-page mental wellness magazine for children. Complete design ownership: concept, layout, colour theory, typography, illustration direction.",
     tags: ["Print", "Editorial", "Typography"],
     accent: "var(--rose)",
     accentRgb: "225,29,72",
