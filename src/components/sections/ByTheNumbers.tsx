@@ -64,6 +64,11 @@ function conduitPath(cx: number, cy: number, dx: number, dy: number) {
   return `M ${x1} ${y1} Q ${cx1} ${cy1} ${x2} ${y2}`;
 }
 
+const NODE_W = 190, NODE_H = 108;
+// Same clipped-corner shape as the card's clipPath, traced as an SVG outline so a neon
+// stroke can run the full perimeter, picking up where the incoming conduit leaves off.
+const NODE_OUTLINE = `M0,10 L10,0 L${NODE_W},0 L${NODE_W},${NODE_H - 10} L${NODE_W - 10},${NODE_H} L0,${NODE_H} Z`;
+
 function Node({ stat, index, active, onEnter, onLeave }: {
   stat: typeof stats[0]; index: number; active: boolean;
   onEnter: () => void; onLeave: () => void;
@@ -94,22 +99,57 @@ function Node({ stat, index, active, onEnter, onLeave }: {
         left: `calc(50% + ${layout[index].x}px)`,
         top: `calc(50% + ${layout[index].y}px)`,
         transform: active ? "translate(-50%, -50%) translateY(-3px)" : "translate(-50%, -50%)",
-        width: "190px",
+        width: `${NODE_W}px`,
         padding: "18px 20px",
         borderRadius: "14px",
         background: active
           ? `linear-gradient(160deg, ${stat.color}14 0%, rgba(10,8,5,0.9) 65%)`
           : "linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%)",
-        border: `1px solid ${active ? stat.color : "rgba(255,255,255,0.12)"}`,
         boxShadow: active
-          ? `0 0 0 1px ${stat.color}55 inset, 0 0 24px ${stat.color}70, 0 0 70px ${stat.color}35, 0 18px 40px rgba(0,0,0,0.55)`
-          : `0 0 0 1px rgba(255,255,255,0.03) inset, 0 8px 24px rgba(0,0,0,0.35)`,
-        transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s, box-shadow 0.35s, background 0.35s",
+          ? `0 18px 40px rgba(0,0,0,0.55)`
+          : `0 8px 24px rgba(0,0,0,0.35)`,
+        transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, background 0.35s",
         zIndex: active ? 5 : 3,
         clipPath: "polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)",
         backdropFilter: "blur(6px)",
       }}
     >
+      {/* Neon strip tracing the full card perimeter, continuing the conduit's circuit */}
+      <svg width={NODE_W} height={NODE_H} style={{ position:"absolute", inset:0, overflow:"visible", pointerEvents:"none" }}>
+        <defs>
+          <filter id={`nodeGlow-${index}`} x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <path d={NODE_OUTLINE} fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" />
+        <path
+          d={NODE_OUTLINE} fill="none"
+          stroke={stat.color}
+          strokeWidth={active ? 2.5 : 1.5}
+          opacity={active ? 1 : 0.6}
+          filter={`url(#nodeGlow-${index})`}
+          style={{ transition: "opacity 0.3s, stroke-width 0.3s" }}
+        />
+        {/* traveling pulse that laps the border once it arrives from the hub */}
+        <path
+          d={NODE_OUTLINE} fill="none"
+          stroke={stat.color}
+          strokeWidth={active ? 4 : 2}
+          strokeLinecap="round"
+          strokeDasharray={`${active ? 70 : 40} 900`}
+          opacity={active ? 1 : 0.5}
+          filter={`url(#nodeGlow-${index})`}
+          style={{
+            transition: "opacity 0.25s, stroke-width 0.25s",
+            animation: `nodeOutlineFlow ${active ? 2.4 : 5.5}s linear infinite`,
+          }}
+        />
+      </svg>
+
       {/* Corner accent ticks */}
       <div style={{ position:"absolute", top:0, left:0, width:"16px", height:"16px", borderTop:`2px solid ${active?stat.color:"rgba(255,255,255,0.18)"}`, borderLeft:`2px solid ${active?stat.color:"rgba(255,255,255,0.18)"}`, transition:"border-color 0.3s" }}/>
       <div style={{ position:"absolute", bottom:0, right:0, width:"16px", height:"16px", borderBottom:`2px solid ${active?stat.color:"rgba(255,255,255,0.18)"}`, borderRight:`2px solid ${active?stat.color:"rgba(255,255,255,0.18)"}`, transition:"border-color 0.3s" }}/>
@@ -120,11 +160,12 @@ function Node({ stat, index, active, onEnter, onLeave }: {
         marginBottom:"6px", letterSpacing:"-0.01em",
         textShadow: active ? `0 0 18px ${stat.color}90, 0 0 40px ${stat.color}50` : "none",
         transition:"color 0.3s, text-shadow 0.3s",
+        position:"relative",
       }}>
         {stat.prefix || ""}{displayVal}{stat.suffix}
       </div>
-      <div style={{ fontFamily:"var(--font-display)", fontWeight:700, fontSize:"12.5px", color:"rgba(255,255,255,0.85)", marginBottom:"3px", lineHeight:1.25 }}>{stat.label}</div>
-      <div style={{ fontFamily:"var(--font-mono)", fontSize:"9.5px", color:active?`${stat.color}cc`:"rgba(255,255,255,0.35)", letterSpacing:"0.02em", transition:"color 0.3s" }}>{stat.sub}</div>
+      <div style={{ fontFamily:"var(--font-display)", fontWeight:700, fontSize:"12.5px", color:"rgba(255,255,255,0.85)", marginBottom:"3px", lineHeight:1.25, position:"relative" }}>{stat.label}</div>
+      <div style={{ fontFamily:"var(--font-mono)", fontSize:"9.5px", color:active?`${stat.color}cc`:"rgba(255,255,255,0.35)", letterSpacing:"0.02em", transition:"color 0.3s", position:"relative" }}>{stat.sub}</div>
     </div>
   );
 }

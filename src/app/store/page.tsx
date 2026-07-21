@@ -11,6 +11,56 @@ const PRODUCTS = [
 
 const CATS = ["All","Templates","Guides","Design","Career"];
 
+function SaasKitPreview({ accent, dark }: { accent: string; dark: boolean }) {
+  const files = ["app/", "  api/paystack/webhook.ts", "  dashboard/", "prisma/schema.prisma", "lib/resend.ts", ".env.example"];
+  const fg = dark ? "rgba(255,255,255,0.5)" : "var(--text-3)";
+  return (
+    <div style={{ fontFamily:"var(--font-mono)", fontSize:"11px", lineHeight:1.9, padding:"14px 16px", background: dark ? "rgba(255,255,255,0.03)" : "var(--bg-2)", border:`1px solid ${accent}25`, borderRadius:"4px" }}>
+      {files.map((f,i) => (
+        <div key={i} style={{ color: f.startsWith("  ") ? fg : accent, opacity: f.startsWith("  ") ? 0.75 : 1 }}>{f}</div>
+      ))}
+    </div>
+  );
+}
+
+function AdsPlaybookPreview({ accent, dark }: { accent: string; dark: boolean }) {
+  const bars = [38, 62, 45, 80, 55, 90];
+  const fg = dark ? "rgba(255,255,255,0.35)" : "var(--text-4)";
+  return (
+    <div style={{ display:"flex", alignItems:"flex-end", gap:"5px", padding:"14px 16px", height:"66px", background: dark ? "rgba(255,255,255,0.03)" : "var(--bg-2)", border:`1px solid ${accent}25`, borderRadius:"4px" }}>
+      {bars.map((h,i) => (
+        <div key={i} style={{ flex:1, height:`${h}%`, background: i===bars.length-1 ? accent : `${accent}40`, borderRadius:"1px 1px 0 0" }} />
+      ))}
+      <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:fg, marginLeft:"8px", alignSelf:"center" }}>CTR ↑</span>
+    </div>
+  );
+}
+
+function EditorialPreview({ accent }: { accent: string }) {
+  const swatches = ["#f472b6","#60a5fa","#34d399","#fbbf24"];
+  return (
+    <div style={{ display:"flex", gap:"4px", padding:"14px 16px", background:"var(--bg-2)", border:`1px solid ${accent}25`, borderRadius:"4px", alignItems:"center" }}>
+      {swatches.map(c => <div key={c} style={{ flex:1, aspectRatio:"1.4", background:c, borderRadius:"2px" }} />)}
+    </div>
+  );
+}
+
+function CvPreview({ accent, dark }: { accent: string; dark: boolean }) {
+  const fg = dark ? "rgba(255,255,255,0.25)" : "var(--text-4)";
+  return (
+    <div style={{ padding:"14px 16px", background: dark ? "rgba(255,255,255,0.03)" : "var(--bg-2)", border:`1px solid ${accent}25`, borderRadius:"4px", display:"flex", flexDirection:"column", gap:"6px" }}>
+      <div style={{ width:"55%", height:"6px", background:accent, borderRadius:"1px" }} />
+      <div style={{ width:"85%", height:"4px", background:fg, borderRadius:"1px", marginTop:"4px" }} />
+      <div style={{ width:"70%", height:"4px", background:fg, borderRadius:"1px" }} />
+      <div style={{ width:"75%", height:"4px", background:fg, borderRadius:"1px" }} />
+    </div>
+  );
+}
+
+const PREVIEWMAP: Record<string, React.FC<{ accent: string; dark: boolean }>> = {
+  "01": SaasKitPreview, "02": AdsPlaybookPreview, "03": EditorialPreview, "04": CvPreview,
+};
+
 export default function Store() {
   const [activeCat, setActiveCat]       = useState("All");
   const [expandedProduct, setExpanded]  = useState<string|null>(null);
@@ -31,7 +81,7 @@ export default function Store() {
               Packaged<br /><span style={{ color:"var(--purple)" }}>Knowledge.</span>
             </h1>
             <p style={{ fontFamily:"var(--font-body)", fontSize:"15px", color:"var(--text-3)", maxWidth:"480px", lineHeight:1.85 }}>
-              Templates, playbooks, and systems pulled from real projects. Not theory: things that shipped, scaled, and made money.
+              Four things pulled directly out of client work: the SaaS boilerplate, the ads playbook, the magazine design system, the CV format. Priced to skip the rebuild, not to fund a course empire.
             </p>
           </div>
           <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
@@ -58,10 +108,12 @@ export default function Store() {
                 <div style={{ height:"3px", background:`linear-gradient(90deg,${product.accent},${product.accent}50,transparent)` }}/>
 
                 <div style={{ padding:isMobile?"24px 20px":"36px 40px" }}>
-                  {/* Top row: number + info */}
-                  <div style={{ display:"flex", gap:"20px", alignItems:"flex-start" }}>
+                  {/* Top row: preview + info */}
+                  <div style={{ display:"flex", gap:"24px", alignItems:"flex-start" }}>
                     {!isMobile && (
-                      <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"36px", color:`${product.accent}20`, lineHeight:1, letterSpacing:"-0.04em", flexShrink:0, paddingTop:"4px" }}>{product.id}</div>
+                      <div style={{ width:"140px", flexShrink:0, paddingTop:"2px" }}>
+                        {(() => { const Preview = PREVIEWMAP[product.id]; return Preview ? <Preview accent={product.accent} dark={isDark} /> : null; })()}
+                      </div>
                     )}
                     <div style={{ flex:1, minWidth:0 }}>
                       <div style={{ display:"flex", gap:"8px", alignItems:"center", marginBottom:"10px", flexWrap:"wrap" }}>
