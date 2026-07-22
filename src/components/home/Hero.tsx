@@ -11,12 +11,10 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "var(--bg)" }}>
-      <div className="h-24" />
-
       <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-stretch">
 
         {/* LEFT: typography does the work */}
-        <div className="flex flex-col justify-center px-8 md:px-16 py-16 lg:py-0">
+        <div className="flex flex-col justify-center px-8 md:px-16 pt-32 pb-16 lg:pt-16 lg:pb-0">
 
           <div className="flex items-center gap-3 mb-10" style={{
             opacity: loaded ? 1 : 0,

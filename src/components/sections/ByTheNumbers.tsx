@@ -64,7 +64,7 @@ function conduitPath(cx: number, cy: number, dx: number, dy: number) {
   return `M ${x1} ${y1} Q ${cx1} ${cy1} ${x2} ${y2}`;
 }
 
-const NODE_W = 190, NODE_H = 108;
+const NODE_W = 190, NODE_H = 128;
 // Same clipped-corner shape as the card's clipPath, traced as an SVG outline so a neon
 // stroke can run the full perimeter, picking up where the incoming conduit leaves off.
 const NODE_OUTLINE = `M0,10 L10,0 L${NODE_W},0 L${NODE_W},${NODE_H - 10} L${NODE_W - 10},${NODE_H} L0,${NODE_H} Z`;
@@ -100,8 +100,10 @@ function Node({ stat, index, active, onEnter, onLeave }: {
         top: `calc(50% + ${layout[index].y}px)`,
         transform: active ? "translate(-50%, -50%) translateY(-3px)" : "translate(-50%, -50%)",
         width: `${NODE_W}px`,
+        minHeight: `${NODE_H}px`,
         padding: "18px 20px",
         borderRadius: "14px",
+        boxSizing: "border-box",
         background: active
           ? `linear-gradient(160deg, ${stat.color}14 0%, rgba(10,8,5,0.9) 65%)`
           : "linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%)",

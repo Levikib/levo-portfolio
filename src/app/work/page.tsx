@@ -107,6 +107,7 @@ const PROJECTS = [
     tags: ["InDesign", "Editorial Design", "Typography", "Colour Theory", "Illustration Direction", "Print Production"],
     metrics: [{ val:"2", label:"Volumes" },{ val:"72", label:"Total Pages" },{ val:"100%", label:"Design Own." },{ val:"Kids", label:"Audience" }],
     github: null,
+    readOnlineHref: "/editorial",
   },
 ];
 
@@ -399,6 +400,13 @@ function ProjectCard({ p, idx, expanded, onToggle }: {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background=`${p.accent}15`; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="transparent"; }}
             >Live Demo ↗</a>
+          )}
+          {"readOnlineHref" in p && p.readOnlineHref && (
+            <a href={p.readOnlineHref}
+              style={{ fontFamily:"var(--font-syne-mono)", fontSize:"10px", letterSpacing:"0.1em", textTransform:"uppercase", color:p.accent, textDecoration:"none", padding:"9px 18px", border:`1px solid ${p.accent}50`, transition:"all 0.2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background=`${p.accent}15`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="transparent"; }}
+            >Read Online →</a>
           )}
         </div>
       </div>
