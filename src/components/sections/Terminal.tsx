@@ -288,7 +288,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "chillminds") {
     out.push({ type: "output", text: CHILLMINDS_ASCII, color: "#059669" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Vol. 1 & 2 published. Printed and distributed.", color: "#059669" });
+    out.push({ type: "output", text: "  ● Vol. 1A & 1B published. Printed and distributed.", color: "#059669" });
   } else if (cmd === "hookah") {
     out.push({ type: "output", text: HOOKAH_ASCII, color: "#9d5cf5" });
     out.push({ type: "blank", text: "" });

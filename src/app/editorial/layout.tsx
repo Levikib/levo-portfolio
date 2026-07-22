@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Chill Minds Magazine — Read Online",
   description:
-    "Chill Minds Magazine Vol. 1 & 2, a children's mental wellness and health magazine designed, illustrated, and produced by Levis Kibirie. Read both volumes online, free.",
+    "Chill Minds Magazine Vol. 1A & 1B, a children's mental wellness and health magazine designed, illustrated, and produced by Levis Kibirie. Read both volumes online, free.",
   keywords: [
     "Chill Minds Magazine", "Kids Mental Health Magazine", "Children Wellness Kenya",
     "Editorial Design", "Magazine Flipbook", "Kenya Design",

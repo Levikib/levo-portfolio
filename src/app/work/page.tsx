@@ -97,7 +97,7 @@ const PROJECTS = [
     name: "Chill Minds Magazine",
     tagline: "72 pages. Two volumes. Built alone.",
     category: "Design",
-    status: "published", statusLabel: "Vol. 1 & 2 Published",
+    status: "published", statusLabel: "Vol. 1A & 1B Published",
     year: "2024–2025", type: "Editorial Design",
     accent: "#059669", accentBorder: "rgba(5,150,105,0.2)",
     vizBg: "#030f09",

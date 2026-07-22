@@ -1,31 +1,32 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const pieces = [
   {
-    title: "Chill Minds Vol. 1",
+    title: "Chill Minds Vol. 1A",
     type: "Editorial Design",
     year: "2024",
-    desc: "36-page mental wellness magazine for children. Complete design ownership: concept, layout, colour theory, typography, illustration direction.",
+    desc: "36-page student mental health magazine. Complete design ownership: concept, layout, colour theory, typography, illustration direction.",
     tags: ["Print", "Editorial", "Typography"],
     accent: "var(--rose)",
-    accentRgb: "225,29,72",
     bg: "#fff5f7",
-    emoji: "📖",
+    cover: "/editorial/vol1/page-01.jpg",
     stat: "36 pages",
+    href: "/editorial",
   },
   {
-    title: "Chill Minds Vol. 2",
+    title: "Chill Minds Vol. 1B",
     type: "Editorial Design",
     year: "2025",
-    desc: "Second volume expanding the universe. New themes, deeper visual language, more vibrant compositions. Same commitment to children's wellbeing.",
+    desc: "Second volume: self-esteem, relationships, and grief. New themes, deeper visual language, same commitment to student wellbeing.",
     tags: ["Print", "Magazine", "Illustration"],
     accent: "var(--purple)",
-    accentRgb: "124,58,237",
     bg: "#f5f3ff",
-    emoji: "✨",
+    cover: "/editorial/vol2/page-01.jpg",
     stat: "36 pages",
+    href: "/editorial",
   },
   {
     title: "Brand Identity Work",
@@ -34,10 +35,11 @@ const pieces = [
     desc: "Logo systems, colour palettes, and visual identity for Kenyan SMEs through ShanTech Agency. Built brands that communicate before a word is read.",
     tags: ["Branding", "Logo", "Identity"],
     accent: "var(--amber)",
-    accentRgb: "217,119,6",
     bg: "#fffbf0",
+    cover: null,
     emoji: "🎨",
     stat: "12+ clients",
+    href: "/work",
   },
 ];
 
@@ -61,14 +63,18 @@ export default function DesignWork() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {pieces.map((p) => (
-          <div key={p.title} className="reveal group glass-card rounded-sm overflow-hidden">
-            {/* Cover mockup */}
-            <div style={{ height:"180px", background:p.bg, display:"flex", alignItems:"center", justifyContent:"center", position:"relative", overflow:"hidden" }}>
-              <div style={{ textAlign:"center" }}>
-                <div style={{ fontSize:"52px", marginBottom:"8px" }}>{p.emoji}</div>
-                <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"16px", color:p.accent }}>{p.title}</div>
-              </div>
-              <div style={{ position:"absolute", top:"12px", right:"12px", background:p.accent, color:"white", fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.1em", textTransform:"uppercase", padding:"4px 10px" }}>{p.year}</div>
+          <Link key={p.title} href={p.href} className="reveal group glass-card rounded-sm overflow-hidden" style={{ display:"block", textDecoration:"none" }}>
+            {/* Cover */}
+            <div style={{ height:"260px", background:p.bg, display:"flex", alignItems:"center", justifyContent:"center", position:"relative", overflow:"hidden" }}>
+              {p.cover ? (
+                <Image src={p.cover} alt={`${p.title} cover`} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit:"cover", objectPosition:"top center" }} />
+              ) : (
+                <div style={{ textAlign:"center" }}>
+                  <div style={{ fontSize:"52px", marginBottom:"8px" }}>{p.emoji}</div>
+                  <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"16px", color:p.accent }}>{p.title}</div>
+                </div>
+              )}
+              <div style={{ position:"absolute", top:"12px", right:"12px", background:p.accent, color:"white", fontFamily:"var(--font-mono)", fontSize:"9px", letterSpacing:"0.1em", textTransform:"uppercase", padding:"4px 10px", zIndex:1 }}>{p.year}</div>
             </div>
 
             <div className="p-6">
@@ -82,7 +88,7 @@ export default function DesignWork() {
                 <div style={{ fontFamily:"var(--font-display)", fontWeight:800, fontSize:"13px", color:p.accent }}>{p.stat}</div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
