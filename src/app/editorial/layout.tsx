@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     "Chill Minds Magazine", "Kids Mental Health Magazine", "Children Wellness Kenya",
     "Editorial Design", "Magazine Flipbook", "Kenya Design",
   ],
-  alternates: { canonical: "https://levikibirie.dev/editorial" },
+  alternates: { canonical: "https://levis.makejahomes.co.ke/editorial" },
   openGraph: {
     title: "Chill Minds Magazine: Read Online | Levis Kibirie",
     description: "Both volumes of Chill Minds Magazine, free to read online.",
-    url: "https://levikibirie.dev/editorial",
+    url: "https://levis.makejahomes.co.ke/editorial",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };

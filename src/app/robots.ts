@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://levikibirie.dev/sitemap.xml",
-    host: "https://levikibirie.dev",
+    sitemap: "https://levis.makejahomes.co.ke/sitemap.xml",
+    host: "https://levis.makejahomes.co.ke",
   };
 }

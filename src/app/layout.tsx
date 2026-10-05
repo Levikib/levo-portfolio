@@ -36,7 +36,7 @@ const dmSans = DM_Sans({
   preload: false,
 });
 
-const BASE_URL = "https://levikibirie.dev";
+const BASE_URL = "https://levis.makejahomes.co.ke";
 
 export const icons = {
   icon: [
@@ -83,7 +83,6 @@ export const metadata: Metadata = {
     title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
     description: "Follow the signal: deep case studies from Makeja Homes, client builds and core banking.",
     images: ["/og-image.png"],
-    creator: "@levikibirie",
   },
 };
 

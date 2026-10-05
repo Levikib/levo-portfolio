@@ -3,7 +3,7 @@
 Living status doc for Claude sessions working on Levo's portfolio. Read it top to bottom before touching code. **Update it at the end of every session**: move finished items to Done, add new pending items and ideas, and bump "Last updated".
 
 **Last updated:** 2026-10-05 (Claude cloud session)
-**Live site:** levis.makejahomes.co.ke (Vercel deploys from `main`). The canonical domain in code is `levikibirie.dev` and is **unconfirmed** (see Pending).
+**Live site:** levis.makejahomes.co.ke (Vercel deploys from `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
 **Repo:** github.com/Levikib/levo-portfolio. `main` and `signal-path` both point at the redesign (fast-forwarded on 2026-10-05).
 
 ---
@@ -67,7 +67,7 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - Editorial: 15 items (2 Chill Minds magazines + 12 pieces of Makeja, Smokers Vine/Hookah and Mikono media from the repos, about 11.7 MB).
 - Thoughts section and writing guide (no posts yet, by design: Levo writes them).
 - QA fixes: hydration bug, contrast, tap targets, landmarks, og images, title template, copy bans.
-- Merged to `main` and **live**: Vercel production deploy succeeded (`cf9faa9`) and levis.makejahomes.co.ke/work/makeja-homes serves the new case study. Note: `levikibirie.dev` does not resolve yet.
+- Merged to `main` and **live**: Vercel production deploy succeeded (`cf9faa9`) and levis.makejahomes.co.ke/work/makeja-homes serves the new case study.
 
 ## 6. Pending (priority order)
 
@@ -75,7 +75,7 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 2. **Full independent QA pass** on every route (was cancelled twice). Gates: console/hydration, links and redirects, facts, axe, mobile screenshots, media privacy, copy bans, SEO. Write `docs/QA-FINAL.md`.
 3. **Laptop content audit for Editorial** (needs the desktop app open and the computer linked). Folders Levo granted:
    `C:\Users\admin\Documents\ShanTech Projects\Animated Videos Portfolio`, `...\Documents\Professional Documents`, `...\Documents\Sammy Quotations`, `...\Documents\Job Quotations`, `...\Documents\Makeja Homes Files`, and `C:\Users\admin\Downloads` (look for files named with "makeja"). Find finished design work: business profiles, invoices/quotation designs, posters, Makeja social posts and videos, other brands. **Redact or mock any client names, amounts, phones, emails or IDs** before publishing. Append items to `src/data/editorial.ts`, optimise media into `public/editorial/<brand>/`.
-4. **Domain:** confirm `levikibirie.dev` vs `levis.makejahomes.co.ke`, then set `SITE.url` in `facts.ts` and the canonicals.
+4. **Domain:** done. Everything points at levis.makejahomes.co.ke (`levikibirie.dev` was never registered). If Levo buys a personal domain later, change `SITE.url` and add it in Vercel.
 5. **Media to produce** (slots in `src/data/media.ts`; flip `ready: true` when files land): hero Veo loop (1:1, 6s), illustrated avatar from next week's photoshoot, one reel per project (CapCut screen recordings, filenames listed in `media.ts`). Task still open: write the Veo / Google AI Studio prompts and a CapCut shot list.
 6. **Redesign `/about`** in the clay system (still the old style), and clean up `src/app/mobile.css` (it overrides heading sizes and `wa.me` links; `signal.css` currently fights it).
 7. **Core banking case study** is thin: needs 1 to 2 shareable results from Levo and confirmation of what can be said about clients.

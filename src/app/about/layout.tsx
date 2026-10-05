@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     "Levis Kibirie About", "Nairobi Engineer", "Fullstack Developer Kenya",
     "SaaS Founder Kenya", "Remote Engineer Africa", "Cybersecurity Engineer Kenya",
   ],
-  alternates: { canonical: "https://levikibirie.dev/about" },
+  alternates: { canonical: "https://levis.makejahomes.co.ke/about" },
   openGraph: {
     title: "About | Levis Kibirie",
     description: "8+ years. Nairobi → World. Fullstack engineer, SaaS founder, graphic designer.",
-    url: "https://levikibirie.dev/about",
+    url: "https://levis.makejahomes.co.ke/about",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {

@@ -9,9 +9,9 @@
 ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝╚══════╝
 ```
 
-**Personal portfolio · levikibirie.dev · Built with Next.js 14 · Nairobi, Kenya**
+**Personal portfolio · levis.makejahomes.co.ke · Built with Next.js 14 · Nairobi, Kenya**
 
-[![Live](https://img.shields.io/badge/live-levikibirie.dev-7c3aed?style=flat-square)](https://levikibirie.dev)
+[![Live](https://img.shields.io/badge/live-levis.makejahomes.co.ke-7c3aed?style=flat-square)](https://levis.makejahomes.co.ke)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![Deployed on Vercel](https://img.shields.io/badge/deployed-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
@@ -25,7 +25,7 @@
 
 This is the source for my personal engineering portfolio. Not a template, not a Webflow export — a fully custom Next.js 14 site built to the same standard I apply to production SaaS products. Every component, animation, and interaction written from scratch.
 
-**Live:** [levikibirie.dev](https://levikibirie.dev)
+**Live:** [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke)
 
 ---
 
@@ -304,11 +304,11 @@ Per-page meta  → layout.tsx in each route segment
 
 | Route | Title | Description | OG Image | Canonical |
 |-------|-------|-------------|----------|-----------|
-| `/` | Levis Kibirie — Fullstack Engineer & SaaS Founder | ✓ | `/og-image.png` | `levikibirie.dev` |
-| `/about` | About \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/about` |
-| `/work` | Work & Services \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/work` |
-| `/blog` | Blog \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/blog` |
-| `/store` | Store \| Levis Kibirie | ✓ | `/og-image.png` | `levikibirie.dev/store` |
+| `/` | Levis Kibirie — Fullstack Engineer & SaaS Founder | ✓ | `/og-image.png` | `levis.makejahomes.co.ke` |
+| `/about` | About \| Levis Kibirie | ✓ | `/og-image.png` | `levis.makejahomes.co.ke/about` |
+| `/work` | Work & Services \| Levis Kibirie | ✓ | `/og-image.png` | `levis.makejahomes.co.ke/work` |
+| `/blog` | Blog \| Levis Kibirie | ✓ | `/og-image.png` | `levis.makejahomes.co.ke/blog` |
+| `/store` | Store \| Levis Kibirie | ✓ | `/og-image.png` | `levis.makejahomes.co.ke/store` |
 
 ---
 
@@ -392,7 +392,7 @@ Cache-Control: public, max-age=31536000, immutable  (/_next/static, images, font
 |---------|------|------|
 | **Makeja Homes** — Property management SaaS (247+ tenants, KSH 1.5M/mo) | [github.com/Levikib/makeja-homes](https://github.com/Levikib/makeja-homes) | [makejahomes.co.ke](https://makejahomes.co.ke) |
 | **GhostNet** — Cybersecurity research & training platform (13 modules, GHOST AI) | — | [ghostnet-pi.vercel.app](https://ghostnet-pi.vercel.app) |
-| **Levo Portfolio** — This repo | [github.com/Levikib/levo-portfolio](https://github.com/Levikib/levo-portfolio) | [levikibirie.dev](https://levikibirie.dev) |
+| **Levo Portfolio** — This repo | [github.com/Levikib/levo-portfolio](https://github.com/Levikib/levo-portfolio) | [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke) |
 
 ---
 
@@ -400,7 +400,7 @@ Cache-Control: public, max-age=31536000, immutable  (/_next/static, images, font
 
 **Levis Kibirie** — Fullstack Engineer & SaaS Founder · Nairobi, Kenya
 
-- 🌐 [levikibirie.dev](https://levikibirie.dev)
+- 🌐 [levis.makejahomes.co.ke](https://levis.makejahomes.co.ke)
 - 💼 [linkedin.com/in/levis-kibirie-6bba13344](https://linkedin.com/in/levis-kibirie-6bba13344)
 - 🐙 [github.com/Levikib](https://github.com/Levikib)
 - ✉️ leviskibirie2110@gmail.com

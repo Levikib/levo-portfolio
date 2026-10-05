@@ -7,7 +7,7 @@
 export const SITE = {
   name: "Levis Kibirie",
   short: "Levo",
-  url: "https://levikibirie.dev", // TODO(levo): confirm the production domain
+  url: "https://levis.makejahomes.co.ke",
   role: "Product engineer and designer",
   city: "Nairobi, Kenya",
   timezone: "EAT (UTC+3)",
