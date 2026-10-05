@@ -2,7 +2,7 @@
 
 Living status doc for Claude sessions working on Levo's portfolio. Read it top to bottom before touching code. **Update it at the end of every session**: move finished items to Done, add new pending items and ideas, and bump "Last updated".
 
-**Last updated:** 2026-10-05, afternoon (Claude cloud session)
+**Last updated:** 2026-10-05, evening (Claude cloud session, independent QA)
 **Live site:** levis.makejahomes.co.ke (Vercel deploys from `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
 **Repo:** github.com/Levikib/levo-portfolio. `main` and `signal-path` both point at the redesign (fast-forwarded on 2026-10-05).
 
@@ -73,11 +73,12 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - **Deliberately excluded** from the laptop: ID cards, certificates, KRA/TCC docs, transcripts, cover letters, CVs (pending Levo's OK), everything in Job Quotations and Sammy Quotations (bank details and third-party pricing), the Makeja corporate legal documents, pitch-deck financials, the "Her Prettiness Mio" birthday book (private person), and the health explainer videos (not reviewed yet, see Ideas).
 - Interim hero portrait: Levo's suit photo at `public/media/levo-avatar.webp` (`HERO.avatar.ready = true`).
 - AI generation prompts written: `docs/MEDIA-PROMPTS.md`, also saved to `C:\Users\admin\Downloads\PORTFOLIO-MEDIA-PROMPTS.md`.
+- **Full independent QA pass: done** (`docs/QA-FINAL.md`). All 8 gates pass on 40 routes at 1440 and 390; fixed two private-data leaks (web revamp film removed, Chill Minds promo trimmed before a third-party phone number). Editorial has 24 items, not 25.
 
 ## 6. Pending (priority order)
 
 1. Smoke-test the live site on a real phone (layout, fonts, videos).
-2. **Full independent QA pass** on every route (was cancelled twice). Gates: console/hydration, links and redirects, facts, axe, mobile screenshots, media privacy, copy bans, SEO. Write `docs/QA-FINAL.md`.
+2. **QA follow-ups for Levo** (details in `docs/QA-FINAL.md`): Njiti poster (`makeja-poster-7.webp`) says "Powered by Claude", which is false, so re-export or drop it; `public/work/makeja-screenshot.png` shows old numbers (180+ units, 71 leases, 13 clients), re-shoot after item 11; confirm clients are fine with their business phone numbers in artwork (Gloss & Glow, Prime Touch, second number on poster 1); the removed web revamp film is still in git history; read the 72 Chill Minds pages for private data; re-record a clean web revamp film if wanted.
 3. **Laptop audit: done.** Optional extras still on the laptop: the comic strip zips (`Downloads/Makeja Marketing Comic Strip 1.zip`, `2.zip`), `Makeja Homes Outro 1.mp4`, `A_heavy_drop_of_black_sumi_ink.mp4`, Tutorials 2 to 4 and the health explainer animations in `Animated Videos Portfolio` (Contraception, Menopause, PMS, Lower Cancer Risk, Patience Family Matters, Abel Breaking Barriers): ask Levo before using the health ones.
 4. **Domain:** done. Everything points at levis.makejahomes.co.ke (`levikibirie.dev` was never registered). If Levo buys a personal domain later, change `SITE.url` and add it in Vercel.
 5. **Media to produce:** Levo is generating them from `docs/MEDIA-PROMPTS.md` (clay avatar from his face references, hero Veo loop, banking abstract, OG image, Thoughts covers) plus CapCut reels. When he drops them in `Downloads/portfolio-media`, optimise, copy to `public/media` or `public/reels`, flip `ready` in `src/data/media.ts`, swap the interim portrait, commit, deploy.
