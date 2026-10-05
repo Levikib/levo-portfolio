@@ -281,15 +281,14 @@ export const EDITORIAL: EditorialItem[] = [
   },
   {
     slug: "makeja-launch-films",
-    title: "Agents ad and web revamp film",
+    title: "Agents ad and command centre film",
     kind: "motion",
     client: "Makeja Homes",
     year: "2026",
-    blurb: "Two launch pieces: an ad recruiting property agents over the Nairobi skyline, and a LinkedIn walkthrough of the redesigned website. Shown as 20 second cuts.",
+    blurb: "Two launch pieces: an ad recruiting property agents over the Nairobi skyline, and a short reveal of the agents command centre.",
     tools: [],
     cover: { type: "video", src: "/editorial/makeja/makeja-agents-ad.mp4", poster: "/editorial/makeja/makeja-agents-ad-poster.webp", alt: "Nairobi skyline at golden hour opening the agents ad", w: 1280, h: 720 },
     gallery: [
-      { type: "video", src: "/editorial/makeja/makeja-web-revamp.mp4", poster: "/editorial/makeja/makeja-web-revamp-poster.webp", alt: "Screen recording of the redesigned Makeja Homes website", w: 1280, h: 720 },
       { type: "video", src: "/editorial/makeja/makeja-command-centre.mp4", poster: "/editorial/makeja/makeja-command-centre-poster.webp", alt: "Makeja Homes command centre interface reveal", w: 1280, h: 720 },
     ],
     source: "laptop: Downloads/Agents Ad Makeja Levis.mp4, Linkedin Video, Web Revamp Makeja.mp4, Makeja_Homes_command_centre",
