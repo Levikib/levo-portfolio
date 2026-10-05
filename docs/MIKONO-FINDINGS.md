@@ -4,14 +4,18 @@ Principal-engineer pass over the `mikono-creations` entry in `src/data/projects.
 
 Legend: **TRUE** = code or committed report confirms it. **PARTIAL** = true but overstated or needs a qualifier. **FALSE** = the repo contradicts it. **UNVERIFIED** = not provable from the repo. **OUTDATED** = was true, no longer is.
 
-Commands run (no network, no writes to the repo; `git status` clean afterwards):
+Re-verified independently on 2026-10-05 after `git pull --ff-only` (already up to date, HEAD `77fee0a`). Every count below was re-run; line references were corrected where the first pass was off by one.
+
+Commands run (no network beyond the pull, no writes to the repo; `git status` clean afterwards):
 
 - `find app -name page.tsx | wc -l` = 51
 - `find components -name '*.tsx' | wc -l` = 132 (69 top level, 63 in `card/ cart/ enquiry/ filters/ fx/ gallery/ helpers/ legal/ studio/ wizard/`)
 - `grep -c '^  t("' data/studio/orderTypes.ts` = 29
 - `node scripts/photo-coverage.mjs --source` = "88 of 88 supplied files appear on the site. UNUSED (0)"
 - Unit tests: `test-whatsapp` 58, `test-checkout` 73, `test-enquiry` 18, `test-studio` 99, `test-helpers` 46 = **294 passing**
-- `node scripts/qa-copy.mjs` = `hits=0 TODO=0`; `node scripts/tokens-check.mjs` exit 0
+- `node scripts/qa-copy.mjs` = `hits=0 TODO=0`; `node scripts/tokens-check.mjs` = PASS (29 tokens under the 0.13 chroma cap, 53 contrast pairs; it rewrites `strategy/gates/phase7-tokens-check.md` with identical content)
+- `content/journal/index.ts` `posts.length` = 47 (imported under Node 22 type stripping with `scripts/register-alias.mjs`)
+- `app/sitemap.ts` evaluated the same way = **127 URLs** (30 products, 5 categories). `strategy/21-seo-sweep.md:24` estimated 135; neither number is 121.
 
 ---
 
@@ -24,7 +28,7 @@ Commands run (no network, no writes to the repo; `git status` clean afterwards):
 | 88/88 client photos used | PARTIAL | 88 is 87 photos **plus 1 video** (`strategy/gates/phase1-media-gate.md:6`; `media/manifest/merged.json` last ids `img-087.jpg`, `vid-001.mp4`). Coverage scan: 88 of 88 used (`scripts/photo-coverage.mjs`, run with `--source`). Say "88/88 supplied photos and video". |
 | "used and labelled correctly" (results) | PARTIAL | Labels for 44 unclear images are majority votes, and the client "corrects at review" (`strategy/07-BUILD-DECISIONS.md:12` R6; `phase1-media-gate.md:26`). "Correctly" is not proven. |
 | 47 journal posts | TRUE | `content/journal/index.ts:1-3` (10 legacy + 12 + 12 + 13); `content/journal/images.generated.json` has 47 keys. |
-| **23 order types** | **FALSE** | 29: `data/studio/orderTypes.ts:36` comment "29 types", 29 `t(...)` entries at :37-67. `strategy/stage2/studio/DATA-MODEL.md:484` "order types 29". `README.md:23` still says 23 (stale, fix it there too). |
+| **23 order types** | **FALSE** | 29: `data/studio/orderTypes.ts:37` comment "29 types", 29 `t(...)` entries at :39-67. `strategy/stage2/studio/DATA-MODEL.md:484` "order types 29". `README.md:23` still says 23 (stale, fix it there too). |
 | Gift finder, size finder, safari family builder | TRUE | `app/gifts/finder/page.tsx`, `app/size-finder/page.tsx`, `app/build-a-family/page.tsx` |
 | Animation budget 4 phone / 6 desktop | TRUE, needs detail | `components/fx/engine/index.ts:65-69`: `tier === "lite" ? 2 : phone ? 4 : 6`, phone = `innerWidth < 900`, minus 2 after slow frames (:212-216). |
 | Budget "set before first paint" | PARTIAL | The **tier** (off / still / lite / full) is set before first paint by an inline head script (`public/splash-gate.js:1, 14-28`). The **budget number** is computed by the engine after the document is parsed (`engine/index.ts:1-2, 65-69`). Say "tier chosen before first paint". |
@@ -64,7 +68,7 @@ Commands run (no network, no writes to the repo; `git status` clean afterwards):
 | Next: "Commit the codebase to GitHub" | OUTDATED | Repo is pushed (commit `77fee0a`). Remove, and remove the placeholder. |
 | When: 2026 | TRUE | Commit date 2026-10-05; gate reports dated 2026-10-01 to 2026-10-05. |
 
-Extra numbers verified for the rewrite: 30 products (`data/catalogue.generated.json`, `products.length`), 5 categories (`app/shop/*-animals`, `dolls`, `wall-art`), 16 draft legal documents (`content/legal/`, `README.md:26`), 280 source images to 2,391 WebP variants at 11 widths (`data/imageManifest.generated.json`; `build-images.mjs:21`), quick brief 3 steps and full brief up to 11 (`data/studio.ts:32-33`), 294 unit tests passing.
+Extra numbers verified for the rewrite: sitemap 127 URLs (`app/sitemap.ts` evaluated), 59 SVG sprites (`public/fx/cast`, `cast2`), 12 game finds (`data/living/game.json`), 40 decisions D1 to D40 (`strategy/07-BUILD-DECISIONS.md:3`), 7 outlets (`lib/site.ts:27-35`), 5 zip ids across 88 files (`media/manifest/index.json`), 30 products (`data/catalogue.generated.json`, `products.length`), 5 categories (`app/shop/*-animals`, `dolls`, `wall-art`), 16 draft legal documents (`content/legal/`, `README.md:26`), 280 source images to 2,391 WebP variants at 11 widths (`data/imageManifest.generated.json`; `build-images.mjs:21`), quick brief 3 steps and full brief up to 11 (`data/studio.ts:32-33`), 294 unit tests passing.
 
 ---
 
@@ -188,9 +192,9 @@ export default function imageLoader({ src, width }: { src: string; width: number
 
 The Studio's 29 order types are data, not code: each carries flags such as `bulk`, `business`, `logo`, `gentle` and `reference`. Pure functions read those flags to decide which steps and sections appear (business details only for business work, proof of rights only when a logo is likely, gentler copy for remembrance pieces).
 
-**Why a hiring manager cares:** a 14-step form that only asks what matters is a hard product problem; modelling it as typed data plus pure predicates makes it testable (99 Studio tests) and lets the owner remove an order type without touching UI code.
+**Why a hiring manager cares:** a brief of up to 11 steps (or a 3-step quick path) that only asks what matters is a hard product problem; modelling it as typed data plus pure predicates makes it testable (99 Studio tests) and lets the owner remove an order type without touching UI code.
 
-`data/studio/orderTypes.ts:36-37, 47, 49, 51`
+`data/studio/orderTypes.ts:37-38, 49, 51, 53`
 ```ts
 /** 29 types. The owner removes any she will not take. */
 export const orderTypes: OrderTypeDef[] = [
@@ -247,7 +251,7 @@ The data-protection decisions (no child data, KRA PIN only in the outgoing messa
 
 **Why a hiring manager cares:** privacy by design that survives refactors. A reviewer can see the Kenya Data Protection Act reasoning (`strategy/07-BUILD-DECISIONS.md:44` D16) turned into assertions that fail CI.
 
-`scripts/test-whatsapp.mjs:251-261`
+`scripts/test-whatsapp.mjs:251-262`
 ```js
 t("the KRA PIN is in the message but never in a draft", () => {
   const form = { ...F.emptyForm, customerTypes: ["shop"], name: "Amina", phone: "0712345678", businessName: "Savanna Gifts", kraPin: "A123456789B", paymentNote: "x" };
@@ -280,7 +284,7 @@ t("no child data keywords among stored fields or option ids", () => {
 
 ---
 
-## 3. Corrections to make in projects.ts
+## 3. Corrections made in projects.ts (all applied in section 5)
 
 1. `79` components -> **132** component files.
 2. `23` order types -> **29**.
@@ -292,7 +296,9 @@ t("no child data keywords among stored fields or option ids", () => {
 8. "defaulted to FAIL" -> "defaulted to NEEDS WORK and failed the set".
 9. Drop "hand-drawn" and "layout never shifts".
 10. Remove the GitHub `next` item and the `placeholders` entry; the repo is public now.
-11. Outside this file: `README.md:23` in the Mikono repo says 23 order types; `docs/ENGINEERING-AUDIT.md:43` in the portfolio carries 79 / 23 / 90.
+11. Added `repo`, four verified `code` excerpts (was `code: []`), stats 29 order types and 294 tests, and image and content layers in `architecture`.
+12. Mikono HEAD re-checked with `git pull --ff-only` before commit: still `77fee0a`.
+13. Still open, outside this file: `README.md:23` in the Mikono repo says 23 order types; `docs/ENGINEERING-AUDIT.md:43` in the portfolio carries 79 / 23 / 90.
 
 ---
 
@@ -316,9 +322,9 @@ The Mikono repo is public at `github.com/Levikib/mikono-creations`, so these are
 
 ---
 
-## 5. Replacement object
+## 5. Replacement object (applied)
 
-Type-checked against `Project` with `tsc --noEmit --strict` (scratch copy). It contains no em or en dashes and none of the banned words. The tagline is 12 words and the summary is 43.
+Applied in place of the old `mikono-creations` object in `src/data/projects.ts` (no other entry touched). `npx tsc --noEmit` exits 0. Copy checks on the object: 0 em or en dashes, 0 hits for elevate, unlock, seamless, leverage, delve, journey, game-changer, cutting-edge, robust, empower. Tagline 12 words, summary 43 words. The four `code` excerpts are copied exactly from the files named, with `// …` marking trims; none contains a backtick or `${`, so no escaping was needed.
 
 ```ts
   {
@@ -348,12 +354,12 @@ Type-checked against `Project` with `tsc --noEmit --strict` (scratch copy). It c
     ],
     architecture: [
       { name: "Media intelligence", detail: "Every file got a stable id. 8 analyst agents labelled them, two blind passes re-labelled 60, and 5 independent deciders voted on the 44 unclear ones." },
-      { name: "Strategy", detail: "Six strategy reports, then an audit that found 19 contradictions between them, then one binding decisions file of 40 rulings that overrides them all." },
-      { name: "Storefront", detail: "30 animals in 5 categories, colour and size variants, a cart, and an order wizard that ends in a prefilled WhatsApp message with an MK-YYMMDD-XXXX reference." },
-      { name: "Studio", detail: "A 3-step quick brief or a full brief of up to 11 steps. 29 order types carry flags that decide which questions appear. Multi-piece orders, plus gift finder, size finder and a safari family builder." },
-      { name: "Living layer", detail: "59 SVG sprites, a scroll thread and a 12-find herd game. The server renders every animal as still HTML; a standalone engine only sets data attributes, so hydration never disagrees." },
+      { name: "Strategy", detail: "Six strategy reports, then an audit that failed the set and listed 19 contradictions between them, then one binding decisions file of 40 rulings that overrides them all." },
+      { name: "Storefront", detail: "30 animals in 5 categories with colour and size variants, a cart, and an order wizard that ends in a prefilled WhatsApp message with an MK-YYMMDD-XXXX reference." },
+      { name: "Studio", detail: "A 3-step quick brief or a full brief of up to 11 steps. Each of the 29 order types carries flags that decide which questions appear. Multi-piece orders, plus a gift finder, a size finder and a safari family builder." },
+      { name: "Living layer", detail: "59 SVG animal sprites, a scroll thread and a 12-find herd game. The server renders every animal as still HTML; a standalone engine only sets data attributes, so hydration never disagrees." },
       { name: "Images", detail: "A build step turns 280 source images into 2,391 WebP variants at up to 11 widths. A custom next/image loader picks the nearest one, so no runtime optimiser is billed." },
-      { name: "Content and trust", detail: "47 journal posts from four sources normalised into one model, 16 draft legal documents, and consent-gated analytics." },
+      { name: "Content and trust", detail: "47 journal posts from four sources normalised into one model, 16 draft legal documents, and analytics tags that load only after consent." },
     ],
     decisions: [
       {
@@ -369,7 +375,7 @@ Type-checked against `Project` with `tsc --noEmit --strict` (scratch copy). It c
       {
         title: "Motion with a budget",
         why: "An inline head script picks the animal tier before first paint from the visitor's switch, reduced motion, Save-Data and device memory. The engine then lets at most 4 animals move on a phone, 6 on desktop, 2 on weak devices.",
-        tradeoff: "Fewer flourishes. If the engine sees slow frames it cuts the budget by 2 for the session, and an Animals switch in every footer turns it off.",
+        tradeoff: "Fewer flourishes. After three slow frames the engine cuts the budget by 2 for the session, and an Animals switch in every footer turns motion off.",
       },
       {
         title: "Pre-built images instead of a runtime optimiser",
@@ -380,7 +386,7 @@ Type-checked against `Project` with `tsc --noEmit --strict` (scratch copy). It c
     code: [
       {
         file: "lib/whatsapp.ts",
-        caption: "A wa.me link breaks when it gets too long, so the order message steps down from full to compact to short until the encoded URL fits, and the full text is kept for the customer to paste.",
+        caption: "A wa.me link fails when it gets too long, so the order message steps down from full to compact to short until the encoded URL fits, and the full text is kept for the customer to paste.",
         code: `export const URL_BUDGET = 2000;
 // …
 /** Picks the longest level whose encoded URL fits the budget. fullText is always the full message for copying. */
@@ -399,7 +405,7 @@ export function planOrderSend(number: string | undefined, o: OrderMsg): SendPlan
       },
       {
         file: "components/fx/engine/index.ts",
-        caption: "Only the best few animals may move at once. The budget depends on screen and device tier, and drops for the rest of the session after three slow frames.",
+        caption: "Only the best few animals may move at once. The budget depends on screen width and device tier, and drops for the rest of the session after three slow frames.",
         code: `function setBudget() {
   const phone = innerWidth < 900;
   budget = tier === "lite" ? 2 : phone ? 4 : 6;
@@ -413,22 +419,17 @@ export function planOrderSend(number: string | undefined, o: OrderMsg): SendPlan
   }`,
       },
       {
-        file: "lib/imageLoader.ts",
-        caption: "A custom next/image loader maps each request to the nearest pre-built WebP width, and caps at 640 px when the visitor has Save-Data on.",
-        code: `const LITE_MAX = 640;
+        file: "lib/studio/flow.ts",
+        caption: "The studio asks only what the brief makes relevant. Order types are data with flags, and small pure predicates decide which steps and sections appear.",
+        code: `export const wantsBusiness = (b: Brief) => isBusinessCustomer(b) || hasType(b, (t) => !!t.business);
 // …
-export const variantPath = (src: string, w: number) => {
-  const rel = src.startsWith("/media/") ? src.slice("/media/".length) : "_root" + src;
-  return \`/media-opt/\${rel.replace(/\\.[^./]+$/, "")}-\${w}.webp\`;
-};
-
-export default function imageLoader({ src, width }: { src: string; width: number; quality?: number }): string {
-  const have = widths[src];
-  if (!have || have.length === 0) return src;
-  const lite = typeof globalThis !== "undefined" && (globalThis as { __mkLite?: boolean }).__mkLite === true;
-  const want = lite ? Math.min(width, LITE_MAX) : width;
-  const w = have.find((x) => x >= want) ?? have[have.length - 1];
-  return variantPath(src, w);
+export const isBulk = (b: Brief) => hasType(b, (t) => !!t.bulk) || b.pieces.some((p) => !!qtyBands.find((x) => x.id === p.qtyBand)?.bulk) || totalCount(b) >= BULK_FROM;
+// …
+export const mayHaveLogo = (b: Brief) => hasLogoFinish(b) || hasType(b, (t) => !!t.logo) || b.pieces.some((p) => p.baseId === "character");
+// …
+export function activeSteps(path: PathMode, b: Brief): StepId[] {
+  if (path === "quick") return quickSteps;
+  return fullSteps.filter((s) => s !== "business" || wantsBusiness(b));
 }`,
       },
       {
@@ -449,7 +450,7 @@ export default function imageLoader({ src, width }: { src: string; width: number
       },
     ],
     qa: [
-      "Three independent verifiers (visual, content and media, function and accessibility) at every rendering phase, with their reports committed to the repo.",
+      "Three independent verifiers (visual, content and media, function and accessibility) per rendering phase; their reports for the shop, trade and content phases are committed to the repo.",
       "294 unit tests across checkout, WhatsApp messages, enquiries, the studio and helpers, including privacy rules: no child data fields, and the KRA PIN never stored on the device.",
       "Build gates: a copy scan for dashes and banned phrases, a choreography check for the animal layer, and an OKLCH chroma cap of 0.13 with WCAG AA contrast pairs.",
       "Playwright mobile scripts for layout, interactions, width and performance across 11 viewports; the width gate passes all 366 page and width runs.",
@@ -457,7 +458,7 @@ export default function imageLoader({ src, width }: { src: string; width: number
     results: [
       "All 88 supplied files (87 photos, 1 video) appear on the site; the 44 unclear species were settled by vote for the client to confirm at review.",
       "Live with 51 route templates, 30 animals, 47 journal posts and a custom studio that turns any brief into one WhatsApp message.",
-      "The process became the Foundation Build Playbook used for later client sites.",
+      "The pipeline was written up as the Foundation Build Playbook for future client sites.",
     ],
     next: [
       "Switch on prices and product offer markup once the client confirms them.",

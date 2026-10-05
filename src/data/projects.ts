@@ -204,61 +204,140 @@ export async function isRevoked(jti: string) {
     name: "Mikono Creations",
     kind: "Client · Craft e-commerce",
     accent: "#E8B04B",
-    tagline: "A crochet toy shop that takes custom orders straight into WhatsApp.",
+    tagline: "A handmade animal shop whose checkout writes the WhatsApp order for you.",
     summary:
-      "A full store for a Nairobi craft business that supports 25+ women: a custom-animal studio, gift and size finders, a living layer of hand-drawn animals, and a WhatsApp checkout built for how Kenyans actually buy.",
+      "A full store for a Nairobi craft business that supports 25+ women: 30 animals, a custom-order studio with 29 order types, gift and size finders, a budgeted animal layer, and a checkout that writes a referenced WhatsApp order sized to fit the link.",
     live: "https://mikono-creations.vercel.app",
-    role: "Strategy, design and full build, run as a multi-agent pipeline",
+    repo: "https://github.com/Levikib/mikono-creations",
+    role: "Strategy, design and full build, run as a multi-agent pipeline with audit gates",
     when: "2026",
-    stack: ["Next.js", "TypeScript", "Static responsive image pipeline", "WhatsApp order flow", "90 orchestrated agent calls"],
+    stack: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS 4", "sharp (build-time WebP pipeline)", "WhatsApp deep links", "Playwright (mobile QA scripts)", "Vercel"],
     stats: [
       { value: "51", label: "route templates" },
-      { value: "79", label: "components" },
-      { value: "88/88", label: "client photos used" },
-      { value: "47", label: "journal posts" },
+      { value: "29", label: "custom order types" },
+      { value: "88/88", label: "supplied photos and video used" },
+      { value: "294", label: "unit tests passing" },
     ],
     problem: [
-      "The brief was 5 WhatsApp zips of photos, a logo, seven stockists and a founder story. No prices, no catalogue, no labels.",
-      "The client forbade bright colours for a children's brand, and wanted the site to feel alive.",
-      "Customers buy through WhatsApp, not card checkout.",
+      "The brief arrived as 5 WhatsApp zips: 87 photos, 1 video, a logo, seven stockists and a founder story. Prices, delivery fees and centimetre sizes were not supplied.",
+      "The client ruled out bright colours in the interface for a children's brand, then asked for a site that felt more alive.",
+      "Kenyan customers buy through WhatsApp, not card checkout, and much of the work is custom: mascots, corporate gifts, pet lookalikes, classroom sets.",
     ],
     architecture: [
-      { name: "Media intelligence", detail: "Every photo got a stable id, then 8 analysts, blind cross-checks and a 5-way vote identified each animal and colourway." },
-      { name: "Strategy", detail: "Six parallel reports, then an audit agent that defaulted to FAIL and found 19 contradictions, then one binding decisions file." },
-      { name: "Storefront", detail: "Shop, product pages, cart and a multi-step wizard that ends in a prefilled WhatsApp order with a reference number." },
-      { name: "Studio", detail: "A custom-order studio covering 23 order types, plus gift finder, size finder and a safari family builder." },
-      { name: "Living layer", detail: "An animal cast, a scroll thread and a find-the-herd game on one engine with a hard animation budget." },
+      { name: "Media intelligence", detail: "Every file got a stable id. 8 analyst agents labelled them, two blind passes re-labelled 60, and 5 independent deciders voted on the 44 unclear ones." },
+      { name: "Strategy", detail: "Six strategy reports, then an audit that failed the set and listed 19 contradictions between them, then one binding decisions file of 40 rulings that overrides them all." },
+      { name: "Storefront", detail: "30 animals in 5 categories with colour and size variants, a cart, and an order wizard that ends in a prefilled WhatsApp message with an MK-YYMMDD-XXXX reference." },
+      { name: "Studio", detail: "A 3-step quick brief or a full brief of up to 11 steps. Each of the 29 order types carries flags that decide which questions appear. Multi-piece orders, plus a gift finder, a size finder and a safari family builder." },
+      { name: "Living layer", detail: "59 SVG animal sprites, a scroll thread and a 12-find herd game. The server renders every animal as still HTML; a standalone engine only sets data attributes, so hydration never disagrees." },
+      { name: "Images", detail: "A build step turns 280 source images into 2,391 WebP variants at up to 11 widths. A custom next/image loader picks the nearest one, so no runtime optimiser is billed." },
+      { name: "Content and trust", detail: "47 journal posts from four sources normalised into one model, 16 draft legal documents, and analytics tags that load only after consent." },
     ],
     decisions: [
       {
         title: "Two real prototypes before choosing a look",
-        why: "A dark glass direction and a daylight clay direction were both built and screenshotted on phones.",
-        tradeoff: "Daylight clay won: heavy blur cost too much on low-end Android and was too dark for a children's brand.",
+        why: "A dark glass direction and a daylight clay direction were both built as static pages with the real photos and screenshotted at phone and desktop sizes.",
+        tradeoff: "Daylight clay won: heavy backdrop blur is the costliest effect on low-end Android, and dark was the wrong first impression for a children's brand.",
       },
       {
-        title: "Price on request until prices are real",
-        why: "No invented prices. A pricesConfirmed flag shows 'Price on request' and the build validates every product once it flips.",
-        tradeoff: "Some conversion friction until the client supplies prices.",
+        title: "No invented prices",
+        why: "One pricesConfirmed flag drives four price states, so no total is shown or estimated until every line and the delivery fee are known. The catalogue throws at build time if the flag is on and any product lacks a price.",
+        tradeoff: "Every product reads 'Ask for price' until the client supplies prices, which costs some conversion.",
       },
       {
         title: "Motion with a budget",
-        why: "At most 4 animated elements on a phone, 6 on desktop, set before first paint, with a visible Animals on/off switch.",
-        tradeoff: "Fewer flourishes, but layout never shifts and reduced-motion users get a still site.",
+        why: "An inline head script picks the animal tier before first paint from the visitor's switch, reduced motion, Save-Data and device memory. The engine then lets at most 4 animals move on a phone, 6 on desktop, 2 on weak devices.",
+        tradeoff: "Fewer flourishes. After three slow frames the engine cuts the budget by 2 for the session, and an Animals switch in every footer turns motion off.",
+      },
+      {
+        title: "Pre-built images instead of a runtime optimiser",
+        why: "The hosted image optimiser hit its plan limit, so every photo is now resized once at build time and served as static WebP.",
+        tradeoff: "Builds take longer as the photo set grows, so variants are incremental and AVIF stays opt-in.",
       },
     ],
-    code: [],
+    code: [
+      {
+        file: "lib/whatsapp.ts",
+        caption: "A wa.me link fails when it gets too long, so the order message steps down from full to compact to short until the encoded URL fits, and the full text is kept for the customer to paste.",
+        code: `export const URL_BUDGET = 2000;
+// …
+/** Picks the longest level whose encoded URL fits the budget. fullText is always the full message for copying. */
+export function planOrderSend(number: string | undefined, o: OrderMsg): SendPlan {
+  const fullText = buildOrderMessage(o, "full");
+  const levels: Level[] = ["full", "compact", "short"];
+  let last: SendPlan | null = null;
+  for (const level of levels) {
+    const text = level === "full" ? fullText : buildOrderMessage(o, level);
+    const url = buildWaUrl(number, text);
+    last = { level, text, fullText, url, tooLong: false, pasteRest: level !== "full" };
+    if (!url || url.length <= URL_BUDGET) return last;
+  }
+  return { ...(last as SendPlan), tooLong: true };
+}`,
+      },
+      {
+        file: "components/fx/engine/index.ts",
+        caption: "Only the best few animals may move at once. The budget depends on screen width and device tier, and drops for the rest of the session after three slow frames.",
+        code: `function setBudget() {
+  const phone = innerWidth < 900;
+  budget = tier === "lite" ? 2 : phone ? 4 : 6;
+  try { if (sessionStorage.getItem("mk-fx-slow")) budget = Math.max(1, budget - 2); } catch { /* storage blocked */ }
+}
+// …
+  if (!force && lastT && dt > 100 && motionOK()) {
+    slowFrames = slowFrames.filter((t) => now - t < 2000);
+    slowFrames.push(now);
+    if (slowFrames.length >= 3) { try { sessionStorage.setItem("mk-fx-slow", "1"); } catch { /* storage blocked */ } setBudget(); soon(0); slowFrames = []; }
+  }`,
+      },
+      {
+        file: "lib/studio/flow.ts",
+        caption: "The studio asks only what the brief makes relevant. Order types are data with flags, and small pure predicates decide which steps and sections appear.",
+        code: `export const wantsBusiness = (b: Brief) => isBusinessCustomer(b) || hasType(b, (t) => !!t.business);
+// …
+export const isBulk = (b: Brief) => hasType(b, (t) => !!t.bulk) || b.pieces.some((p) => !!qtyBands.find((x) => x.id === p.qtyBand)?.bulk) || totalCount(b) >= BULK_FROM;
+// …
+export const mayHaveLogo = (b: Brief) => hasLogoFinish(b) || hasType(b, (t) => !!t.logo) || b.pieces.some((p) => p.baseId === "character");
+// …
+export function activeSteps(path: PathMode, b: Brief): StepId[] {
+  if (path === "quick") return quickSteps;
+  return fullSteps.filter((s) => s !== "business" || wantsBusiness(b));
+}`,
+      },
+      {
+        file: "scripts/test-whatsapp.mjs",
+        caption: "Privacy rules are tests: a business's KRA PIN goes into the WhatsApp message but must never reach the draft saved on the device.",
+        code: `t("the KRA PIN is in the message but never in a draft", () => {
+  const form = { ...F.emptyForm, customerTypes: ["shop"], name: "Amina", phone: "0712345678", businessName: "Savanna Gifts", kraPin: "A123456789B", paymentNote: "x" };
+  const ticks = { ...F.noTicks, terms_acknowledged: true };
+  const msg = F.toOrderMsg(form, [{ sku: "a-b-s", name: "A", colourLabel: "B", size: "S", qty: 1 }], "MK-261001-AAAA", ticks, "", "", C.CONSENT_VERSION);
+  assert.ok(W.buildOrderMessage(msg, "full").includes("KRA PIN: A123456789B"));
+  const full = W.buildOrderMessage(msg, "full");
+  F.writeDraft({ step: "review", skipGift: false, skipAbout: false, form, ref: "MK-261001-AAAA", sent: { message: full, text: full, level: "full", at: 1 } });
+  const raw = mem.get(F.DRAFT_KEY);
+  assert.ok(raw && !raw.includes("A123456789B") && !raw.includes("kraPin"), "draft has no PIN");
+  const back = F.readDraft();
+  assert.equal(back.form.kraPin, "");
+});`,
+      },
+    ],
     qa: [
-      "Three independent verifiers after every rendering step: visual, content and media, function and accessibility.",
-      "Scripted gates: copy bans, palette contrast, duplicate media, photo coverage, mobile layout and performance.",
-      "SEO crawl of 121 pages with zero blocking issues.",
+      "Three independent verifiers (visual, content and media, function and accessibility) per rendering phase; their reports for the shop, trade and content phases are committed to the repo.",
+      "294 unit tests across checkout, WhatsApp messages, enquiries, the studio and helpers, including privacy rules: no child data fields, and the KRA PIN never stored on the device.",
+      "Build gates: a copy scan for dashes and banned phrases, a choreography check for the animal layer, and an OKLCH chroma cap of 0.13 with WCAG AA contrast pairs.",
+      "Playwright mobile scripts for layout, interactions, width and performance across 11 viewports; the width gate passes all 366 page and width runs.",
     ],
     results: [
-      "Every one of the 88 supplied photos is used and labelled correctly.",
-      "The process became the Foundation Build Playbook used for every new client site.",
+      "All 88 supplied files (87 photos, 1 video) appear on the site; the 44 unclear species were settled by vote for the client to confirm at review.",
+      "Live with 51 route templates, 30 animals, 47 journal posts and a custom studio that turns any brief into one WhatsApp message.",
+      "The pipeline was written up as the Foundation Build Playbook for future client sites.",
     ],
-    next: ["Show prices, or 'from' prices, once confirmed.", "Commit the codebase to GitHub so this case study can link to source."],
+    next: [
+      "Switch on prices and product offer markup once the client confirms them.",
+      "Clear the open critical and high findings from the latest mobile layout gate.",
+      "Run the SEO crawler against the live site and fix what it finds.",
+      "Have a Kenyan advocate review the 16 draft legal documents before launch.",
+    ],
     reel: { file: "reels/mikono-studio-9x16-10s.mp4", ratio: "9:16", seconds: 10, shot: "Phone: build a custom animal in the studio, then the WhatsApp order opens." },
-    placeholders: ["Repository link once the code is committed."],
   },
   {
     slug: "elatec-safety-systems",
