@@ -1,16 +1,16 @@
-import Link from "next/link";
 import Hero from "@/components/signal/Hero";
 import SignalPath from "@/components/signal/SignalPath";
 import Station from "@/components/signal/Station";
 import Terminal from "@/components/sections/Terminal";
+import { ClayCard, ClayButton, SectionHeader, CtaBand } from "@/components/signal";
 import { Star, Squiggle } from "@/components/signal/Doodles";
 import { PROJECTS } from "@/data/projects";
 import { SITE, waLink } from "@/data/facts";
 
 const STEPS = [
-  { n: "01 · strategy", t: "Brief to binding decisions", d: "Business, SEO, content and design plans run in parallel, then one audit reconciles them into a single decisions file." },
-  { n: "02 · build", t: "Two prototypes, one direction", d: "Real prototypes are tested on cheap phones before a page ships. The loser is kept as evidence of why." },
-  { n: "03 · verify", t: "Three QA gates, every round", d: "Visual, content and accessibility checks run by scripts and independent reviewers, not by opinion." },
+  { n: "1", a: "#ff8a1f", k: "strategy", t: "Brief to binding decisions", d: "Business, SEO, content and design plans run in parallel, then one audit reconciles them into a single decisions file." },
+  { n: "2", a: "#d4ff3a", k: "build", t: "Two prototypes, one direction", d: "Real prototypes are tested on cheap phones before a page ships. The loser is kept as evidence of why." },
+  { n: "3", a: "#8b7cff", k: "verify", t: "Three QA gates, every round", d: "Visual, content and accessibility checks run by scripts and independent reviewers, not by opinion." },
 ];
 
 export default function Home() {
@@ -18,54 +18,86 @@ export default function Home() {
     <main className="sp">
       <Hero />
 
-      <section className="sp-wrap" aria-labelledby="path-title" style={{ paddingTop: 40 }}>
-        <div style={{ textAlign: "center", position: "relative" }}>
-          <div className="sp-eyebrow">$ follow --signal</div>
-          <h2 id="path-title" className="sp-display sp-h2">Idea to shipped,<br />one stop at a time.</h2>
-          <Star style={{ position: "absolute", top: 0, right: "12%", width: 34 }} />
+      <section className="sp-wrap" aria-labelledby="path-title" style={{ paddingTop: 112 }}>
+        <div style={{ position: "relative" }}>
+          <SectionHeader
+            align="center"
+            eyebrow="$ follow --signal"
+            id="path-title"
+            title={<>Idea to shipped,<br />one stop at a time.</>}
+            kicker={`${PROJECTS.length} builds, each lit as the signal reaches it. Every stop opens into a full case study.`}
+          />
+          <Star className="sp-hide-xs" style={{ position: "absolute", top: 0, right: "10%", width: 34 }} />
         </div>
         <SignalPath>
           {PROJECTS.map((p, i) => (
             <Station key={p.slug} p={p} side={i % 2 ? "right" : "left"}>
               {p.slug === "levo-cli" ? (
-                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 18, textAlign: "center" }}>
-                  <a href="#terminal" className="sp-mono" style={{ color: "var(--sp-lime)", fontSize: 15 }}>
+                <a href="#terminal" className="screen__slot" style={{ ["--accent" as string]: p.accent, justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+                  <span className="sp-mono" style={{ color: "var(--sp-lime)", fontSize: 16 }}>
                     levo@nairobi:~$ <span style={{ color: "var(--sp-paper)" }}>open makeja</span>
-                    <br /><span style={{ color: "var(--sp-muted)", fontSize: 12 }}>try the live terminal below ↓</span>
-                  </a>
-                </div>
+                  </span>
+                  <span className="sp-mono" style={{ color: "var(--sp-muted)", fontSize: 12, marginTop: 10 }}>try the live terminal below ↓</span>
+                </a>
               ) : undefined}
             </Station>
           ))}
+          <div className="sp-path__end">
+            <div className="cta-row" style={{ justifyContent: "center" }}>
+              <ClayButton href="/work" variant="signal" size="lg">Browse every case study</ClayButton>
+              <ClayButton href="#contact" variant="ghost" size="lg">Start a conversation</ClayButton>
+            </div>
+          </div>
         </SignalPath>
       </section>
 
-      <Terminal />
+      <section className="sp-section sp-wrap" aria-labelledby="term-title" style={{ paddingBottom: 40 }}>
+        <SectionHeader
+          eyebrow="$ ./levo-cli"
+          id="term-title"
+          title="Drive the site from a shell."
+          kicker="A real command parser that reads the same facts file as every page. Type help to see the commands, use the arrow keys for history and Tab to complete."
+          note="it works!"
+        />
+      </section>
+      <div className="sp-term-shell sp-wrap">
+        <Terminal />
+      </div>
+      <div className="sp-wrap">
+        <div className="sp-section__cta" style={{ marginTop: 24 }}>
+          <p>Prefer reading to typing? The full builds are one click away.</p>
+          <ClayButton href="/work/levo-cli" variant="ghost">How the terminal is built</ClayButton>
+        </div>
+      </div>
 
       <section className="sp-section sp-wrap" aria-labelledby="build-title">
-        <div className="sp-eyebrow">$ man levo-build</div>
-        <h2 id="build-title" className="sp-display sp-h2">How a site gets built here.</h2>
-        <Squiggle style={{ width: 140, marginTop: 10 }} />
-        <div className="sp-steps">
+        <SectionHeader eyebrow="$ man levo-build" id="build-title" title="How a site gets built here." />
+        <Squiggle style={{ width: 140, marginTop: 14 }} />
+        <ol className="clay-grid clay-grid--3" style={{ listStyle: "none", marginTop: 40 }}>
           {STEPS.map((s) => (
-            <div key={s.n} className="sp-step"><b>{s.n}</b><h3>{s.t}</h3><p>{s.d}</p></div>
+            <ClayCard as="li" key={s.n} accent={s.a} pad="lg">
+              <div className="clay-kicker"><span className="step__no">{s.n}</span><span>{s.k}</span></div>
+              <h3 className="clay-title step__title" style={{ fontSize: 26, marginTop: 22 }}>{s.t}</h3>
+              <p className="clay-body">{s.d}</p>
+            </ClayCard>
           ))}
+        </ol>
+        <div className="sp-section__cta">
+          <p>Need a site that takes real orders? This is the process you get.</p>
+          <ClayButton href={waLink("Hi Levo, I want to talk about a build.")} external variant="primary">Talk about a build</ClayButton>
         </div>
       </section>
 
-      <section id="contact" className="sp-wrap" style={{ paddingBottom: 110 }} aria-labelledby="contact-title">
-        <div className="sp-cta">
-          <div>
-            <div className="sp-mono" style={{ fontSize: 14 }}>$ ./hire --levo</div>
-            <h2 id="contact-title" className="sp-display" style={{ marginTop: 10 }}>Got something worth building? Let&apos;s talk this week.</h2>
-            <p style={{ marginTop: 14, fontSize: 16 }}>Senior remote roles and contract builds. Replies within a day, {SITE.timezone}.</p>
-          </div>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a className="sp-btn sp-btn--dark" href={waLink("Hi Levo, I saw your portfolio and want to talk about a project.")} target="_blank" rel="noreferrer">WhatsApp</a>
-            <a className="sp-btn sp-btn--line" href={`mailto:${SITE.email}`}>Email</a>
-            <Link className="sp-btn sp-btn--line" href="/work">Case studies</Link>
-          </div>
-        </div>
+      <section id="contact" className="sp-wrap" style={{ paddingBottom: 112 }} aria-labelledby="contact-title">
+        <CtaBand
+          id="contact-title"
+          title="Got something worth building? Let's talk this week."
+          body={`Senior remote roles and contract builds. Replies within a day, ${SITE.timezone}.`}
+        >
+          <ClayButton variant="dark" size="lg" href={waLink("Hi Levo, I saw your portfolio and want to talk about a project.")} external>WhatsApp</ClayButton>
+          <ClayButton variant="ghost" size="lg" href={`mailto:${SITE.email}`} icon="@">Email</ClayButton>
+          <ClayButton variant="ghost" size="lg" href={SITE.linkedin} external>LinkedIn</ClayButton>
+        </CtaBand>
       </section>
     </main>
   );

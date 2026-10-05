@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PROJECTS, getProject } from "@/data/projects";
 import { REELS } from "@/data/media";
-import { SITE } from "@/data/facts";
+import { SITE, waLink } from "@/data/facts";
 import Reel from "@/components/signal/Reel";
+import { ClayCard, ClayButton, CtaBand } from "@/components/signal";
 import { Underline } from "@/components/signal/Doodles";
 
 export function generateStaticParams() {
@@ -23,12 +23,21 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-function Block({ title, children }: { title: string; children: React.ReactNode }) {
+function Block({ no, title, children }: { no: string; title: string; children: React.ReactNode }) {
+  const id = `b-${no}`;
   return (
-    <section className="cs-block">
-      <h2>{title}</h2>
+    <section className="cs-block" aria-labelledby={id}>
+      <div className="cs-block__label"><span>{no}</span><h2 id={id}>{title}</h2></div>
       <div>{children}</div>
     </section>
+  );
+}
+
+function List({ items, accent }: { items: string[]; accent: string }) {
+  return (
+    <ClayCard accent={accent} pad="lg">
+      <ul className="cs-list">{items.map((x) => <li key={x}>{x}</li>)}</ul>
+    </ClayCard>
   );
 }
 
@@ -37,112 +46,140 @@ export default function CaseStudy({ params }: { params: { slug: string } }) {
   if (!p) notFound();
   const i = PROJECTS.findIndex((x) => x.slug === p.slug);
   const next = PROJECTS[(i + 1) % PROJECTS.length];
+  const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
   const slot = REELS[p.slug];
+  const tall = p.reel.ratio === "9:16";
+
+  // Blocks are a reading sequence, so they are numbered in order of appearance.
+  const blocks: { title: string; node: React.ReactNode }[] = [];
+  blocks.push({ title: "The problem", node: <List items={p.problem} accent={p.accent} /> });
+  blocks.push({
+    title: "Architecture",
+    node: (
+      <div className="cs-arch">
+        {p.architecture.map((l, k) => (
+          <ClayCard key={l.name} accent={p.accent} pad="sm">
+            {k > 0 && <span className="cs-arch__wire" aria-hidden />}
+            <b>{l.name}</b><span className="d">{l.detail}</span>
+          </ClayCard>
+        ))}
+      </div>
+    ),
+  });
+  if (p.decisions.length) blocks.push({
+    title: "Key decisions",
+    node: (
+      <div className="clay-grid clay-grid--2 cs-decisions">
+        {p.decisions.map((d, k) => (
+          <ClayCard key={d.title} accent={p.accent} pad="md" className="cs-decision">
+            <div className="clay-kicker"><span className="badge">{String(k + 1).padStart(2, "0")}</span></div>
+            <h3>{d.title}</h3>
+            <p className="clay-body">{d.why}</p>
+            <div className="well cs-tradeoff"><strong>Tradeoff</strong>{d.tradeoff}</div>
+          </ClayCard>
+        ))}
+      </div>
+    ),
+  });
+  if (p.code.length) blocks.push({
+    title: "Real code",
+    node: p.code.map((c) => (
+      <ClayCard as="figure" key={c.file} accent={p.accent} pad="none" className="cs-code">
+        <div className="cs-code__head"><span><span className="cs-code__dots" aria-hidden><i /><i /><i /></span>{c.file}</span><span className="clay-accent">excerpt</span></div>
+        <pre className="well" tabIndex={0} aria-label={`Code excerpt from ${c.file}`}><code>{c.code}</code></pre>
+        <figcaption className="cap">{c.caption}</figcaption>
+      </ClayCard>
+    )),
+  });
+  if (p.qa.length) blocks.push({ title: "How it was verified", node: <List items={p.qa} accent={p.accent} /> });
+  if (p.results.length) blocks.push({ title: "Results", node: <List items={p.results} accent={p.accent} /> });
+  if (p.next.length) blocks.push({ title: "What I'd do next", node: <List items={p.next} accent={p.accent} /> });
 
   return (
-    <main className="sp" style={{ minHeight: "100vh" }}>
+    <main className="sp" style={{ minHeight: "100vh", ["--accent" as string]: p.accent }}>
       <article className="sp-wrap">
         <header className="cs-hero">
-          <Link href="/work" className="sp-eyebrow">← all case studies</Link>
-          <div className="sp-station__no" style={{ marginTop: 26 }}>
-            <em style={{ background: p.accent }}>{p.station}</em><span>{p.kind}</span>
+          <ClayButton href="/work" variant="ghost" icon="←">All case studies</ClayButton>
+          <div className="clay-kicker" style={{ marginTop: 32 }}>
+            <span className="badge">{p.station}</span><span>{p.kind}</span>
           </div>
-          <h1 className="sp-display cs-title">{p.name}</h1>
+          <h1 className="cs-title">{p.name}</h1>
           <Underline color={p.accent} style={{ width: "min(420px, 70%)", height: 18 }} />
-          <p style={{ fontSize: "clamp(20px, 2.4vw, 28px)", lineHeight: 1.35, maxWidth: 820, marginTop: 18 }}>{p.summary}</p>
+          <p className="cs-summary">{p.summary}</p>
+          <div className="cta-row cs-hero__ctas">
+            {p.live && <ClayButton href={p.live} external variant="signal">Open the live site</ClayButton>}
+            {p.repo && <ClayButton href={p.repo} external variant={p.live ? "ghost" : "signal"}>Read the source</ClayButton>}
+            <ClayButton href="#cs-cta" variant={p.live || p.repo ? "ghost" : "signal"} icon="↓">Talk about this build</ClayButton>
+          </div>
 
-          <dl className="cs-meta">
-            <div><dt>Role</dt><dd>{p.role}</dd></div>
-            <div><dt>When</dt><dd>{p.when}</dd></div>
-            <div><dt>Stack</dt><dd>{p.stack.slice(0, 4).join(", ")}</dd></div>
-            <div><dt>Links</dt><dd style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              {p.live && <a href={p.live} target="_blank" rel="noreferrer" style={{ color: "var(--sp-signal)" }}>Live site ↗</a>}
-              {p.repo && <a href={p.repo} target="_blank" rel="noreferrer" style={{ color: "var(--sp-signal)" }}>Source ↗</a>}
+          <dl className="clay-grid clay-grid--4 cs-meta">
+            <ClayCard pad="sm" accent={p.accent}><dt>Role</dt><dd>{p.role}</dd></ClayCard>
+            <ClayCard pad="sm" accent={p.accent}><dt>When</dt><dd>{p.when}</dd></ClayCard>
+            <ClayCard pad="sm" accent={p.accent}><dt>Stack</dt><dd>{p.stack.slice(0, 4).join(", ")}</dd></ClayCard>
+            <ClayCard pad="sm" accent={p.accent}><dt>Links</dt><dd style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              {p.live && <a href={p.live} target="_blank" rel="noreferrer">Live site ↗</a>}
+              {p.repo && <a href={p.repo} target="_blank" rel="noreferrer">Source ↗</a>}
               {!p.live && !p.repo && <span style={{ color: "var(--sp-muted)" }}>Private</span>}
-            </dd></div>
+            </dd></ClayCard>
           </dl>
 
           {p.stats.length > 0 && (
-            <div className="sp-stats" style={{ borderTop: 0, marginTop: 28 }}>
+            <ul className="clay-grid clay-grid--4 cs-stats" style={{ listStyle: "none" }}>
               {p.stats.map((s) => (
-                <div key={s.label}><div className="sp-stat__v" style={{ color: p.accent }}>{s.value}</div><div className="sp-stat__l">{s.label}</div></div>
+                <ClayCard as="li" key={s.label} pad="sm" accent={p.accent}>
+                  <span className="stat__bar" aria-hidden />
+                  <div className="stat__v clay-accent">{s.value}</div>
+                  <div className="stat__l">{s.label}</div>
+                </ClayCard>
               ))}
-            </div>
+            </ul>
           )}
         </header>
 
         {slot && (
-          <div className="sp-station__media" style={{ aspectRatio: p.reel.ratio === "9:16" ? "9 / 16" : "16 / 9", maxWidth: p.reel.ratio === "9:16" ? 420 : undefined, margin: "0 auto 60px" }}>
-            <Reel slot={slot} alt={`${p.name} in action`} shot={p.reel.shot} />
-          </div>
-        )}
-
-        <Block title="The problem">
-          <div className="cs-prose"><ul>{p.problem.map((x) => <li key={x}>{x}</li>)}</ul></div>
-        </Block>
-
-        <Block title="Architecture">
-          <div className="cs-arch">
-            {p.architecture.map((l) => (
-              <div key={l.name} className="cs-arch__row"><b style={{ color: p.accent }}>{l.name}</b><span>{l.detail}</span></div>
-            ))}
-          </div>
-        </Block>
-
-        {p.decisions.length > 0 && (
-          <Block title="Key decisions">
-            <div className="cs-decisions">
-              {p.decisions.map((d) => (
-                <div key={d.title} className="cs-decision">
-                  <h3>{d.title}</h3>
-                  <p>{d.why}</p>
-                  <p><strong style={{ color: "var(--sp-paper)" }}>Tradeoff:</strong> {d.tradeoff}</p>
-                </div>
-              ))}
+          <ClayCard accent={p.accent} pad="sm" className="cs-reel" style={{ padding: 12, maxWidth: tall ? 420 : undefined }}>
+            <div className={`screen ${tall ? "screen--portrait" : "screen--wide"}`}>
+              <Reel slot={slot} alt={`${p.name} in action`} shot={p.reel.shot} no={p.station} name={p.name} />
             </div>
-          </Block>
+          </ClayCard>
         )}
 
-        {p.code.length > 0 && (
-          <Block title="Real code">
-            {p.code.map((c) => (
-              <figure key={c.file} className="cs-code">
-                <figcaption className="cs-code__head"><span>{c.file}</span><span style={{ color: p.accent }}>excerpt</span></figcaption>
-                <pre><code>{c.code}</code></pre>
-                <p>{c.caption}</p>
-              </figure>
-            ))}
-          </Block>
-        )}
-
-        {p.qa.length > 0 && (
-          <Block title="How it was verified">
-            <div className="cs-prose"><ul>{p.qa.map((x) => <li key={x}>{x}</li>)}</ul></div>
-          </Block>
-        )}
-
-        {p.results.length > 0 && (
-          <Block title="Results">
-            <div className="cs-prose"><ul>{p.results.map((x) => <li key={x}>{x}</li>)}</ul></div>
-          </Block>
-        )}
-
-        {p.next.length > 0 && (
-          <Block title="What I'd do next">
-            <div className="cs-prose"><ul>{p.next.map((x) => <li key={x}>{x}</li>)}</ul></div>
-          </Block>
-        )}
+        {blocks.map((b, k) => (
+          <Block key={b.title} no={String(k + 1).padStart(2, "0")} title={b.title}>{b.node}</Block>
+        ))}
 
         {p.placeholders && p.placeholders.length > 0 && process.env.NODE_ENV !== "production" && (
-          <Block title="To fill in">
+          <Block no="··" title="To fill in">
             <div className="cs-todo">{p.placeholders.map((x) => <div key={x}>• {x}</div>)}</div>
           </Block>
         )}
 
-        <nav className="cs-next" aria-label="Next case study">
-          <Link href="/work" className="sp-btn sp-btn--ghost">← All case studies</Link>
-          <Link href={`/work/${next.slug}`} className="sp-btn sp-btn--primary">Next: {next.name} →</Link>
-        </nav>
+        <div className="cs-end">
+          <section aria-labelledby="cs-cta" id="cs-cta-wrap">
+            <CtaBand
+              id="cs-cta"
+              eyebrow={`$ ./hire --re ${p.slug}`}
+              title={`Want a build like ${p.name}?`}
+              body={`Senior remote roles and contract builds. Replies within a day, ${SITE.timezone}.`}
+            >
+              <ClayButton variant="dark" size="lg" href={waLink(`Hi Levo, I read the ${p.name} case study and want to talk.`)} external>WhatsApp</ClayButton>
+              <ClayButton variant="ghost" size="lg" href={`mailto:${SITE.email}?subject=${encodeURIComponent(`About ${p.name}`)}`} icon="@">Email</ClayButton>
+            </CtaBand>
+          </section>
+
+          <nav aria-label="More case studies" className="clay-grid clay-grid--2">
+            <ClayCard href={`/work/${prev.slug}`} accent={prev.accent} pad="md">
+              <div className="clay-kicker"><span className="badge">{prev.station}</span><span>Previous</span></div>
+              <div className="clay-title" style={{ fontSize: 30 }}>{prev.name}</div>
+              <div className="clay-foot"><span className="clay-fake-btn">Read<i aria-hidden>←</i></span></div>
+            </ClayCard>
+            <ClayCard href={`/work/${next.slug}`} accent={next.accent} pad="md">
+              <div className="clay-kicker"><span className="badge">{next.station}</span><span>Next</span></div>
+              <div className="clay-title" style={{ fontSize: 30 }}>{next.name}</div>
+              <div className="clay-foot"><span className="clay-fake-btn">Read<i aria-hidden>→</i></span></div>
+            </ClayCard>
+          </nav>
+        </div>
       </article>
     </main>
   );

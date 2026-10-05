@@ -1,33 +1,59 @@
-import Link from "next/link";
 import { PROJECTS } from "@/data/projects";
+import { ClayCard, SectionHeader, CtaBand, ClayButton } from "@/components/signal";
 import { Underline } from "@/components/signal/Doodles";
+import { SITE, waLink } from "@/data/facts";
 
 export default function WorkIndex() {
   return (
     <main className="sp" style={{ minHeight: "100vh" }}>
       <section className="sp-wrap cs-hero">
-        <div className="sp-eyebrow">$ ls ./work --all</div>
-        <h1 className="sp-display cs-title">Case studies</h1>
-        <Underline style={{ width: 260, height: 18 }} />
-        <p className="cs-prose" style={{ maxWidth: 640, marginTop: 18 }}>
-          <span style={{ fontSize: 19, color: "#d8d2c7" }}>Each one covers the problem, the architecture, the decisions and their tradeoffs, real code, how it was verified, and what I would do next.</span>
-        </p>
+        <SectionHeader
+          as="h1"
+          eyebrow="$ ls ./work --all"
+          title="Case studies"
+          kicker="Each one covers the problem, the architecture, the decisions and their tradeoffs, real code, how it was verified, and what I would do next."
+        />
+        <Underline style={{ width: 260, height: 18, marginTop: 10 }} />
       </section>
-      <section className="sp-wrap" style={{ paddingBottom: 110 }}>
-        <ol style={{ listStyle: "none", borderTop: "1px solid var(--sp-line)" }}>
+
+      <section className="sp-wrap" aria-label="All case studies" style={{ paddingBottom: 72 }}>
+        <ul className="clay-grid clay-grid--2" style={{ listStyle: "none" }}>
           {PROJECTS.map((p) => (
-            <li key={p.slug} style={{ borderBottom: "1px solid var(--sp-line)" }}>
-              <Link href={`/work/${p.slug}`} style={{ display: "grid", gridTemplateColumns: "60px minmax(0,1fr) auto", gap: 20, alignItems: "center", padding: "26px 0" }}>
-                <span className="sp-mono" style={{ color: p.accent, fontSize: 14 }}>{p.station}</span>
-                <span>
-                  <span className="sp-display" style={{ display: "block", fontSize: "clamp(28px,4vw,46px)", fontWeight: 700, lineHeight: 1 }}>{p.name}</span>
-                  <span style={{ display: "block", color: "var(--sp-muted)", marginTop: 8, fontSize: 15 }}>{p.kind} · {p.tagline}</span>
-                </span>
-                <span aria-hidden className="sp-mono" style={{ fontSize: 22 }}>→</span>
-              </Link>
+            <li key={p.slug} style={{ display: "flex" }}>
+              <ClayCard href={`/work/${p.slug}`} accent={p.accent} pad="lg" className="work-card" style={{ width: "100%" }} aria-label={`${p.name}: read the case study`}>
+                <div className="clay-kicker"><span className="badge">{p.station}</span><span>{p.kind}</span></div>
+                <h2 className="clay-title">{p.name}</h2>
+                <p className="clay-body" style={{ fontSize: 17 }}>{p.tagline}</p>
+                {p.stats.length > 0 && (
+                  <div className="work-card__stats">
+                    {p.stats.slice(0, 2).map((s) => (
+                      <div key={s.label} className="well"><b>{s.value}</b><span>{s.label}</span></div>
+                    ))}
+                  </div>
+                )}
+                <div className="clay-foot">
+                  <div className="sp-chips">
+                    {p.stack.slice(0, 3).map((t) => <span key={t} className="sp-chip">{t}</span>)}
+                  </div>
+                  <span className="clay-fake-btn" aria-hidden>Read<i>→</i></span>
+                </div>
+              </ClayCard>
             </li>
           ))}
-        </ol>
+        </ul>
+      </section>
+
+      <section className="sp-wrap" style={{ paddingBottom: 112 }} aria-labelledby="work-cta">
+        <CtaBand
+          id="work-cta"
+          tone="signal"
+          title="Seen enough? Let's build the next one."
+          body={`Senior remote roles and contract builds. Replies within a day, ${SITE.timezone}.`}
+        >
+          <ClayButton variant="dark" size="lg" href={waLink("Hi Levo, I read your case studies and want to talk.")} external>WhatsApp</ClayButton>
+          <ClayButton variant="ghost" size="lg" href={`mailto:${SITE.email}`} icon="@">Email</ClayButton>
+          <ClayButton variant="ghost" size="lg" href={SITE.github} external>GitHub</ClayButton>
+        </CtaBand>
       </section>
     </main>
   );
