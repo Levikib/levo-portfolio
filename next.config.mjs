@@ -15,6 +15,15 @@ const nextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
 
+  // Old routes: the fake blog became Thoughts, the store had no purchase flow.
+  async redirects() {
+    return [
+      { source: "/blog", destination: "/thoughts", permanent: false },
+      { source: "/blog/:path*", destination: "/thoughts", permanent: false },
+      { source: "/store", destination: "/editorial?kind=product", permanent: false },
+    ];
+  },
+
   // Security + performance headers
   async headers() {
     return [

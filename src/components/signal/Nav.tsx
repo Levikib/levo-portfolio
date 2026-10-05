@@ -50,7 +50,7 @@ export default function Nav() {
           </button>
           <Link href="/#terminal" className="sp-nav__link sp-hide-sm">Terminal</Link>
           <Link href="/editorial" className="sp-nav__link sp-hide-sm">Editorial</Link>
-          <Link href="/blog" className="sp-nav__link sp-hide-sm">Writing</Link>
+          <Link href="/thoughts" className="sp-nav__link sp-hide-sm">Thoughts</Link>
           <ClayButton href="/#contact" variant="signal" className="sp-nav__cta">Hire me</ClayButton>
         </div>
       </nav>
