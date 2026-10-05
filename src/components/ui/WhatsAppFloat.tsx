@@ -74,7 +74,7 @@ export default function WhatsAppFloat() {
         }}>
           {/* Pulse ring */}
           {pulse && (
-            <div style={{
+            <div data-wa-pulse style={{
               position: "absolute",
               inset: "-4px",
               borderRadius: "50%",
@@ -95,6 +95,9 @@ export default function WhatsAppFloat() {
           0%   { transform: scale(1);   opacity: 0.8; }
           70%  { transform: scale(1.5); opacity: 0;   }
           100% { transform: scale(1.5); opacity: 0;   }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [data-wa-pulse] { animation: none !important; display: none; }
         }
       `}</style>
     </aside>

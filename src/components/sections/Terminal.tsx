@@ -578,10 +578,10 @@ export default function Terminal() {
             <div style={{ width:"12px", height:"12px", borderRadius:"50%", background:"#ff5f56" }} />
             <div style={{ width:"12px", height:"12px", borderRadius:"50%", background:"#ffbd2e" }} />
             <div style={{ width:"12px", height:"12px", borderRadius:"50%", background:"#27c93f" }} />
-            <span style={{ fontFamily:"var(--font-mono)", fontSize:"11px", color:"rgba(255,255,255,0.3)", marginLeft:"12px", letterSpacing:"0.08em" }}>levis@portfolio:~</span>
+            <span style={{ fontFamily:"var(--font-mono)", fontSize:"11px", color:"rgba(255,255,255,0.6)", marginLeft:"12px", letterSpacing:"0.08em" }}>levis@portfolio:~</span>
             <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:"6px" }}>
               <div style={{ width:"7px", height:"7px", borderRadius:"50%", background:"#10b981", boxShadow:"0 0 6px #10b981", animation:"blink 2s ease-in-out infinite" }} />
-              <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:"rgba(16,185,129,0.7)", letterSpacing:"0.12em" }}>LIVE</span>
+              <span style={{ fontFamily:"var(--font-mono)", fontSize:"9px", color:"#10b981", letterSpacing:"0.12em" }}>LIVE</span>
             </div>
           </div>
 
@@ -618,7 +618,7 @@ export default function Terminal() {
               autoCapitalize="off"
               spellCheck={false}
               style={{
-                flex:1, background:"transparent", border:"none", outline:"none",
+                flex:1, minHeight:"44px", margin:"-13px 0", background:"transparent", border:"none", outline:"none",
                 fontFamily:"'Courier New', monospace", fontSize:monoSize, color:"white",
                 caretColor:"#10b981",
               }}

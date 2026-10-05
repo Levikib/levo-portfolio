@@ -473,6 +473,14 @@ const STATS = [
   { val: "2",       label: "Production SaaS",  accent: "#a855f7" },
 ];
 
+/** Mixes a hex accent toward black (amt<0) or white (amt>0) so small text clears WCAG AA 4.5:1. */
+const shade = (hex: string, amt: number) => {
+  const n = parseInt(hex.slice(1, 7), 16);
+  const t = amt < 0 ? 0 : 255, a = Math.abs(amt);
+  const c = [16, 8, 0].map((sh) => Math.round(((n >> sh) & 255) * (1 - a) + t * a));
+  return "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("");
+};
+
 const LABEL_COLORS: Record<string, string> = {
   Education: "#0891b2", Work: "#059669", Founded: "#7c3aed",
   Cert: "#d97706", Built: "#10b981", Building: "#a855f7",
@@ -531,7 +539,7 @@ export default function About() {
             <div key={s.label} style={{ padding: "32px 24px", textAlign: "center", position: "relative", borderRight: i < STATS.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${s.accent}, transparent)` }} />
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(22px,2.5vw,36px)", color: s.accent, lineHeight: 1, marginBottom: "6px" }}>{s.val}</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{s.label}</div>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -547,8 +555,8 @@ export default function About() {
             </div>
             <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
               {[null, "Education", "Work", "Founded", "Built"].map(f => (
-                <button key={String(f)} onClick={() => setFilter(f)}
-                  style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 12px", background: filter === f ? "var(--text)" : "transparent", border: `1px solid ${filter === f ? "var(--text)" : "var(--border)"}`, color: filter === f ? "white" : "var(--text-3)", cursor: "pointer", transition: "all 0.2s" }}>
+                <button key={String(f)} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}
+                  style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 12px", minHeight: "44px", background: filter === f ? "var(--text)" : "transparent", border: `1px solid ${filter === f ? "var(--text)" : "var(--border)"}`, color: filter === f ? "white" : "var(--text-3)", cursor: "pointer", transition: "all 0.2s" }}>
                   {f ?? "All"}
                 </button>
               ))}
@@ -559,12 +567,12 @@ export default function About() {
             {filtered.map((item, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "clamp(56px,10vw,80px) 1fr", position: "relative" }}>
                 <div style={{ paddingTop: "30px", paddingRight: "16px", textAlign: "right" }}>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: item.accent, letterSpacing: "0.06em", lineHeight: 1.4 }}>{item.year}</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: shade(item.accent, -0.45), letterSpacing: "0.06em", lineHeight: 1.4 }}>{item.year}</div>
                 </div>
                 <div style={{ padding: "24px 0 24px 32px", borderBottom: i < filtered.length - 1 ? "1px solid var(--border)" : "none", position: "relative" }}>
                   <div style={{ position: "absolute", left: "-4.5px", top: "32px", width: "9px", height: "9px", borderRadius: "50%", background: item.accent, border: "2px solid var(--bg)", boxShadow: `0 0 0 1px ${item.accent}40` }} />
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px", flexWrap: "wrap" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.1em", textTransform: "uppercase", color: LABEL_COLORS[item.label] ?? item.accent, background: `${LABEL_COLORS[item.label] ?? item.accent}12`, border: `1px solid ${LABEL_COLORS[item.label] ?? item.accent}30`, padding: "2px 8px" }}>{item.label}</span>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "8px", letterSpacing: "0.1em", textTransform: "uppercase", color: shade(LABEL_COLORS[item.label] ?? item.accent, -0.45), background: `${LABEL_COLORS[item.label] ?? item.accent}12`, border: `1px solid ${LABEL_COLORS[item.label] ?? item.accent}30`, padding: "2px 8px" }}>{item.label}</span>
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: "var(--text-4)" }}>{item.org}</span>
                   </div>
                   <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "17px", color: "var(--text)", lineHeight: 1.2, marginBottom: "6px" }}>{item.title}</h3>
@@ -579,13 +587,13 @@ export default function About() {
       {/* ── STACK ── */}
       <div style={{ background: "#0a0805", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(124,58,237,0.6)", textTransform: "uppercase", marginBottom: "10px" }}>// Stack</div>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "#a78bfa", textTransform: "uppercase", marginBottom: "10px" }}>// Stack</div>
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", letterSpacing: "-0.02em", color: "white", lineHeight: 1, marginBottom: "40px" }}>The Toolkit.</h2>
           <div className="about-stack-grid" style={{ display: "grid", gap: "1px", background: "rgba(255,255,255,0.06)" }}>
             {STACK.map(cat => (
               <div key={cat.cat} style={{ background: "#0a0805", padding: "28px 24px", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg,${cat.accent},transparent)` }} />
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: cat.accent, marginBottom: "14px", opacity: 0.8 }}>{cat.cat}</div>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: shade(cat.accent, 0.45), marginBottom: "14px" }}>{cat.cat}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                   {cat.items.map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -619,11 +627,11 @@ export default function About() {
 
       {/* ── CTA ── */}
       <div style={{ background: "#05020f", padding: "72px clamp(20px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,0.06)", textAlign: "center" }}>
-        <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "rgba(168,85,247,0.6)", textTransform: "uppercase", marginBottom: "16px" }}>// Open to Work</div>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "#c4b5fd", textTransform: "uppercase", marginBottom: "16px" }}>// Open to Work</div>
         <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(32px,5vw,64px)", lineHeight: 0.95, letterSpacing: "-0.03em", color: "white", marginBottom: "20px" }}>
           Let&apos;s build<br /><span style={{ color: "#a855f7" }}>something real.</span>
         </h2>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.8, maxWidth: "460px", margin: "0 auto 36px" }}>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "14px", color: "rgba(255,255,255,0.65)", lineHeight: 1.8, maxWidth: "460px", margin: "0 auto 36px" }}>
           Open to senior remote engineering roles, SaaS collaborations, and problems worth solving.
         </p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>

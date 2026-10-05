@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     template: "%s | Levis Kibirie",
   },
   description:
-    `Product engineer and designer in Nairobi. Founder of Makeja Homes (${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units). Four years on core banking environments. Open to senior remote roles and contract builds.`,
+    `Product engineer and designer in Nairobi. Founder of Makeja Homes (${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units). Open to senior remote roles and contract builds.`,
   keywords: [
     "Fullstack Engineer", "SaaS Founder", "Next.js Developer", "TypeScript",
     "Nairobi Kenya", "Remote Engineer", "Levis Kibirie", "Makeja Homes",
