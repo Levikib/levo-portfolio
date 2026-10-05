@@ -51,9 +51,6 @@
   --text-inv: #faf7f0;
 
   /* Fonts */
-  --font-display: var(--font-syne);
-  --font-mono: var(--font-syne-mono);
-  --font-body: var(--font-dm-sans);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }

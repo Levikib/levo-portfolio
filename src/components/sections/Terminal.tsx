@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { MAKEJA, fmt } from "@/data/facts";
+import { PROJECTS } from "@/data/projects";
 
 type Line = { type: "input" | "output" | "error" | "blank"; text: string; color?: string };
 
@@ -8,22 +10,21 @@ const PROMPT = "levis@portfolio:~$";
 
 const MAKEJA_ASCII = `
   ╔═══════════════════════════════╗
-  ║   MAKEJA HOMES · DASHBOARD    ║
+  ║   MAKEJA HOMES · LIVE         ║
   ╠═══════════════════════════════╣
-  ║  Tenants     247+  ▓▓▓▓▓▓▓░  ║
-  ║  Monthly     KSH 1.5M  ✓     ║
-  ║  Uptime      100%   ●LIVE    ║
-  ║  Units       260    managed  ║
+  ║  Tenants     ${fmt(MAKEJA.tenants).padEnd(17)}║
+  ║  Units       ${fmt(MAKEJA.units).padEnd(17)}║
+  ║  Leases      ${fmt(MAKEJA.leases).padEnd(17)}║
+  ║  Clients     ${fmt(MAKEJA.clients).padEnd(17)}║
   ╚═══════════════════════════════╝`;
 
 const GHOSTNET_ASCII = `
   ╔═══════════════════════════════╗
   ║     GHOSTNET · ACTIVE         ║
   ╠═══════════════════════════════╣
-  ║  Modules     13    total      ║
-  ║  Lab Steps   243   guided     ║
-  ║  XP Economy  5450  points     ║
-  ║  Tools       9     standalone ║
+  ║  Modules     13    training   ║
+  ║  Tools       8     standalone ║
+  ║  Leaderboard ●LIVE            ║
   ║  GHOST Agent ●ONLINE          ║
   ╚═══════════════════════════════╝`;
 
@@ -72,7 +73,7 @@ const HOOKAH_ASCII = `
   ╠═══════════════════════════════╣
   ║  Hero Model  GLB   Draco      ║
   ║  Flavours    25    orbiting   ║
-  ║  Disassembly 7     parts      ║
+  ║  GPU split   5     bands      ║
   ║  Payments    Paystack ✓LIVE   ║
   ╚═══════════════════════════════╝`;
 
@@ -81,6 +82,8 @@ const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: s
     label: "PROJECTS", color: "#a855f7",
     items: [
       { cmd: "projects", desc: "→  List every project" },
+      { cmd: "open <name>", desc: "→  Open a full case study" },
+      { cmd: "work", desc: "→  All case studies" },
       { cmd: "makeja", desc: "→  Makeja Homes live stats" },
       { cmd: "ghostnet", desc: "→  GhostNet platform stats" },
       { cmd: "nse", desc: "→  NSE Research Agent stats" },
@@ -130,8 +133,8 @@ const MAN_PAGES: Record<string, string[]> = {
     "  DESCRIPTION",
     "         Multi-tenant residential property management SaaS.",
     "         Built from zero: architecture, payment flows, automation.",
-    "         Live since 2024. 247+ active tenants, KSH 1.5M/month",
-    "         processed through Paystack webhooks.",
+    `         Live since 2024. ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units,`,
+    `         ${fmt(MAKEJA.leases)} leases, ${fmt(MAKEJA.clients)} client companies.`,
     "",
     "  SEE ALSO",
     "         ghostnet(1), stack(1), projects(1)",
@@ -144,10 +147,9 @@ const MAN_PAGES: Record<string, string[]> = {
     "",
     "  DESCRIPTION",
     "         Full-stack cybersecurity research & training platform.",
-    "         13 modules (concept page + interactive lab each), 243",
-    "         guided lab steps, ~5,450 XP economy with a 5-tier rank",
-    "         system, 9 standalone tools, live leaderboard, and GHOST",
-    "         Agent, a Groq llama-3.3-70b assistant embedded in-app.",
+    "         13 training modules, 8 standalone tools, a live",
+    "         leaderboard, and GHOST Agent, a Groq llama-3.3-70b",
+    "         assistant embedded in-app.",
     "         Module pages are open to browse; labs and the agent",
     "         require a free account.",
     "",
@@ -182,9 +184,9 @@ const WHOAMI_LINES = [
   "  Levis Kibirie: Fullstack Engineer · SaaS Founder · Designer",
   "  Based in Nairobi, Kenya. 8+ years in tech.",
   "",
-  "  Built Makeja Homes from scratch: 247+ tenants, KSH 1.5M/mo.",
-  "  Built GhostNet: cybersec platform with AI, 13 modules, 9 tools.",
-  "  GhostNet builder · Pen tester · Forbes Africa ready.",
+  `  Built Makeja Homes from scratch: ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units.`,
+  "  4 years building T24 core banking environments for banks.",
+  "  Client sites: Mikono Creations, Elatec, Noevella Group.",
   "",
   "  Open to: senior remote engineering, SaaS collabs, interesting problems.",
 ];
@@ -210,14 +212,14 @@ const SOCIALS_LINES = [
 ];
 
 const PROJECTS_LINES = [
-  "  01  Makeja Homes         Live · SaaS         247+ tenants, KSH 1.5M/mo",
-  "  02  GhostNet             Live · EdTech       13 modules, 243 lab steps, 5,450 XP",
+  `  01  Makeja Homes         Live · SaaS         ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units`,
+  "  02  GhostNet             Live · EdTech       13 modules, 8 tools, AI agent",
   "  03  NSE Research Agent   In Dev · AI Tool    Nairobi Securities Exchange intel",
   "  04  ShanTech Agency      2024–25 · Agency    12+ clients, 250K+ engagements",
   "  05  Chill Minds Magazine Published · Design  2 volumes, 72 pages",
   "  06  Hookah Rental       Live · 3D           GLB hero model, 25 flavours, Paystack",
   "",
-  "  Run a project name to see its stats. e.g. `ghostnet`, `makeja`, `hookah`",
+  "  Run a project name for stats, or `open <name>` for the full case study.",
 ];
 
 const TIMELINE_LINES = [
@@ -233,10 +235,10 @@ const TIMELINE_LINES = [
 ];
 
 const BEYOND_LINES = [
-  "  🎌  Anime      FMA, Attack on Titan, Vinland Saga. Don't argue.",
-  "  📈  Markets    NSE investor building the tool I always wished existed.",
-  "  📖  Editorial  Designed Chill Minds Magazine, 72 pages, printed & distributed.",
-  "  🌍  Nairobi    Proving world-class products ship from anywhere.",
+  "  anime      FMA, Attack on Titan, Vinland Saga. Don't argue.",
+  "  markets    NSE investor building the tool I always wished existed.",
+  "  editorial  Designed Chill Minds Magazine, 72 pages, printed & distributed.",
+  "  nairobi    Proving world-class products ship from anywhere.",
 ];
 
 const ABOUT_LINES = [
@@ -268,6 +270,19 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
       for (const h of g.items) {
         out.push({ type: "output", text: `    ${h.cmd.padEnd(17)}${h.desc}`, color: undefined });
       }
+    }
+  } else if (cmd === "work") {
+    out.push({ type: "output", text: "  Opening /work ...", color: "#4ead6a" });
+    out.push({ type: "blank", text: "__GOTO__/work" });
+  } else if (cmd.startsWith("open")) {
+    const q = cmd.slice(4).trim();
+    const p = PROJECTS.find(x => q && (x.slug.includes(q) || x.name.toLowerCase().includes(q)));
+    if (p) {
+      out.push({ type: "output", text: `  Opening ${p.name} ...`, color: "#4ead6a" });
+      out.push({ type: "blank", text: `__GOTO__/work/${p.slug}` });
+    } else {
+      out.push({ type: "error", text: `  open: no project matches '${q}'`, color: "#e11d48" });
+      out.push({ type: "output", text: `  Try: ${PROJECTS.map(x => x.slug.split("-")[0]).join(", ")}`, color: "rgba(255,255,255,0.35)" });
     }
   } else if (cmd === "makeja") {
     out.push({ type: "output", text: MAKEJA_ASCII, color: "#a855f7" });
@@ -420,13 +435,13 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
 
 const BOOT_SEQUENCE = [
   { text: "Initializing Levis Kibirie OS v2.0...", color: "rgba(255,255,255,0.3)" },
-  { text: "Loading projects: makeja ✓  ghostnet ✓  nse ✓  shantech ✓  chillminds ✓  hookah ✓", color: "#4ead6a" },
+  { text: "Loading projects: makeja ✓  mikono ✓  elatec ✓  noevella ✓  ghostnet ✓  hookah ✓", color: "#4ead6a" },
   { text: "Mounting skills: typescript ✓  nextjs ✓  supabase ✓  groq ✓", color: "#a855f7" },
   { text: "System ready. Type 'help' to get started.\n", color: "#d97706" },
 ];
 
 const TAB_COMPLETE_CMDS = [
-  "help","projects","makeja","ghostnet","nse","shantech","chillminds","hookah",
+  "help","projects","open makeja","open mikono","open elatec","open noevella","open ghostnet","open hookah","open levo-cli","work","makeja","ghostnet","nse","shantech","chillminds","hookah",
   "whoami","about","timeline","skills","stack","beyond",
   "contact","socials","hire levis","neofetch","history","man ",
   "clear","ls","pwd","date",
@@ -488,7 +503,8 @@ export default function Terminal() {
     }
 
     const scrollHire = result.some(l => l.text === "__HIRE__");
-    const filtered = result.filter(l => l.text !== "__HIRE__");
+    const goto = result.find(l => l.text.startsWith("__GOTO__"))?.text.slice(8);
+    const filtered = result.filter(l => l.text !== "__HIRE__" && !l.text.startsWith("__GOTO__"));
 
     setLines(prev => [
       ...prev,
@@ -500,6 +516,7 @@ export default function Terminal() {
     setHistIdx(-1);
     setInput("");
 
+    if (goto) setTimeout(() => { window.location.href = goto; }, 500);
     if (scrollHire) {
       setTimeout(() => {
         document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });

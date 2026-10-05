@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
+import { MAKEJA, fmt } from "@/data/facts";
 
 export const metadata: Metadata = {
-  title: "Work & Projects",
-  description:
-    "Portfolio of engineering work by Levis Kibirie. Makeja Homes (production SaaS, 247+ tenants, KSH 1.5M/mo), GhostNet (cybersecurity platform, AI-powered), NSE Research Agent, ShanTech Agency, and more.",
-  keywords: [
-    "Makeja Homes", "GhostNet", "SaaS Portfolio", "Next.js Projects",
-    "Kenya Engineer Portfolio", "Fullstack Projects", "Cybersecurity Platform",
-  ],
+  title: "Case studies",
+  description: `In-depth case studies by Levis Kibirie: Makeja Homes (${fmt(MAKEJA.tenants)} tenants), Mikono Creations, Elatec Safety Systems, Noevella Group, core banking environments, levo-cli, GhostNet and Hookah 3D.`,
   alternates: { canonical: "https://levikibirie.dev/work" },
   openGraph: {
-    title: "Work & Projects | Levis Kibirie",
-    description: "Production systems, AI platforms, and digital products built by Levis Kibirie.",
+    title: "Case studies | Levis Kibirie",
+    description: "Architecture, decisions and real code behind every build.",
     url: "https://levikibirie.dev/work",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-  twitter: {
-    title: "Work & Projects | Levis Kibirie",
-    description: "Production systems, AI platforms, and digital products built by Levis Kibirie.",
   },
 };
 

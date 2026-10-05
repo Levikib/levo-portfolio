@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { MAKEJA, fmt } from "@/data/facts";
 
 // ── SCRAMBLE ENGINE ───────────────────────────────────────────────────────────
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*<>?/\\|ΛΨΩΦΞΣΔΘアイウエカキクケコサシスセソ█▓▒░▄▀■□";
@@ -440,9 +441,9 @@ const JOURNEY = [
   { year: "2020–2024", label: "Education", accent: "#0891b2", title: "BSc Information Technology",       org: "Kenyatta University · 2nd Upper Class", desc: "Full degree: software engineering, networks, databases, systems architecture." },
   { year: "Apr 2022",  label: "Work",      accent: "#059669", title: "IT Intern",                        org: "Ministry of Foreign & Diaspora Affairs", desc: "Government infrastructure, network management, and systems support." },
   { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder, ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
-  { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder, Makeja Homes",           org: "Production SaaS",                       desc: "Built a full multi-tenant property management SaaS. 247+ tenants, KSH 1.5M/month." },
+  { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder, Makeja Homes",           org: "Production SaaS",                       desc: `Built a full multi-tenant property management SaaS. ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units.` },
   { year: "2025",      label: "Cert",      accent: "#d97706", title: "Oracle Cloud AI Foundations",      org: "Oracle",                                desc: "Validated cloud and AI fundamentals with an internationally recognised Oracle certification." },
-  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 243 lab steps, 5450 XP, 9 standalone tools, GHOST Agent. Built from scratch." },
+  { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 8 standalone tools, a live leaderboard and GHOST Agent. Built from scratch." },
   { year: "2026",      label: "Built",     accent: "#9d5cf5", title: "Hookah Rental & Experience",       org: "Live 3D Platform",                      desc: "3D hero model, GPU disassembly shader, orbiting flavour wall, live Paystack checkout." },
   { year: "2026",      label: "Building",  accent: "#a855f7", title: "NSE Research Agent",               org: "In Development",                        desc: "AI-powered market intelligence for the Nairobi Securities Exchange." },
 ];
@@ -465,8 +466,8 @@ const BEYOND = [
 ];
 
 const STATS = [
-  { val: "247+",    label: "Active Tenants",   accent: "#7c3aed" },
-  { val: "KSH 1.5M", label: "Monthly Volume", accent: "#4ead6a" },
+  { val: fmt(MAKEJA.tenants), label: "Tenants on Makeja", accent: "#7c3aed" },
+  { val: fmt(MAKEJA.units), label: "Units Managed", accent: "#4ead6a" },
   { val: "13",      label: "GhostNet Modules", accent: "#10b981" },
   { val: "8+",      label: "Years in Tech",    accent: "#d97706" },
   { val: "2",       label: "Production SaaS",  accent: "#a855f7" },
@@ -500,7 +501,7 @@ export default function About() {
                 Founding Fullstack Engineer from Nairobi, Kenya. I build production systems that handle real money and real users, then I make them look good.
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-3)", lineHeight: 1.9, maxWidth: "400px", marginBottom: "36px" }}>
-                Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersec platform with AI), both live and in production.
+                Built Makeja Homes ({fmt(MAKEJA.tenants)} tenants, {fmt(MAKEJA.units)} units) and GhostNet (cybersec platform with AI), both live and in production.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href="/work" className="btn-primary">See My Work →</a>

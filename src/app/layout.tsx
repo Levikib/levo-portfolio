@@ -1,26 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Syne_Mono, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, DM_Sans, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import "./mobile.css";
+import "./signal.css";
+import { MAKEJA, fmt } from "@/data/facts";
 import CustomCursor from "@/components/ui/CustomCursor";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import SmoothScroll from "@/components/ui/SmoothScroll";
-import Nav from "@/components/layout/Nav";
-import Footer from "@/components/layout/Footer";
+import Nav from "@/components/signal/Nav";
+import Footer from "@/components/signal/Footer";
 
-const syne = Syne({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
-  preload: true,
 });
-const syneMono = Syne_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "600"],
   variable: "--font-mono",
   display: "swap",
-  preload: false,
+});
+const hand = Permanent_Marker({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-hand",
+  display: "swap",
 });
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -47,7 +53,7 @@ export const metadata: Metadata = {
     template: "%s | Levis Kibirie",
   },
   description:
-    "Fullstack Software Engineer and SaaS Founder from Nairobi, Kenya. Built Makeja Homes (247+ tenants, KSH 1.5M/mo) and GhostNet (cybersecurity platform with AI). 8+ years. Open to senior remote roles.",
+    `Product engineer and designer in Nairobi. Founder of Makeja Homes (${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units). Four years on core banking environments. Open to senior remote roles and contract builds.`,
   keywords: [
     "Fullstack Engineer", "SaaS Founder", "Next.js Developer", "TypeScript",
     "Nairobi Kenya", "Remote Engineer", "Levis Kibirie", "Makeja Homes",
@@ -67,7 +73,7 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Engineer who builds systems that move real money. 8+ years. Nairobi → World.",
+    description: "Follow the signal: deep case studies from Makeja Homes, client builds and core banking.",
     siteName: "Levis Kibirie",
     locale: "en_US",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Levis Kibirie: Fullstack Engineer & SaaS Founder" }],
@@ -75,14 +81,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Engineer who builds systems that move real money. 8+ years. Nairobi → World.",
+    description: "Follow the signal: deep case studies from Makeja Homes, client builds and core banking.",
     images: ["/og-image.png"],
     creator: "@levikibirie",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#7c3aed",
+  themeColor: "#0b0c0e",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -109,12 +115,11 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${syneMono.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${display.variable} ${mono.variable} ${dmSans.variable} ${hand.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preload" href="/levo.jpg" as="image" type="image/jpeg" />
-        <script
+                <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
