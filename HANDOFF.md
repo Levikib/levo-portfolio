@@ -67,11 +67,11 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - Editorial: 15 items (2 Chill Minds magazines + 12 pieces of Makeja, Smokers Vine/Hookah and Mikono media from the repos, about 11.7 MB).
 - Thoughts section and writing guide (no posts yet, by design: Levo writes them).
 - QA fixes: hydration bug, contrast, tap targets, landmarks, og images, title template, copy bans.
-- Merged to `main` (fast-forward `87ae7b5..b27f98c`). **Not yet confirmed that Vercel deployed it.**
+- Merged to `main` and **live**: Vercel production deploy succeeded (`cf9faa9`) and levis.makejahomes.co.ke/work/makeja-homes serves the new case study. Note: `levikibirie.dev` does not resolve yet.
 
 ## 6. Pending (priority order)
 
-1. **Confirm the Vercel production deploy** of `b27f98c` and smoke-test the live site on a phone.
+1. Smoke-test the live site on a real phone (layout, fonts, videos).
 2. **Full independent QA pass** on every route (was cancelled twice). Gates: console/hydration, links and redirects, facts, axe, mobile screenshots, media privacy, copy bans, SEO. Write `docs/QA-FINAL.md`.
 3. **Laptop content audit for Editorial** (needs the desktop app open and the computer linked). Folders Levo granted:
    `C:\Users\admin\Documents\ShanTech Projects\Animated Videos Portfolio`, `...\Documents\Professional Documents`, `...\Documents\Sammy Quotations`, `...\Documents\Job Quotations`, `...\Documents\Makeja Homes Files`, and `C:\Users\admin\Downloads` (look for files named with "makeja"). Find finished design work: business profiles, invoices/quotation designs, posters, Makeja social posts and videos, other brands. **Redact or mock any client names, amounts, phones, emails or IDs** before publishing. Append items to `src/data/editorial.ts`, optimise media into `public/editorial/<brand>/`.
