@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section className="sp-hero" aria-labelledby="hero-title">
       <Star className="sp-float" style={{ position: "absolute", top: 120, left: "46%", width: 30, ["--r" as string]: "-12deg" }} />
-      <Squiggle style={{ position: "absolute", bottom: 140, left: -10, width: 160 }} />
+      <Squiggle className="sp-hide-xs" style={{ position: "absolute", bottom: 140, left: -10, width: 160 }} />
 
       <div className="sp-wrap">
         <div className="sp-hero__grid">

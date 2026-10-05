@@ -37,13 +37,13 @@ const ALL: Project[] = [
     name: "Makeja Homes",
     kind: "Founder · PropTech SaaS",
     accent: "#FF8A1F",
-    tagline: "The real estate operating system for African landlords.",
+    tagline: "Property management software built for how Kenyan landlords actually work.",
     summary:
       "A multi-tenant SaaS where every property company gets its own isolated Postgres schema: leases signed online, bills generated in one click, payments reconciled automatically, and an AI assistant that knows the portfolio.",
     live: "https://makejahomes.co.ke",
     role: "Co-founder, founding engineer and product designer",
     when: "2024 to now",
-    stack: ["Next.js 14", "TypeScript", "PostgreSQL (Neon)", "Prisma + raw SQL", "Upstash Redis", "Paystack", "M-Pesa", "Groq (Llama)", "KRA eTIMS"],
+    stack: ["Next.js 14", "TypeScript", "PostgreSQL (Neon)", "Prisma + raw SQL", "Upstash Redis", "Paystack (cards + M-Pesa)", "Groq (gpt-oss-120b + fallbacks)", "KRA eTIMS", "QuickBooks Online"],
     stats: [
       { value: fmt(MAKEJA.tenants), label: MAKEJA.tenants.label },
       { value: fmt(MAKEJA.units), label: MAKEJA.units.label },
@@ -58,9 +58,10 @@ const ALL: Project[] = [
     architecture: [
       { name: "Edge", detail: "Next.js middleware verifies the JWT, resolves the company slug, checks the Redis revocation list." },
       { name: "App", detail: "407 API route handlers and 200 pages across 5 role dashboards: admin, manager, caretaker, storekeeper, tenant." },
-      { name: "Tenant data", detail: "One Postgres schema per company (tenant_<slug>), 24 tables each, reached through a cached client pinned by search_path." },
+      { name: "Tenant data", detail: "One Postgres schema per company (tenant_<slug>) with 40+ tables, reached through a capped LRU of clients pinned by search_path, kept current by a per-tenant migration runner." },
       { name: "Shared data", detail: "A master schema for companies, billing and the public rental listings index fed from every tenant schema." },
-      { name: "Money", detail: "Paystack and M-Pesa in, automatic reconciliation, integer minor units for listing prices." },
+      { name: "Money", detail: "Paystack cards and M-Pesa in, a signed webhook that credits bills in one transaction, stale payments reconciled on read, integer minor units for listing prices." },
+      { name: "Integrations", detail: "KRA eTIMS e-invoicing, QuickBooks Online sync per client, WhatsApp reminders." },
       { name: "Intelligence", detail: "Njiti, an in-dashboard assistant with role-scoped live data and a distilled long-term memory per company." },
     ],
     decisions: [
@@ -72,7 +73,7 @@ const ALL: Project[] = [
       {
         title: "Provision in SQL, not prisma db push",
         why: "Vercel's serverless filesystem is read-only, so the CLI cannot run at signup. A 577-line provisioner creates the schema, enums and every table directly.",
-        tradeoff: "The SQL has to be kept in step with the master schema by discipline and self-heal passes.",
+        tradeoff: "Tenant schemas then drift, so a migration runner applies numbered, idempotent steps to every schema, records them in a ledger and holds a Postgres advisory lock so two deploys never migrate at once.",
       },
       {
         title: "Reconcile on read instead of a cron",
@@ -86,26 +87,66 @@ const ALL: Project[] = [
       },
       {
         title: "Write it down: DECISIONS.md",
-        why: "Every non-obvious call (enum sequencing in Postgres, why raw SQL over migrate) is logged with what was rejected and why.",
+        why: "Non-obvious calls (enum sequencing in Postgres, raw SQL over prisma migrate) are logged with what was rejected and why.",
         tradeoff: "Slower in the moment, much faster for every future change.",
       },
     ],
     code: [
       {
-        file: "lib/db/prisma-tenant.ts",
-        caption: "PgBouncer drops the options parameter, so tenant clients use the direct URL with search_path pinned, cached with eviction.",
-        code: `const tenantClients = new Map<string, PrismaClient>()
-const MAX_CACHED_CLIENTS = 20
+        file: "lib/get-prisma.ts",
+        caption: "The pooler drops search_path, so each tenant gets a direct connection pinned to its schema, held in a capped LRU so tenant growth cannot exhaust connections.",
+        code: `export function buildTenantUrl(schemaName: string): string {
+  // Neon's pgbouncer pooler strips the \`options=\` parameter, so search_path
+  // is never set and all queries silently hit the public schema instead.
+  const direct = (process.env.DIRECT_DATABASE_URL || /* … */ '').replace('-pooler.', '.')
+  // … strip any existing schema= / options= params
+  return \`\${base}\${sep}options=--search_path%3D\${schemaName}\`
+}
 
-export function getTenantPrisma(slug: string): PrismaClient {
-  const schemaName = \`tenant_\${slug}\`
-  if (tenantClients.has(schemaName)) return tenantClients.get(schemaName)!
-  // evict the oldest client when the cache is full …
+export function getCachedClient(schemaName: string): PrismaClient {
+  const existing = cache.get(schemaName)
+  if (existing) {
+    cache.delete(schemaName)   // refresh recency
+    cache.set(schemaName, existing)
+    return existing
+  }
+  // … create client, then evict the least-recently-used one past the cap
+}`,
+      },
+      {
+        file: "lib/db/tenant-migrations/runner.ts",
+        caption: "Every tenant schema is migrated by idempotent steps recorded in a shared ledger, under an advisory lock so concurrent deploys queue instead of racing DDL.",
+        code: `export async function sweepAllTenantSchemas(opts: { force?: boolean } = {}) {
+  const master = getMasterPrisma()
+  await ensureLedger(master)
+  await master.$executeRawUnsafe(\`SELECT pg_advisory_lock(\${ADVISORY_LOCK_KEY})\`)
+  try {
+    const schemas = await listTenantSchemas(master)
+    for (const schema of schemas) {
+      results.push(await runTenantMigrations(schema, opts))
+    }
+    // …
+  } finally {
+    await master.$executeRawUnsafe(\`SELECT pg_advisory_unlock(\${ADVISORY_LOCK_KEY})\`)
+  }
+}`,
+      },
+      {
+        file: "app/api/webhooks/paystack/route.ts",
+        caption: "The webhook checks Paystack's HMAC signature in constant time, then marks the payment and credits the bill inside one transaction, so money can never be half recorded.",
+        code: `const hash = crypto
+  .createHmac("sha512", process.env.PAYSTACK_SECRET_KEY!)
+  .update(body)
+  .digest("hex")
 
-  // Must use direct (non-pooler) URL: PgBouncer does not forward \`options\`
-  const directUrl = process.env.DIRECT_DATABASE_URL!
-    .replace('-pooler.', '.')
-  const tenantUrl = \`\${directUrl}?options=--search_path%3D\${schemaName}\``,
+const hashBuf = Buffer.from(hash, "hex")
+const sigBuf = signature ? Buffer.from(signature, "hex") : Buffer.alloc(0)
+const signatureValid =
+  hashBuf.length === sigBuf.length && crypto.timingSafeEqual(hashBuf, sigBuf)
+// …
+await db.$transaction(async (tx) => {
+  // mark COMPLETED and credit the bill or deposit together …
+})`,
       },
       {
         file: "lib/reconcile-paystack-pending.ts",
@@ -122,7 +163,8 @@ for (const row of stale) {
   const ps = await fetch(
     \`https://api.paystack.co/transaction/verify/\${encodeURIComponent(row.ref)}\`,
     { headers: { Authorization: \`Bearer \${process.env.PAYSTACK_SECRET_KEY}\` } })
-  // settle or fail the payment from Paystack's real status …
+  // Paystack says it never succeeded: mark FAILED. A real success is left
+  // to the full verify path (bill matching, wallet credit, receipt) …
 }`,
       },
       {
@@ -142,16 +184,17 @@ export async function isRevoked(jti: string) {
       "Billing guard refuses bills or water readings for months before a tenant moved in or a unit existed.",
       "Integer minor units for listing money, one rounding rule for the whole path.",
       "Kenya tax module encodes MRI withholding, contractor withholding, VAT threshold, county land rates and stamp duty.",
-      "Rate limiting, CSRF protection, bcrypt and Turnstile on public forms.",
+      "Paystack webhook: constant-time signature check, idempotent, money credited in one transaction.",
+      "Rate limiting, CSRF double-submit plus Sec-Fetch-Site checks, bcrypt, Turnstile on login and password reset.",
     ],
     results: [
       `${fmt(MAKEJA.tenants)} tenants and ${fmt(MAKEJA.units)} units under management.`,
       `${fmt(MAKEJA.leases)} leases signed digitally, ${fmt(MAKEJA.clients)} client companies.`,
       "Three products on one login: MANAGE, FIND (public listings) and BUILD (verified contractor marketplace).",
+      "407 API routes and 200 pages, with every tenant schema kept current by the migration runner.",
     ],
     next: [
-      "Bring the remaining raw-SQL tables under a single migration runner per tenant.",
-      "M-Pesa STK push as the default rent rail.",
+      "A direct M-Pesa STK push rail alongside Paystack.",
     ],
     reel: { file: "reels/makeja-dashboard-16x9-12s.mp4", ratio: "16:9", seconds: 12, shot: "Admin dashboard: generate monthly bills, open a payment, ask Njiti a question." },
   },
@@ -161,13 +204,13 @@ export async function isRevoked(jti: string) {
     name: "Mikono Creations",
     kind: "Client · Craft e-commerce",
     accent: "#E8B04B",
-    tagline: "Crocheted animals from Nairobi, sold like a toy shop and told like a scrapbook.",
+    tagline: "A crochet toy shop that takes custom orders straight into WhatsApp.",
     summary:
-      "A full store for a women-led craft business: a custom-animal studio, gift and size finders, a living layer of hand-drawn animals, and a WhatsApp checkout built for how Kenyans actually buy.",
+      "A full store for a Nairobi craft business that supports 25+ women: a custom-animal studio, gift and size finders, a living layer of hand-drawn animals, and a WhatsApp checkout built for how Kenyans actually buy.",
     live: "https://mikono-creations.vercel.app",
     role: "Strategy, design and full build, run as a multi-agent pipeline",
     when: "2026",
-    stack: ["Next.js", "TypeScript", "Static responsive image pipeline", "WhatsApp order flow", "90 orchestrated AI agents"],
+    stack: ["Next.js", "TypeScript", "Static responsive image pipeline", "WhatsApp order flow", "90 orchestrated agent calls"],
     stats: [
       { value: "51", label: "route templates" },
       { value: "79", label: "components" },
@@ -223,14 +266,14 @@ export async function isRevoked(jti: string) {
     name: "Elatec Safety Systems",
     kind: "Client · Local service + shop",
     accent: "#6FD3A5",
-    tagline: "Security, solar and shading, sold online and booked in a tap.",
+    tagline: "A security and solar installer that now sells and books online.",
     summary:
-      "A service business site with a real shop, deposits by category, bookings, order tracking by reference, 3D product scenes and structured data written by hand for local search.",
+      "A service business site with a real shop, bookings, a WhatsApp order hand-off, a towns-served index computed from real project records, and structured data written by hand for local search.",
     live: "https://elatecsafetysystems.co.ke",
     repo: undefined,
     role: "Design and full build through ShanTech",
     when: "2026",
-    stack: ["Next.js 14", "Supabase (Postgres + RLS)", "Sanity CMS", "React Three Fiber", "Africa's Talking SMS", "Resend"],
+    stack: ["Next.js 14", "TypeScript", "Supabase (Postgres)", "Typed data files", "WhatsApp", "Africa's Talking SMS"],
     stats: [
       { value: "18", label: "page templates" },
       { value: "33", label: "towns with real projects" },
@@ -241,17 +284,17 @@ export async function isRevoked(jti: string) {
       "Three very different services (security, solar, shading) had to read as one brand.",
     ],
     architecture: [
-      { name: "Content", detail: "Sanity for services, projects and blog; a projects map of every town served." },
-      { name: "Commerce", detail: "Cart, checkout and orders in Supabase with staged order events and public lookup by reference only." },
-      { name: "Messaging", detail: "WhatsApp confirmations and Africa's Talking SMS with Kenyan numbers normalised." },
+      { name: "Content", detail: "Typed data files for services, products, projects and the blog, so every page is static and fast." },
+      { name: "Proof", detail: "A towns-served index whose counts are computed from the project records, so the claim cannot drift from the evidence." },
+      { name: "Commerce", detail: "Cart and checkout hand off a full order summary to WhatsApp. An order API with staged events is built, ready to switch on." },
+      { name: "Messaging", detail: "Notifications try WhatsApp first and fall back to Africa's Talking SMS." },
       { name: "Search", detail: "Hand-built schema.org JSON-LD for the organisation, services and products." },
-      { name: "3D", detail: "Draco-compressed GLB scenes for camera, solar and shading products." },
     ],
     decisions: [
       {
         title: "Deposits by product category",
         why: "Installs need commitment up front: 30% by default, 40% for solar and gate automation.",
-        tradeoff: "Rules live in code, so changing them needs a deploy.",
+        tradeoff: "The rule lives in the order API, which is not switched on yet; the live checkout hands off to WhatsApp today.",
       },
       {
         title: "Leave out what is not real",
@@ -262,7 +305,7 @@ export async function isRevoked(jti: string) {
     code: [
       {
         file: "src/lib/utils/depositCalc.ts",
-        caption: "Category-aware deposits with an override, rounded up so the business is never short.",
+        caption: "Category-aware deposits with an override, rounded up so the business is never short. Built into the order API.",
         code: `const DEFAULT_DEPOSIT_PCT = 30
 const CATEGORY_DEPOSIT_PCT = { solar: 40, gate_automation: 40 }
 
@@ -274,11 +317,24 @@ export function calcDeposit(subtotal, category?, overridePct?) {
   return { deposit, balance: subtotal - deposit, pct }
 }`,
       },
+      {
+        file: "src/data/projectsData.ts",
+        caption: "The 'towns we have worked in' claim is computed from the project records, so the number cannot drift from the evidence.",
+        code: `export function getAllLocations() {
+  const counts = new Map<string, number>()
+  for (const p of PROJECTS_DATA) {
+    counts.set(p.location, (counts.get(p.location) ?? 0) + 1)
+  }
+  return Array.from(counts.entries())
+    .map(([location, count]) => ({ location, count, region: getProjectRegion(location) }))
+    .sort((a, b) => b.count - a.count || a.location.localeCompare(b.location))
+}`,
+      },
     ],
-    qa: ["Row-level security: the public can read an order only by its reference.", "Order references in the form ELT-YYYY-NNNNN for phone and WhatsApp support."],
+    qa: ["Structured data only states what exists: missing social profiles are left out, not invented.", "Town and region counts are derived from project records at render time."],
     results: ["Shop, bookings and project proof live under one brand.", "Real projects listed across 33 towns and counties."],
-    next: ["Real social links in the footer and structured data.", "Server-render the stats so they never show zero."],
-    reel: { file: "reels/elatec-projects-16x9-10s.mp4", ratio: "16:9", seconds: 10, shot: "Hero slider, then the towns-served map, then a product page with the 3D model." },
+    next: ["Switch checkout onto the order API with private tracking links.", "Real social links in the footer and structured data.", "Server-render the stats so they never show zero."],
+    reel: { file: "reels/elatec-projects-16x9-10s.mp4", ratio: "16:9", seconds: 10, shot: "Hero slider, then the towns-served index, then a product page and the WhatsApp order." },
     placeholders: ["Repo is private: decide whether to show code excerpts publicly."],
   },
   {
@@ -287,7 +343,7 @@ export function calcDeposit(subtotal, category?, overridePct?) {
     name: "Noevella Group",
     kind: "Client · Luxury creative agency",
     accent: "#E91E8C",
-    tagline: "Five divisions, one integrated team, one site the founder edits herself.",
+    tagline: "An agency site the founder runs herself, with no developer needed.",
     summary:
       "A media-forward agency site on a headless CMS: divisions, work, journal and a shop, with a design language locked with the client before a page was built.",
     live: "https://noevellagroup.com",
@@ -307,7 +363,8 @@ export function calcDeposit(subtotal, category?, overridePct?) {
       { name: "CMS", detail: "Payload 3 inside the Next.js app: Divisions, Projects, Products, Orders, Inquiries, Insights, Services, Team, Testimonials, Media, Users." },
       { name: "Storage", detail: "Postgres for content, Vercel Blob for media, scripted media imports." },
       { name: "Front end", detail: "Clay and glass panels, sticker cards, type-on hero, floating pill nav with a mega panel." },
-      { name: "Growth", detail: "Consent-aware marketing pixels and a WhatsApp checkout." },
+      { name: "Growth", detail: "Meta and GA4 pixels with campaign attribution carried into every order and WhatsApp message." },
+      { name: "Resilience", detail: "Every CMS query falls back to labelled static content, so pages render before any entry exists." },
     ],
     decisions: [
       {
@@ -321,8 +378,43 @@ export function calcDeposit(subtotal, category?, overridePct?) {
         tradeoff: "Slower start, far fewer rewrites.",
       },
     ],
-    code: [],
-    qa: ["Typed collections with generated types.", "Every animation respects reduced motion."],
+    code: [
+      {
+        file: "src/lib/queries.ts",
+        caption: "Every CMS query degrades to labelled static content, so the site renders before a single entry exists and never shows a blank grid.",
+        code: `async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await fn()
+  } catch (err) {
+    console.warn('[queries] falling back:', (err as Error).message)
+    return fallback
+  }
+}
+
+export async function getFeaturedProjects(limit = 9) {
+  const fromCms = await safe(async () => { /* payload.find featured projects … */ }, [])
+  // Real featured work leads, clearly labelled demo work fills the rest
+  return [...fromCms, ...DEMO_PROJECTS].slice(0, limit)
+}`,
+      },
+      {
+        file: "src/components/Reveal.tsx",
+        caption: "Scroll reveals are progressive enhancement: off for reduced motion, armed only after JS runs, and forced visible after 3 seconds so content can never stay hidden.",
+        code: `const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+if (reduce) {
+  el.classList.add('is-in')
+  return
+}
+
+// Arm the CSS effect (idempotent across instances).
+document.documentElement.setAttribute('data-reveal-armed', '')
+// … IntersectionObserver adds .is-in on entry …
+
+// Safety net: never leave content hidden.
+const failSafe = window.setTimeout(() => el.classList.add('is-in'), 3000)`,
+      },
+    ],
+    qa: ["Typed collections with generated types.", "Every animation respects reduced motion, with a global kill switch.", "Orders and inquiries accept public creates but only signed-in staff can read them."],
     results: ["The founder edits content, work and products herself."],
     next: ["Remove demo labels from shop items before launch.", "Move from a Gmail address to a domain email."],
     reel: { file: "reels/noevella-hero-16x9-8s.mp4", ratio: "16:9", seconds: 8, shot: "Splash, hero video, open the mega menu, scroll the division cards." },
@@ -364,7 +456,7 @@ export function calcDeposit(subtotal, category?, overridePct?) {
     accent: "#D4FF3A",
     tagline: "A real terminal for exploring my work, in the browser and in yours.",
     summary:
-      "The terminal on this site is its own product: a command parser with history, autocomplete, man pages and commands that move you around the site. The plan is to ship it to npm so `npx levo` prints my card in any terminal.",
+      "The terminal on this site is its own product: a command parser with history, autocomplete, man pages and commands that move you around the site.",
     repo: "https://github.com/Levikib/levo-portfolio",
     role: "Design and build",
     when: "2026",
@@ -398,7 +490,7 @@ export function calcDeposit(subtotal, category?, overridePct?) {
     accent: "#7CF0C8",
     tagline: "A cybersecurity training ground with an AI operator built in.",
     summary:
-      "Thirteen training modules from OSINT to Active Directory, standalone security tools, a leaderboard, and GHOST, an LLM agent for authenticated operators.",
+      "Thirteen training modules from OSINT to Active Directory, eight standalone security tools, a leaderboard, and GHOST, an LLM agent for signed-in users.",
     live: "https://ghostnet-pi.vercel.app",
     repo: "https://github.com/Levikib/ghostnet",
     role: "Design and build",
@@ -415,7 +507,7 @@ export function calcDeposit(subtotal, category?, overridePct?) {
     code: [
       {
         file: "app/api/ghost/route.ts",
-        caption: "The agent only answers signed-in operators, with a per-user hourly limit and hard caps on input size.",
+        caption: "The agent only answers signed-in users, with a per-user hourly limit (in memory, per instance) and hard caps on input size and roles.",
         code: `const { data: { user } } = await authClient.auth.getUser()
 if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 if (!checkRateLimit(user.id))
@@ -436,20 +528,20 @@ for (const msg of messages)
     name: "Hookah 3D",
     kind: "Lab · WebGL",
     accent: "#FF5E7A",
-    tagline: "A product that comes apart as you scroll, on the GPU.",
+    tagline: "A product that comes apart on the GPU.",
     summary:
-      "A rental and booking site whose hero model splits into 5 bands with a custom vertex shader, driven by a single scroll-linked uniform.",
+      "An R&D shader for a hookah rental site: one model splits into 5 bands with a custom vertex shader, driven by a single progress uniform. Still in progress and not yet on the live page.",
     live: "https://hookah-website-two.vercel.app",
     repo: "https://github.com/Levikib/hookah-website",
     role: "Design and build",
     when: "2026",
-    stack: ["Next.js 16", "React Three Fiber", "GLSL", "GSAP", "Paystack"],
+    stack: ["Next.js 16", "React Three Fiber", "GLSL", "GSAP"],
     stats: [{ value: "5", label: "GPU-split bands" }],
     problem: ["A product page needed to feel like an experience without shipping five separate models."],
     architecture: [
       { name: "Model", detail: "One GLB mesh." },
       { name: "Shader", detail: "The vertex shader assigns each vertex to a height band and moves bands independently." },
-      { name: "Scroll", detail: "uProgress from 0 to 1 drives the explosion both ways." },
+      { name: "Progress", detail: "uProgress eases toward a target each frame and drives the explosion both ways; scroll wiring is next." },
     ],
     decisions: [
       {
@@ -471,6 +563,7 @@ void main() {
   float band  = getBand(position.y);
   vec3 offset = bandOffset(band) * uProgress;
   float rot   = bandRotY(band)   * uProgress;
+  // + a small sine wobble at peak …
   vec3 pos    = rotY(rot) * position + offset;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }`,
@@ -478,7 +571,7 @@ void main() {
     ],
     qa: [],
     results: [],
-    next: [],
+    next: ["Mount the shader on the live hero and wire it to scroll."],
     reel: { file: "reels/hookah-16x9-8s.mp4", ratio: "16:9", seconds: 8, shot: "Scroll: the model splits apart, then reassembles." },
   },
 ];

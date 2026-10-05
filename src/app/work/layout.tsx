@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { MAKEJA, fmt } from "@/data/facts";
 
 export const metadata: Metadata = {
-  title: "Case studies",
+  title: { default: "Case studies", template: "%s | Levis Kibirie" },
   description: `In-depth case studies by Levis Kibirie: Makeja Homes (${fmt(MAKEJA.tenants)} tenants), Mikono Creations, Elatec Safety Systems, Noevella Group, core banking environments, levo-cli, GhostNet and Hookah 3D.`,
   alternates: { canonical: "https://levikibirie.dev/work" },
   openGraph: {

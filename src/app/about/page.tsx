@@ -438,7 +438,7 @@ function MotionGraphic() {
 const JOURNEY = [
   { year: "2017",      label: "Education", accent: "#7c3aed", title: "Software Development Certificate", org: "ICT Authority Kenya",                  desc: "First formal grounding in software engineering. The start of everything." },
   { year: "2020",      label: "Education", accent: "#0891b2", title: "Cybersecurity & Pen Testing",      org: "Zalego Institute of Technology",        desc: "Ethical hacking, penetration testing, security fundamentals. Built first security tools." },
-  { year: "2020–2024", label: "Education", accent: "#0891b2", title: "BSc Information Technology",       org: "Kenyatta University · 2nd Upper Class", desc: "Full degree: software engineering, networks, databases, systems architecture." },
+  { year: "2020 to 2024", label: "Education", accent: "#0891b2", title: "BSc Information Technology",       org: "Kenyatta University · 2nd Upper Class", desc: "Full degree: software engineering, networks, databases, systems architecture." },
   { year: "Apr 2022",  label: "Work",      accent: "#059669", title: "IT Intern",                        org: "Ministry of Foreign & Diaspora Affairs", desc: "Government infrastructure, network management, and systems support." },
   { year: "May 2024",  label: "Founded",   accent: "#e11d48", title: "Founder, ShanTech Agency",        org: "Digital Agency · Kenya",                desc: "12+ SME clients, 250K+ engagement views. GoHighLevel, Meta Ads, full-stack delivery." },
   { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder, Makeja Homes",           org: "Production SaaS",                       desc: `Built a full multi-tenant property management SaaS. ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units.` },
@@ -542,7 +542,7 @@ export default function About() {
         <div style={{ maxWidth: "840px", margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px", flexWrap: "wrap", gap: "16px" }}>
             <div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--purple)", textTransform: "uppercase", marginBottom: "10px" }}>// Journey</div>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", letterSpacing: "0.25em", color: "var(--purple)", textTransform: "uppercase", marginBottom: "10px" }}>// The path</div>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", letterSpacing: "-0.02em", color: "var(--text)", lineHeight: 1 }}>How I Got Here.</h2>
             </div>
             <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>

@@ -16,9 +16,10 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!p) return {};
   return {
     title: `${p.name} case study`,
-    description: p.summary,
+    description: p.summary.length > 155 ? p.summary.slice(0, p.summary.lastIndexOf(" ", 152)) + "…" : p.summary,
     alternates: { canonical: `${SITE.url}/work/${p.slug}` },
-    openGraph: { title: `${p.name} | Levis Kibirie`, description: p.tagline, url: `${SITE.url}/work/${p.slug}` },
+    openGraph: { title: `${p.name} | Levis Kibirie`, description: p.tagline, url: `${SITE.url}/work/${p.slug}`, images: [{ url: "/og-image.png", width: 1200, height: 630 }] },
+    twitter: { card: "summary_large_image", title: `${p.name} | Levis Kibirie`, description: p.tagline, images: ["/og-image.png"] },
   };
 }
 

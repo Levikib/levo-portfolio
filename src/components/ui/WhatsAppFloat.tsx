@@ -17,9 +17,10 @@ export default function WhatsAppFloat() {
   const waUrl = "https://wa.me/254723819934?text=Hi%20Levo%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project.";
 
   return (
-    <>
+    <aside aria-label="Chat on WhatsApp">
       <a
         href={waUrl}
+        aria-label="Chat with Levo on WhatsApp"
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}
@@ -96,6 +97,6 @@ export default function WhatsAppFloat() {
           100% { transform: scale(1.5); opacity: 0;   }
         }
       `}</style>
-    </>
+    </aside>
   );
 }

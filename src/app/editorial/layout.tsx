@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Chill Minds Magazine — Read Online",
+  title: "Chill Minds Magazine: Read Online",
   description:
     "Chill Minds Magazine Vol. 1A & 1B, a children's mental wellness and health magazine designed, illustrated, and produced by Levis Kibirie. Read both volumes online, free.",
   keywords: [
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://levikibirie.dev/editorial" },
   openGraph: {
-    title: "Chill Minds Magazine — Read Online | Levis Kibirie",
+    title: "Chill Minds Magazine: Read Online | Levis Kibirie",
     description: "Both volumes of Chill Minds Magazine, free to read online.",
     url: "https://levikibirie.dev/editorial",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -18,5 +18,5 @@ export const metadata: Metadata = {
 };
 
 export default function EditorialLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <main>{children}</main>;
 }

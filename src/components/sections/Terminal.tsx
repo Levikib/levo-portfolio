@@ -49,7 +49,7 @@ const NSE_ASCII = `
 
 const SHANTECH_ASCII = `
   ╔═══════════════════════════════╗
-  ║   SHANTECH AGENCY · 2024–25   ║
+  ║   SHANTECH AGENCY · 2024-25   ║
   ╠═══════════════════════════════╣
   ║  Clients     12+   SMEs       ║
   ║  Engagement  250K+ views      ║
@@ -97,7 +97,7 @@ const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: s
     items: [
       { cmd: "whoami", desc: "→  Who is Levis?" },
       { cmd: "about", desc: "→  Extended bio" },
-      { cmd: "timeline", desc: "→  Career journey, 2017 → now" },
+      { cmd: "timeline", desc: "→  Career path, 2017 → now" },
       { cmd: "skills", desc: "→  Skill proficiency overview" },
       { cmd: "stack", desc: "→  Full tech stack" },
       { cmd: "beyond", desc: "→  Outside the terminal" },
@@ -215,7 +215,7 @@ const PROJECTS_LINES = [
   `  01  Makeja Homes         Live · SaaS         ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units`,
   "  02  GhostNet             Live · EdTech       13 modules, 8 tools, AI agent",
   "  03  NSE Research Agent   In Dev · AI Tool    Nairobi Securities Exchange intel",
-  "  04  ShanTech Agency      2024–25 · Agency    12+ clients, 250K+ engagements",
+  "  04  ShanTech Agency      2024-25 · Agency    12+ clients, 250K+ engagements",
   "  05  Chill Minds Magazine Published · Design  2 volumes, 72 pages",
   "  06  Hookah Rental       Live · 3D           GLB hero model, 25 flavours, Paystack",
   "",
@@ -225,7 +225,7 @@ const PROJECTS_LINES = [
 const TIMELINE_LINES = [
   "  2017        Software Development Certificate, ICT Authority Kenya",
   "  2020        Cybersecurity & Pen Testing, Zalego Institute of Technology",
-  "  2020–2024   BSc Information Technology, Kenyatta University (2nd Upper)",
+  "  2020-2024   BSc Information Technology, Kenyatta University (2nd Upper)",
   "  Apr 2022    IT Intern, Ministry of Foreign & Diaspora Affairs",
   "  May 2024    Founder, ShanTech Agency",
   "  2024        Founder, Makeja Homes",
@@ -255,7 +255,7 @@ const ABOUT_LINES = [
   "  Also a designer. Chill Minds Magazine, 72 pages, two volumes,",
   "  100% design ownership, proves the eye isn't separate from the code.",
   "",
-  "  Run `timeline` for the full journey, `stack` for the toolbox.",
+  "  Run `timeline` for the full path, `stack` for the toolbox.",
 ];
 
 function processCommand(raw: string, commandHistory: string[]): Line[] {
@@ -287,7 +287,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "makeja") {
     out.push({ type: "output", text: MAKEJA_ASCII, color: "#a855f7" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Live in production since 2024. KSH flows daily.", color: "#4ead6a" });
+    out.push({ type: "output", text: "  ● Live in production since 2024. Run `open makeja` for the case study.", color: "#4ead6a" });
   } else if (cmd === "ghostnet") {
     out.push({ type: "output", text: GHOSTNET_ASCII, color: "#10b981" });
     out.push({ type: "blank", text: "" });
@@ -299,7 +299,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "shantech") {
     out.push({ type: "output", text: SHANTECH_ASCII, color: "#e11d48" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Completed 2024–2025. Kenyan SMEs, measurable results.", color: "#e11d48" });
+    out.push({ type: "output", text: "  ● Completed 2024 to 2025. Kenyan SMEs, measurable results.", color: "#e11d48" });
   } else if (cmd === "chillminds") {
     out.push({ type: "output", text: CHILLMINDS_ASCII, color: "#059669" });
     out.push({ type: "blank", text: "" });
@@ -631,7 +631,7 @@ export default function Terminal() {
           {["help","projects","makeja","ghostnet","nse","shantech","chillminds","hookah","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
             <button key={cmd}
               onClick={() => { setInput(cmd); setTimeout(() => { setInput(""); setLines(prev => [...prev, { type:"input", text:cmd }, ...processCommand(cmd, history), { type:"blank", text:"" }]); setHistory(prev => [cmd, ...prev.slice(0, 49)]); }, 10); }}
-              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"rgba(16,185,129,0.05)", border:"1px solid rgba(16,185,129,0.18)", color:"rgba(16,185,129,0.7)", padding:"6px 14px", cursor:"pointer", transition:"all 0.2s" }}
+              style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"rgba(16,185,129,0.05)", border:"1px solid rgba(16,185,129,0.18)", color:"rgba(16,185,129,0.85)", padding:"6px 14px", minHeight:"44px", cursor:"pointer", transition:"all 0.2s" }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background="rgba(16,185,129,0.12)"; (e.currentTarget as HTMLElement).style.color="#10b981"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="rgba(16,185,129,0.05)"; (e.currentTarget as HTMLElement).style.color="rgba(16,185,129,0.7)"; }}
             >{cmd}</button>
