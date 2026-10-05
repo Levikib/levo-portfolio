@@ -2,7 +2,7 @@
 
 Living status doc for Claude sessions working on Levo's portfolio. Read it top to bottom before touching code. **Update it at the end of every session**: move finished items to Done, add new pending items and ideas, and bump "Last updated".
 
-**Last updated:** 2026-10-05 (Claude cloud session)
+**Last updated:** 2026-10-05, afternoon (Claude cloud session)
 **Live site:** levis.makejahomes.co.ke (Vercel deploys from `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
 **Repo:** github.com/Levikib/levo-portfolio. `main` and `signal-path` both point at the redesign (fast-forwarded on 2026-10-05).
 
@@ -47,7 +47,7 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 
 | Area | Files |
 |---|---|
-| Single source of truth | `src/data/facts.ts` (numbers, contacts, `waLink`), `src/data/projects.ts` (case studies, `ORDER`), `src/data/media.ts` (reel/hero slots, `ready` flags), `src/data/editorial.ts` (Editorial items, 15), `src/data/thoughts.ts` (posts, topics, `COMING`, `SUBSTACK_URL`) |
+| Single source of truth | `src/data/facts.ts` (numbers, contacts, `waLink`), `src/data/projects.ts` (case studies, `ORDER`), `src/data/media.ts` (reel/hero slots, `ready` flags), `src/data/editorial.ts` (Editorial items, 25), `src/data/thoughts.ts` (posts, topics, `COMING`, `SUBSTACK_URL`) |
 | Design system | `src/app/signal.css` (tokens, clay recipes), `src/components/signal/index.ts` (API docs + exports: `ClayCard`, `ClayButton`, `SectionHeader`, `CtaBand`, `Marquee`). Editorial/Thoughts styles in `src/app/editorial.css` |
 | Home | `src/app/page.tsx`: Hero, Signal Path with 8 Stations, Terminal, build process, contact CTA band |
 | Case studies | `/work` index, `/work/[slug]` (problem, architecture, decisions, real code, QA, results, next) |
@@ -69,17 +69,21 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - QA fixes: hydration bug, contrast, tap targets, landmarks, og images, title template, copy bans.
 - Merged to `main` and **live**: Vercel production deploy succeeded (`cf9faa9`) and levis.makejahomes.co.ke/work/makeja-homes serves the new case study.
 
+- Laptop audit done (2026-10-05): 10 Editorial items added from Levo's laptop (Makeja feature posters x10, square social videos x4, agents ad, web revamp film, command centre reveal, comic cast, banner; Chill Minds campaign films; ShanTech identity, films, business card and proposal; Kivulini Cabins proposal and film; Prime Touch ad; Care and Gloss & Glow logos). Videos cut to 20s previews, H.264, no audio. Working copies are in `C:\Users\admin\Downloads\portfolio-editorial-export`.
+- **Deliberately excluded** from the laptop: ID cards, certificates, KRA/TCC docs, transcripts, cover letters, CVs (pending Levo's OK), everything in Job Quotations and Sammy Quotations (bank details and third-party pricing), the Makeja corporate legal documents, pitch-deck financials, the "Her Prettiness Mio" birthday book (private person), and the health explainer videos (not reviewed yet, see Ideas).
+- Interim hero portrait: Levo's suit photo at `public/media/levo-avatar.webp` (`HERO.avatar.ready = true`).
+- AI generation prompts written: `docs/MEDIA-PROMPTS.md`, also saved to `C:\Users\admin\Downloads\PORTFOLIO-MEDIA-PROMPTS.md`.
+
 ## 6. Pending (priority order)
 
 1. Smoke-test the live site on a real phone (layout, fonts, videos).
 2. **Full independent QA pass** on every route (was cancelled twice). Gates: console/hydration, links and redirects, facts, axe, mobile screenshots, media privacy, copy bans, SEO. Write `docs/QA-FINAL.md`.
-3. **Laptop content audit for Editorial** (needs the desktop app open and the computer linked). Folders Levo granted:
-   `C:\Users\admin\Documents\ShanTech Projects\Animated Videos Portfolio`, `...\Documents\Professional Documents`, `...\Documents\Sammy Quotations`, `...\Documents\Job Quotations`, `...\Documents\Makeja Homes Files`, and `C:\Users\admin\Downloads` (look for files named with "makeja"). Find finished design work: business profiles, invoices/quotation designs, posters, Makeja social posts and videos, other brands. **Redact or mock any client names, amounts, phones, emails or IDs** before publishing. Append items to `src/data/editorial.ts`, optimise media into `public/editorial/<brand>/`.
+3. **Laptop audit: done.** Optional extras still on the laptop: the comic strip zips (`Downloads/Makeja Marketing Comic Strip 1.zip`, `2.zip`), `Makeja Homes Outro 1.mp4`, `A_heavy_drop_of_black_sumi_ink.mp4`, Tutorials 2 to 4 and the health explainer animations in `Animated Videos Portfolio` (Contraception, Menopause, PMS, Lower Cancer Risk, Patience Family Matters, Abel Breaking Barriers): ask Levo before using the health ones.
 4. **Domain:** done. Everything points at levis.makejahomes.co.ke (`levikibirie.dev` was never registered). If Levo buys a personal domain later, change `SITE.url` and add it in Vercel.
-5. **Media to produce** (slots in `src/data/media.ts`; flip `ready: true` when files land): hero Veo loop (1:1, 6s), illustrated avatar from next week's photoshoot, one reel per project (CapCut screen recordings, filenames listed in `media.ts`). Task still open: write the Veo / Google AI Studio prompts and a CapCut shot list.
+5. **Media to produce:** Levo is generating them from `docs/MEDIA-PROMPTS.md` (clay avatar from his face references, hero Veo loop, banking abstract, OG image, Thoughts covers) plus CapCut reels. When he drops them in `Downloads/portfolio-media`, optimise, copy to `public/media` or `public/reels`, flip `ready` in `src/data/media.ts`, swap the interim portrait, commit, deploy.
 6. **Redesign `/about`** in the clay system (still the old style), and clean up `src/app/mobile.css` (it overrides heading sizes and `wa.me` links; `signal.css` currently fights it).
 7. **Core banking case study** is thin: needs 1 to 2 shareable results from Levo and confirmation of what can be said about clients.
-8. **Hero and CTA strategy** from `docs/STRATEGY.md`: add a "Hiring? Get my CV" path (CV PDF needed), pick hero copy option A or B.
+8. **Hero and CTA strategy** from `docs/STRATEGY.md`: add a "Hiring? Get my CV" path. A CV exists on the laptop (`Professional Documents/Levis_Kibirie_CV_2026_v2.pdf`) but it has personal contact details: ask Levo before publishing it. Pick hero copy option A or B.
 9. **levo-cli:** publish `npx levo` to npm (own repo), then restore the npm mention in the case study. Restyle the terminal's command buttons to the clay system.
 10. **Thoughts:** Levo will give topics and voice notes; write posts from them as `status: "draft"` for his approval. Set `SUBSTACK_URL` once the Substack exists.
 11. **Makeja's own site** still shows old numbers (180+ units, 71 leases, 13 clients): update to match `facts.ts`.
