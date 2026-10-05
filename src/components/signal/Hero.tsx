@@ -64,7 +64,7 @@ export default function Hero() {
                 </video>
               ) : HERO.avatar.ready ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={HERO.avatar.src} alt="Illustrated portrait of Levis Kibirie" />
+                <img src={HERO.avatar.src} alt="Portrait of Levis Kibirie" />
               ) : (
                 <div className="sp-key" aria-hidden>
                   <div className="sp-key__cap"><span className="sp-key__glyph">&gt;_</span></div>

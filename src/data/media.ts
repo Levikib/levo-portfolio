@@ -7,7 +7,7 @@ export type Slot = { src: string; poster?: string; ready: boolean; fallback?: st
 
 export const HERO: Record<"loop" | "avatar", Slot> = {
   loop: { src: "/media/hero-orbit-1x1-6s.mp4", poster: "/media/hero-orbit-poster.webp", ready: false, note: "Veo loop: 3D centrepiece wrapped by the amber signal ribbon (1:1, 6s, muted)" },
-  avatar: { src: "/media/levo-avatar.webp", ready: false, note: "Stylised illustrated avatar from next week's photoshoot (transparent WebP)" },
+  avatar: { src: "/media/levo-avatar.webp", ready: true, note: "Interim: real portrait supplied by Levo 2026-10-05. Replace with the clay avatar from docs/MEDIA-PROMPTS.md" },
 };
 
 /** One reel per case study, keyed by project slug. */
