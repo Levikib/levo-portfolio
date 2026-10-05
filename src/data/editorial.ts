@@ -246,7 +246,7 @@ export const EDITORIAL: EditorialItem[] = [
     kind: "social",
     client: "Makeja Homes",
     year: "2026",
-    blurb: "Ten editorial posters, one per product feature: payments, billing, maintenance, roles, security, AI and digital leases. Serif display type over dark and cream grounds.",
+    blurb: "Nine editorial posters, one per product feature: payments, billing, maintenance, roles, security, AI and digital leases. Serif display type over dark and cream grounds.",
     tools: [],
     cover: { type: "image", src: "/editorial/makeja/makeja-poster-1.webp", alt: "Makeja Homes poster reading The most complete property platform in Africa", w: 1400, h: 1400 },
     gallery: [
@@ -255,7 +255,6 @@ export const EDITORIAL: EditorialItem[] = [
       { type: "image", src: "/editorial/makeja/makeja-poster-4.webp", alt: "Makeja Homes feature poster 4", w: 1400, h: 1400 },
       { type: "image", src: "/editorial/makeja/makeja-poster-5.webp", alt: "Makeja Homes feature poster 5", w: 1400, h: 1400 },
       { type: "image", src: "/editorial/makeja/makeja-poster-6.webp", alt: "Makeja Homes feature poster 6", w: 1400, h: 1400 },
-      { type: "image", src: "/editorial/makeja/makeja-poster-7.webp", alt: "Makeja Homes feature poster 7", w: 1400, h: 1400 },
       { type: "image", src: "/editorial/makeja/makeja-poster-8.webp", alt: "Makeja Homes feature poster 8", w: 1400, h: 1400 },
       { type: "image", src: "/editorial/makeja/makeja-poster-9.webp", alt: "Makeja Homes feature poster 9", w: 1400, h: 1400 },
       { type: "image", src: "/editorial/makeja/makeja-poster-10.webp", alt: "Makeja Homes feature poster 10", w: 1400, h: 1400 },

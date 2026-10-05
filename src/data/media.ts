@@ -12,7 +12,7 @@ export const HERO: Record<"loop" | "avatar", Slot> = {
 
 /** One reel per case study, keyed by project slug. */
 export const REELS: Record<string, Slot> = {
-  "makeja-homes": { src: "/reels/makeja-dashboard-16x9-12s.mp4", ready: false, fallback: "/work/makeja-screenshot.png", note: "CapCut screen recording" },
+  "makeja-homes": { src: "/reels/makeja-dashboard-16x9-12s.mp4", ready: false, note: "CapCut screen recording (old screenshot removed: it showed outdated numbers)" },
   "mikono-creations": { src: "/reels/mikono-studio-9x16-10s.mp4", ready: false, note: "CapCut phone recording" },
   "elatec-safety-systems": { src: "/reels/elatec-projects-16x9-10s.mp4", ready: false, note: "CapCut screen recording" },
   "noevella-group": { src: "/reels/noevella-hero-16x9-8s.mp4", ready: false, note: "CapCut screen recording" },

@@ -75,6 +75,8 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - AI generation prompts written: `docs/MEDIA-PROMPTS.md`, also saved to `C:\Users\admin\Downloads\PORTFOLIO-MEDIA-PROMPTS.md`.
 - **Full independent QA pass: done** (`docs/QA-FINAL.md`). All 8 gates pass on 40 routes at 1440 and 390; fixed two private-data leaks (web revamp film removed, Chill Minds promo trimmed before a third-party phone number). Editorial has 24 items, not 25.
 
+- Post-QA: dropped Makeja poster 7 (it said Njiti is powered by Claude) and the old Makeja screenshot (outdated numbers).
+
 ## 6. Pending (priority order)
 
 1. Smoke-test the live site on a real phone (layout, fonts, videos).
@@ -105,3 +107,8 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 - Digital products in Editorial (templates, UI kits, Framer templates) with real checkout once they exist.
 - A Framer marketplace template based on the Mikono clay plus scrapbook style.
 - Case study for ShanTech Agency and Chill Minds as design-led stations.
+
+## 9. Open decisions for Levo
+
+- The removed web-revamp film (personal Gmail accounts visible) is still in the public repo's git history. Scrubbing it needs a history rewrite and force-push of `main`: only with Levo's explicit OK.
+- Re-export Makeja poster 7 with the correct AI line (Groq) if he wants it back.
