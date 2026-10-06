@@ -1,74 +1,121 @@
-# Portfolio media prompts (Google AI Studio images + Veo videos)
+# Portfolio media: what's missing and the prompts to make it
 
-For: levis.makejahomes.co.ke (Signal Path redesign). Generate these, save them with the exact filenames, and send them to Claude to wire in. Each one has a slot in `src/data/media.ts` or `src/data/editorial.ts`.
+Updated 2026-10-06. Levo generates these in **Google AI Studio** (images) and **Veo** (video), drops them in `C:\Users\admin\Downloads\portfolio-media\`, and a Claude session wires them in (see "Wiring" at the end).
 
-**House look (use in every prompt):** dark graphite ground (#0b0c0e), soft matte clay surfaces with gentle inner highlights (claymorphism), one glowing amber signal ribbon (#ff8a1f), small lime (#d4ff3a) and violet (#8b7cff) accents, hyper-real studio lighting, shallow depth of field, no text, no logos, no watermarks.
+**House look (paste into every prompt):** dark graphite ground (#0b0c0e), soft matte claymorphism surfaces with gentle inner highlights, one glowing amber signal ribbon (#ff8a1f), small lime (#d4ff3a) and violet (#8b7cff) accents, hyper-real studio lighting, shallow depth of field. No text, no logos, no watermarks, no UI gibberish.
 
 ---
 
-## 1. Hero avatar (Google AI Studio, image, with your face references)
+## 0. Inventory of empty slots (as of 2026-10-06)
 
-Attach 3 to 5 clear reference photos of your face (front, three-quarter, smiling, good light). Your suit photo is a great primary reference.
+| Slot | Where it shows | File to produce | Code switch |
+|---|---|---|---|
+| Hero avatar | Home hero orb | `levo-avatar.png` (transparent) | `HERO.avatar` in `src/data/media.ts` |
+| Hero loop | Home hero orb (wins over avatar if ready) | `hero-orbit-1x1-6s.mp4` + poster | `HERO.loop` |
+| Reel: Makeja Homes | Station 01 + `/work/makeja-homes` | `makeja-reel-16x9-10s.mp4` | `REELS["makeja-homes"]` |
+| Reel: Mikono Creations | Station 02 + case study (tall frame) | `mikono-reel-9x16-8s.mp4` | `REELS["mikono-creations"]` |
+| Reel: Noevella Group | Station 03 + case study | `noevella-reel-16x9-8s.mp4` | `REELS["noevella-group"]` |
+| Reel: Elatec | Station 04 + case study | `elatec-reel-16x9-8s.mp4` | `REELS["elatec-safety-systems"]` |
+| Reel: Core banking | Station 05 + case study | `banking-reel-16x9-8s.mp4` | `REELS["core-banking"]` |
+| Reel: GhostNet | Station 06 (currently an old screenshot) | `ghostnet-reel-16x9-8s.mp4` | `REELS.ghostnet` |
+| Reel: levo-cli | Station 07 (shows a live terminal link instead; reel only on the case study) | `levo-cli-reel-16x9-8s.mp4` | `REELS["levo-cli"]` |
+| Reel: Hookah 3D | Station 08 (old screenshot) | **last, project still in progress** | `REELS["hookah-3d"]` |
+| OG share image | Link previews everywhere | `og-image.png` 1200x630 | `public/og-image.png` |
+| Thoughts covers | `/thoughts` cards (once posts exist) | `thought-<slug>.png` | `cover` in `src/data/thoughts.ts` |
 
-**Prompt A, stylised 3D clay avatar (main hero):**
-> Using the attached photos as the exact identity reference, create a 3D claymorphism character portrait of this man: same face shape, skin tone, hairstyle, short goatee and smile. Soft matte clay material, slightly rounded and puffy forms, Pixar-quality but tasteful and grown-up. He wears a dark charcoal knit sweater. Shoulders-up, facing three-quarters to camera, confident warm smile. Background: deep graphite (#0b0c0e) with a soft amber rim light from the left and a faint violet fill from the right. A thin glowing amber light ribbon curves behind his shoulders. Square 1:1, 2048 px, centred, studio lighting, no text.
+The Editorial section is fully stocked (25 items); nothing needed there.
 
-**Prompt B, hyper-real editorial portrait (About page, case study author card):**
-> Using the attached photos as the exact identity reference, create a photorealistic editorial portrait of this man in a dark studio. Same face, hair and goatee, natural skin texture, no beauty filter. Charcoal blazer over a black crew-neck tee. Lighting: soft key from front-left, amber (#ff8a1f) rim light on the right edge of his face and shoulder, deep graphite background with subtle gradient. Looking at camera, calm confident half smile. Portrait 4:5, 2048 px tall, shallow depth of field, no text.
+---
 
-**Prompt C, transparent cut-out for the hero orb:** run Prompt A again, then ask:
-> Remove the background completely and return a transparent PNG cut-out of the character, keeping the soft amber rim light on his edges.
+## 1. Hero avatar: cartoon character that looks like Levo (Google AI Studio)
 
-Save as: `levo-avatar.png` (Prompt C), `levo-portrait.jpg` (Prompt B), `levo-avatar-square.png` (Prompt A).
+Goal: a stylised character, not a photo, on a background that is trivial to remove so it can sit in any scene (hero orb, About page, stickers, OG image).
 
-## 2. Hero centrepiece loop (Veo, video)
+**Setup:** attach 3 to 5 reference photos (front, three-quarter, smiling, good light; the navy suit photo is the best primary). Generate on a **flat chroma-green background**, then ask for a transparent cut-out.
 
-**Prompt:**
-> A seamless 6 second loop. A smooth matte graphite clay sphere floats in the centre of a dark studio (#0b0c0e). A thick glossy amber (#ff8a1f) ribbon wraps diagonally around the sphere and slowly travels along its own path, like a signal moving through a cable. Small soft clay shapes (a lime cube, a violet pill, a tiny amber star) orbit slowly at different depths. Soft studio key light, gentle reflections, subtle floating dust particles. Locked-off camera, very slow 5 degree orbit, no cuts. The last frame must match the first frame for a perfect loop. No text, no logos. Square 1:1.
+**Prompt 1A, master character (do this first):**
+> Create a stylised 3D cartoon character of the man in the attached photos. Keep his identity exact: face shape, warm brown skin tone, short tapered afro, short goatee and moustache, friendly wide smile, dark brown eyes. Style: premium 3D animated film character with soft claymorphism shading, slightly larger head than real proportions, smooth matte clay skin with subtle subsurface warmth, not a caricature. Outfit: charcoal knit sweater over a white collar, small amber (#ff8a1f) pin on the chest. Pose: waist-up, body turned three-quarters to the right, head turned to camera, confident warm smile. Lighting: soft studio key light from front-left, faint amber rim light on his right edge. Background: perfectly flat solid chroma green (#00FF00) with no gradient, no shadow on the background and no floor. 1:1, 2048 x 2048. No text.
 
-Save as: `hero-orbit-1x1-6s.mp4`, plus one still frame as `hero-orbit-poster.png`.
+**Prompt 1B, transparent version (same chat, right after 1A):**
+> Return the exact same character as a transparent PNG cut-out with clean anti-aliased edges and no green fringe. Keep the amber rim light on his edges.
 
-**Optional variant (avatar inside the orb):** after the avatar exists, use Veo image-to-video with `levo-avatar-square.png`:
-> Animate this clay character subtly: a slow blink, a small smile widening, a gentle head tilt, while the amber ribbon behind him glows and drifts. 6 seconds, seamless loop, camera locked off.
+**Prompt 1C, pose pack (same chat, for reuse around the site):**
+> Keeping the identical character, outfit and lighting on the same flat chroma-green background, generate four separate images: (1) waving hello, (2) pointing to his left at something off-frame, (3) arms crossed, confident, (4) seated at a laptop, typing, slight smile. 1:1, 2048 px each. No text.
 
-## 3. Core banking station (Veo, video)
+**Checks before sending:** the face clearly reads as Levo, there's no green spill on the hair or ears, the edges are clean, and hands have five fingers.
 
-> Abstract 8 second shot, no logos, no readable text, no real data. A dark server corridor rendered as soft graphite clay blocks. Thin amber light signals pulse along cables between the racks, then converge into one bright point at the end of the corridor. Slow dolly forward. Cool violet ambient light, amber highlights, hyper-real materials, shallow depth of field. 16:9.
+**Save as:** `levo-avatar.png` (1B, transparent), `levo-avatar-green.png` (1A), `levo-pose-wave.png`, `levo-pose-point.png`, `levo-pose-arms.png`, `levo-pose-laptop.png`.
 
-Save as: `banking-abstract-16x9-8s.mp4`.
+## 2. Hero loop: the avatar comes alive (Veo, image-to-video)
 
-## 4. Open Graph share image (Google AI Studio, image)
+Use `levo-avatar-green.png` as the input frame. The green background stays green, so the loop can be keyed later if needed.
 
-> A 1200 x 630 social share banner. Left 55 percent: empty dark graphite space (text will be added in code). Right side: the 3D clay avatar from the attached image (or a clay sphere if no avatar yet) wrapped by a glowing amber ribbon, small lime and violet clay shapes floating nearby. Soft studio light, hyper-real clay, no text.
+> Animate this 3D cartoon character subtly for a seamless 6 second loop: one slow natural blink, a gentle breath in the shoulders, a small friendly head tilt and the smile widening slightly, then easing back to the starting pose. The camera is locked off. Keep the background perfectly flat chroma green with no lighting change. The last frame must match the first frame exactly. No text.
 
-Save as: `og-image.png` (1200 x 630).
+**Save as:** `hero-orbit-1x1-6s.mp4`. If the loop isn't clean, skip it: the transparent PNG alone looks great in the orb.
 
-## 5. Thoughts covers (Google AI Studio, one per post)
+---
 
-Template, swap the subject in brackets:
-> Editorial cover illustration in soft 3D claymorphism on a dark graphite background (#0b0c0e). Subject: [e.g. a clay database split into many small labelled-free drawers, for a post about schema-per-tenant]. One amber glowing ribbon connects the elements. Lime and violet accents. Hyper-real studio lighting, generous empty space at the top for a title, no text. 16:9, 1600 px wide.
+## 3. Product reels (Veo)
 
-Planned posts and suggested subjects:
-- Schema-per-tenant at Makeja: a clay apartment block where each floor is a separate sealed drawer.
-- What anime taught me about building in public: a clay katana resting on a laptop keyboard, amber ribbon as the blade's glow.
-- Shipping world-class products from Nairobi: clay Nairobi skyline silhouette with the ribbon running from it across a clay globe.
+**The method that works best: screenshot, then image-to-video.** Veo can't render real interface text, so give it a real frame. For each product:
+1. Open the live page in Chrome at 1920 x 1080 (phone view at 1080 x 1920 for Mikono), hide personal data, and take a clean screenshot.
+2. In Google AI Studio, ask for: "Place this exact screenshot, unchanged, on the screen of a floating matte graphite laptop (or phone) on a dark graphite studio background with an amber rim light. Photoreal product shot." That gives you the **start frame**.
+3. Run the Veo prompt below with that start frame. Keep the screen content static and move the camera, light and particles; that's what keeps the UI legible.
 
-Save as: `thought-<slug>.png`.
+Each reel: 8 to 10 seconds, no audio, ends on a calm still frame (a clean end frame doubles as the poster).
 
-## 6. Project reels (CapCut screen recordings, not AI)
+### 01 Makeja Homes (16:9, 10s)
+Screenshot: the admin dashboard of a demo company (overview with occupancy and bills). No real tenant names.
+> Slow cinematic push-in on this laptop floating in a dark graphite studio. A thin amber light ribbon enters from the left, wraps once around the laptop and runs along the bottom edge of the screen like a signal. Tiny clay house-shaped particles drift up past the screen. The screen content stays perfectly still and sharp. Soft amber rim light, gentle reflections on the desk-less floor. Ends on a calm, centred hero frame. 16:9, 10 seconds, no text overlays.
 
-Record at 1920 x 1080 (9:16 at 1080 x 1920 for Mikono), 60 fps, then cut to length in CapCut. Export H.264, no audio, under 6 MB. Hide any real tenant names, emails, phone numbers or amounts (use a demo company).
+### 02 Mikono Creations (9:16, 8s)
+Screenshot (phone): the custom animal studio with an animal selected, or the shop grid.
+> A matte phone floats upright in a warm cream-and-graphite studio. Three small crocheted toy animals (a giraffe, an elephant, a lion) made of soft yarn tumble gently into the frame and settle around the base of the phone. Slow orbit of about 15 degrees. The screen content stays still and readable. Warm soft light, shallow depth of field. 9:16 vertical, 8 seconds, no text.
 
-| File | Length | Shot list |
-|---|---|---|
-| `makeja-dashboard-16x9-12s.mp4` | 12s | Demo admin dashboard, generate monthly bills, open one payment, ask Njiti one question |
-| `mikono-studio-9x16-10s.mp4` | 10s | Phone: open the custom studio, pick an animal and colours, WhatsApp order opens |
-| `elatec-projects-16x9-10s.mp4` | 10s | Hero slider, towns-served index, a product page, WhatsApp hand-off |
-| `noevella-hero-16x9-8s.mp4` | 8s | Splash, hero video, open the mega menu, scroll division cards |
-| `levo-cli-16x9-10s.mp4` | 10s | Type `help`, Tab-complete `open makeja`, page jumps to the case study |
-| `ghostnet-16x9-8s.mp4` | 8s | Matrix-rain entry, module grid, ask GHOST one question |
-| `hookah-16x9-8s.mp4` | 8s | Leave for last (project still in progress) |
+### 03 Noevella Group (16:9, 8s)
+Screenshot: the homepage hero with the mega menu open.
+> Elegant slow dolly-in on a floating laptop in a deep plum (#1a0736) studio. Soft magenta and gold light sweeps across the frame like stage lighting at a gala. Thin gold confetti particles drift in slow motion. The screen stays still and sharp. Luxury editorial mood, 16:9, 8 seconds, no text.
 
-## Hand-off
+### 04 Elatec Safety Systems (16:9, 8s)
+Screenshot: the homepage hero or the projects page with the towns list.
+> A floating laptop at dusk over a softly blurred Nairobi suburb rooftop. A sleek CCTV camera rotates slowly in the foreground, and a solar panel catches the last orange sunlight. A thin amber line traces a perimeter fence in light across the background. Slow push-in, the screen content stays still. Cinematic, 16:9, 8 seconds, no text.
 
-Put everything in one folder, e.g. `Downloads/portfolio-media/`, and tell Claude: "media is in Downloads/portfolio-media, wire it in". Claude will optimise each file, copy it into `public/media/` or `public/reels/`, flip the `ready` flags in `src/data/media.ts`, and deploy.
+### 05 Core banking environments (16:9, 8s, no screenshot, fully abstract)
+> Abstract shot, no logos, no readable text, no real data. A dark corridor of server racks rendered as soft graphite clay blocks. Thin amber light signals pulse along cables between the racks and converge into one bright point at the end of the corridor, where a calm vault-like door glows. Slow steady dolly forward, cool violet ambient light, amber highlights, hyper-real materials. 16:9, 8 seconds.
+
+### 06 GhostNet (16:9, 8s)
+Screenshot: the module grid page.
+> A floating laptop in a pitch-dark room lit only by the screen's green glow. Faint green digital rain falls in the far background, out of focus. A soft hooded silhouette leans in at the edge of frame, then fades. Slow push-in, the screen content stays still. Moody cyber-thriller look, 16:9, 8 seconds, no text.
+
+### 07 levo-cli (16:9, 8s)
+Screenshot: the terminal on the home page after running `help`.
+> A floating mechanical keyboard and a small graphite clay monitor showing this terminal. A lime (#d4ff3a) cursor glow pulses on the screen. Keys depress one by one on their own as if someone invisible is typing, with soft clicks of light. Slow orbit, amber rim light. 16:9, 8 seconds, no text.
+
+### 08 Hookah 3D: do this last (project still in progress)
+Better as a real screen recording of the explode shader once it's live on the hero.
+
+---
+
+## 4. OG share image (Google AI Studio)
+
+Use the transparent avatar.
+> A 1200 x 630 social share banner on a dark graphite background. The right 45 percent shows the attached 3D cartoon character, waist-up, with a glowing amber ribbon curving behind him and small lime and violet clay shapes floating nearby. The left 55 percent stays empty dark space for text. Soft studio light. No text.
+
+**Save as:** `og-image.png`.
+
+## 5. Thoughts covers (Google AI Studio, one per post, once posts exist)
+
+> Editorial cover in soft 3D claymorphism on a dark graphite background (#0b0c0e). Subject: [subject]. One amber glowing ribbon connects the elements, with lime and violet accents. Hyper-real studio light, empty space at the top for a title, no text. 16:9, 1600 px wide.
+
+Subjects: schema-per-tenant (a clay apartment block where each floor is a sealed drawer); anime and building in public (a clay katana resting on a keyboard, the ribbon as its glow); shipping from Nairobi (a clay Nairobi skyline with the ribbon running across a clay globe).
+
+---
+
+## Wiring (for the Claude session)
+
+1. Stage the files from `Downloads\portfolio-media\` (needs the desktop app linked).
+2. Videos: `ffmpeg -i in.mp4 -an -vf "scale='min(1280,iw)':-2,fps=30" -c:v libx264 -crf 26 -pix_fmt yuv420p -movflags +faststart out.mp4`, plus a poster frame saved as `.webp`. Images: `.webp` at quality 82 (keep the avatar as PNG or lossless WebP to keep its transparency).
+3. Avatar → `public/media/levo-avatar.png`. Set `HERO.avatar = { src, ready: true }`, and in `src/components/signal/Hero.tsx` render it with `object-fit: contain`, anchored to the bottom of the orb. Write fresh alt text (e.g. "Illustrated character of Levis Kibirie").
+4. Reels → `public/reels/<file>`, then set `REELS[slug].src`, `poster`, `ready: true`, and delete any `fallback`.
+5. Build with the font mock (see HANDOFF), commit, then push `signal-path` and `main`.

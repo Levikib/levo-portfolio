@@ -1,10 +1,30 @@
 # HANDOFF: read this first
 
-Living status doc for Claude sessions working on Levo's portfolio. Read it top to bottom before touching code. **Update it at the end of every session**: move finished items to Done, add new pending items and ideas, and bump "Last updated".
+> **New Claude session or new Claude account? Start here.** This file plus `docs/` is the complete memory of the project; the earlier chat history is NOT available to you. Read sections 0, 1, 2 and 6, then do "Next session: first moves".
 
-**Last updated:** 2026-10-05, evening (Claude cloud session, independent QA)
-**Live site:** levis.makejahomes.co.ke (Vercel deploys from `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
-**Repo:** github.com/Levikib/levo-portfolio. `main` and `signal-path` both point at the redesign (fast-forwarded on 2026-10-05).
+**Last updated:** 2026-10-06 morning (end of the first Claude account's session; Levo is moving to a second Claude account because the first hit its weekly limit)
+**Live site:** levis.makejahomes.co.ke (Vercel auto-deploys `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
+**Repo:** github.com/Levikib/levo-portfolio. Work on `signal-path`, then fast-forward `main` to it (`git push origin signal-path && git push origin signal-path:main`). Both are identical right now.
+
+---
+
+## 0. Start here (new account)
+
+**What this is:** Levo's personal portfolio, rebuilt in October 2026 as "Signal Path". It is a dark claymorphism site: an amber signal ribbon draws down the page through 8 project stations, deep case studies, an Editorial gallery of his design and motion work, a Thoughts blog section and a working terminal. It is live.
+
+**Setup in a fresh cloud session:**
+1. The GitHub account `Levikib` must be connected to this Claude account (claude.ai connectors / GitHub app). Then attach the repos you need: `levo-portfolio` (push), and read-only for context: `makeja-homes` (private), `noevella` (private), `elatec-web` (private), `mikono-creations`, `ghostnet` and `hookah-website` (public).
+2. `git clone https://github.com/Levikib/levo-portfolio && cd levo-portfolio && git checkout signal-path && npm ci`
+3. Build with the Google Fonts mock in section 3 (the sandbox can't reach Google Fonts).
+4. Levo's laptop (Windows, desktop app) can be linked to the session. Folders he has granted before: `C:\Users\admin\Downloads`, `Documents\Makeja Homes Files`, `Documents\Professional Documents`, `Documents\ShanTech Projects\Animated Videos Portfolio`, `Documents\Job Quotations`, `Documents\Sammy Quotations`. A new session must request them again. The laptop has ffmpeg, pdftoppm and ImageMagick in its shell: encode media there, then stage only the small outputs.
+
+**Next session: first moves (in this order):**
+1. **Hero avatar.** Levo does NOT want his real photo in the hero (removed 2026-10-06). He is generating a cartoon/clay character of himself in Google AI Studio on a chroma-green background plus a transparent PNG, using `docs/MEDIA-PROMPTS.md` section 1. When the files land in `Downloads\portfolio-media\`, wire them in (Wiring section of that doc). Until then the hero orb shows the clay `>_` key, which is fine.
+2. **Product reels.** All 8 reel slots are empty (inventory table in `docs/MEDIA-PROMPTS.md` section 0). The plan is a screenshot of the live page, then an AI Studio device mock-up, then Veo image-to-video, with per-product prompts in section 3. Help Levo take the screenshots (Claude in Chrome or Playwright against the live sites), then wire the videos in. Hookah goes last.
+3. **Pixel-clay experiment** (section 10 below): Levo wants to explore it on a separate branch, not on `main`.
+4. Then continue the Pending list (section 6).
+
+**How to talk to Levo:** he is often on his phone using voice input, so keep replies to about 3 sentences. He likes parallel agents in cloud sessions, perfectionist builders and an independent QA pass, with everything committed and pushed. Before ending any session: update this file, commit, push both branches.
 
 ---
 
@@ -71,7 +91,7 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 
 - Laptop audit done (2026-10-05): 10 Editorial items added from Levo's laptop (Makeja feature posters x10, square social videos x4, agents ad, web revamp film, command centre reveal, comic cast, banner; Chill Minds campaign films; ShanTech identity, films, business card and proposal; Kivulini Cabins proposal and film; Prime Touch ad; Care and Gloss & Glow logos). Videos cut to 20s previews, H.264, no audio. Working copies are in `C:\Users\admin\Downloads\portfolio-editorial-export`.
 - **Deliberately excluded** from the laptop: ID cards, certificates, KRA/TCC docs, transcripts, cover letters, CVs (pending Levo's OK), everything in Job Quotations and Sammy Quotations (bank details and third-party pricing), the Makeja corporate legal documents, pitch-deck financials, the "Her Prettiness Mio" birthday book (private person), and the health explainer videos (not reviewed yet, see Ideas).
-- Interim hero portrait: Levo's suit photo at `public/media/levo-avatar.webp` (`HERO.avatar.ready = true`).
+- Hero photo removed 2026-10-06 at Levo's request (he wants a generated cartoon avatar instead). The orb shows the clay `>_` key until the avatar lands.
 - AI generation prompts written: `docs/MEDIA-PROMPTS.md`, also saved to `C:\Users\admin\Downloads\PORTFOLIO-MEDIA-PROMPTS.md`.
 - **Full independent QA pass: done** (`docs/QA-FINAL.md`). All 8 gates pass on 40 routes at 1440 and 390; fixed two private-data leaks (web revamp film removed, Chill Minds promo trimmed before a third-party phone number). Editorial has 24 items, not 25.
 
@@ -80,10 +100,10 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 ## 6. Pending (priority order)
 
 1. Smoke-test the live site on a real phone (layout, fonts, videos).
-2. **QA follow-ups for Levo** (details in `docs/QA-FINAL.md`): Njiti poster (`makeja-poster-7.webp`) says "Powered by Claude", which is false, so re-export or drop it; `public/work/makeja-screenshot.png` shows old numbers (180+ units, 71 leases, 13 clients), re-shoot after item 11; confirm clients are fine with their business phone numbers in artwork (Gloss & Glow, Prime Touch, second number on poster 1); the removed web revamp film is still in git history; read the 72 Chill Minds pages for private data; re-record a clean web revamp film if wanted.
+2. **QA follow-ups for Levo** (details in `docs/QA-FINAL.md`): poster 7 and the old Makeja screenshot were already removed (2026-10-05); confirm clients are fine with their business phone numbers in artwork (Gloss & Glow, Prime Touch, second number on poster 1); the removed web revamp film is still in git history; read the 72 Chill Minds pages for private data; re-record a clean web revamp film if wanted.
 3. **Laptop audit: done.** Optional extras still on the laptop: the comic strip zips (`Downloads/Makeja Marketing Comic Strip 1.zip`, `2.zip`), `Makeja Homes Outro 1.mp4`, `A_heavy_drop_of_black_sumi_ink.mp4`, Tutorials 2 to 4 and the health explainer animations in `Animated Videos Portfolio` (Contraception, Menopause, PMS, Lower Cancer Risk, Patience Family Matters, Abel Breaking Barriers): ask Levo before using the health ones.
 4. **Domain:** done. Everything points at levis.makejahomes.co.ke (`levikibirie.dev` was never registered). If Levo buys a personal domain later, change `SITE.url` and add it in Vercel.
-5. **Media to produce:** Levo is generating them from `docs/MEDIA-PROMPTS.md` (clay avatar from his face references, hero Veo loop, banking abstract, OG image, Thoughts covers) plus CapCut reels. When he drops them in `Downloads/portfolio-media`, optimise, copy to `public/media` or `public/reels`, flip `ready` in `src/data/media.ts`, swap the interim portrait, commit, deploy.
+5. **Media to produce:** see section 0, "first moves" 1 and 2, and `docs/MEDIA-PROMPTS.md` (rewritten 2026-10-06: inventory table, avatar on a chroma-green background, Veo reel prompts per product, OG image, Thoughts covers, wiring steps). An older copy of the prompts sits at `Downloads\\PORTFOLIO-MEDIA-PROMPTS.md` on the laptop; the repo version is the current one.
 6. **Redesign `/about`** in the clay system (still the old style), and clean up `src/app/mobile.css` (it overrides heading sizes and `wa.me` links; `signal.css` currently fights it).
 7. **Core banking case study** is thin: needs 1 to 2 shareable results from Levo and confirmation of what can be said about clients.
 8. **Hero and CTA strategy** from `docs/STRATEGY.md`: add a "Hiring? Get my CV" path. A CV exists on the laptop (`Professional Documents/Levis_Kibirie_CV_2026_v2.pdf`) but it has personal contact details: ask Levo before publishing it. Pick hero copy option A or B.
@@ -112,3 +132,16 @@ Screenshots: install Playwright in a scratch dir, and use the preinstalled Chrom
 
 - The removed web-revamp film (personal Gmail accounts visible) is still in the public repo's git history. Scrubbing it needs a history rewrite and force-push of `main`: only with Levo's explicit OK.
 - Re-export Makeja poster 7 with the correct AI line (Groq) if he wants it back.
+
+## 10. Pixel-clay experiment (Levo's idea, 2026-10-06)
+
+Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-art geometry with claymorphism lighting: stepped pixel corners via an SVG `clipPath`, hard offset drop shadows plus clay inner highlights, cards that press in like hardware buttons, a CRT scanline overlay on the terminal, optional R3F voxel models in the reels, and stepped (frame-limited) animation.
+
+**Engineering notes for whoever builds it:**
+- Do it on a new branch `pixel-clay`, behind a single CSS class on `<html>` (e.g. `data-skin="pixel"`), so it can be compared side by side with the current skin and switched off instantly.
+- **Gotcha:** `clip-path` clips `box-shadow`, so the brief's recipe (clip-path plus outer drop shadow on the same element) will cut off the drop shadow. Build the stepped outline and drop shadow from a pseudo-element or an inline SVG frame behind the card, and clip only the inner surface.
+- Do NOT apply `-webkit-font-smoothing: none` or `image-rendering: pixelated` to body text or photos: it wrecks readability and accessibility. Use pixelated rendering only on deliberate pixel assets (icons, sprites, voxel renders).
+- Stepped easing (`steps(3)`) only for decorative micro-motion; keep page transitions and focus states smooth. Honour `prefers-reduced-motion`.
+- The CRT shader for the terminal can be pure CSS first (repeating-linear-gradient scanlines, slight curvature via an SVG filter). Only use WebGL if the CSS version falls short, and keep it lazy-loaded.
+- R3F voxel models for reels: a nice later phase. Start with one (e.g. a voxel Makeja tower) and keep the home page JS budget in check.
+- Prototype order: one card plus one button plus the terminal bezel → screenshots at 390 and 1440 → show Levo → decide whether to roll it out.
