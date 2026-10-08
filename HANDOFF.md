@@ -145,3 +145,11 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 - The CRT shader for the terminal can be pure CSS first (repeating-linear-gradient scanlines, slight curvature via an SVG filter). Only use WebGL if the CSS version falls short, and keep it lazy-loaded.
 - R3F voxel models for reels: a nice later phase. Start with one (e.g. a voxel Makeja tower) and keep the home page JS budget in check.
 - Prototype order: one card plus one button plus the terminal bezel → screenshots at 390 and 1440 → show Levo → decide whether to roll it out.
+
+## 11. Makeja social content (2026-10-08)
+
+- Claude Doc "Social Content Pack: Mikono + Makeja Tutorials": https://claude.ai/code/artifact/641367bc-c8eb-434a-8116-0065455bb430
+  - LinkedIn post for the Mikono showcase video (trimmed file on the laptop: `Downloads\Mikono Video - LinkedIn.mp4`).
+  - Per-platform posts for the 6 Makeja tutorials in the "Real Estate OS" voice, with a posting schedule (Oct 9 to Oct 21).
+  - "Tutorial posters + Veo films": a poster prompt (AI Studio), a 6s Veo concept prompt, outro tagline and caption with the tutorial link, for all 6 tutorials. Leases Management goes first.
+- Open: trial length (30 vs 14 days, doc comment); the pitch deck has 21 em dashes (cleanup offered, not approved).
