@@ -1,0 +1,102 @@
+/* ═══ TwoSides (home) ═══════════════════════════════════════════════════════
+   Two equal clay slabs (Technical amber, Creative violet) and a slim Takes bar.
+   Whole cards are single links: lift on hover, press on :active.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* .sp-section zeroes .sp-wrap's side padding; give it back below the max width so cards never touch the edge */
+.two.sp-section { padding-left: clamp(0px, calc((1360px - 100vw) / 2), 20px); padding-right: clamp(0px, calc((1360px - 100vw) / 2), 20px); }
+
+.two__grid {
+  margin-top: var(--s6);
+  display: grid; gap: var(--s4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.two-card {
+  --acc: var(--sp-signal);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; min-width: 0;
+  padding: clamp(20px, 2.4vw, 30px);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 80% at 10% -10%, rgba(255, 255, 255, .07), transparent 52%),
+    radial-gradient(90% 80% at 100% 110%, color-mix(in srgb, var(--acc) 16%, transparent), transparent 60%),
+    linear-gradient(168deg, var(--clay-hi), var(--clay-mid) 46%, var(--clay-lo));
+  box-shadow: var(--clay-rest), 0 0 0 1px color-mix(in srgb, var(--acc) 16%, transparent);
+  transition: transform .4s var(--ease-clay), box-shadow .35s ease;
+}
+.two-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: url("/fx/grain.svg"); opacity: .07; mix-blend-mode: overlay; pointer-events: none; }
+.two-card--creative { --acc: var(--sp-violet); }
+.two-card:hover { transform: translateY(-5px); box-shadow: var(--clay-raised), 0 0 0 1.5px color-mix(in srgb, var(--acc) 55%, transparent), 0 30px 70px -40px var(--acc); }
+.two-card:active { transform: translateY(1px) scale(.995); box-shadow: var(--clay-pressed); transition-duration: .08s; }
+
+.two-card__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.two-card__tag { font-family: var(--font-mono), monospace; font-size: var(--t-small); color: var(--acc); }
+.two-card__count { font-family: var(--font-mono), monospace; font-size: var(--t-small); color: var(--sp-muted); padding: 6px 11px; border-radius: 999px; background: var(--well); box-shadow: var(--well-shadow); }
+.two-card__count b { color: var(--sp-paper); font-weight: 600; }
+
+.two-card__glyph {
+  position: absolute; right: clamp(16px, 2.4vw, 30px); top: 64px; z-index: -1;
+  font-family: var(--font-display), sans-serif; font-weight: 800; font-size: clamp(80px, 9vw, 130px); line-height: 1; letter-spacing: -0.06em;
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--acc) 45%, transparent);
+  transition: transform .6s var(--ease-clay);
+}
+.two-card:hover .two-card__glyph { transform: translateY(-6px) rotate(-6deg); }
+
+.two-card__title { margin-top: clamp(40px, 6vw, 72px); font-family: var(--font-display), sans-serif; font-weight: 800; font-size: var(--t-h2); line-height: .92; letter-spacing: -0.045em; color: var(--sp-paper); text-wrap: balance; }
+.two-card__body { margin-top: var(--s3); font-size: var(--t-body); line-height: 1.6; color: var(--sp-soft); max-width: 46ch; }
+.two-card__list { list-style: none; margin: var(--s4) 0 0; padding: 0; display: grid; gap: 8px; }
+.two-card__list li { position: relative; padding-left: 20px; font-size: 14px; line-height: 1.45; color: var(--sp-soft); }
+.two-card__list li::before { content: ""; position: absolute; left: 2px; top: .5em; width: 8px; height: 8px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 10px color-mix(in srgb, var(--acc) 70%, transparent); }
+
+.two-card__foot { margin-top: auto; padding-top: var(--s5); display: flex; flex-direction: column; align-items: flex-start; gap: var(--s4); }
+.two-card__chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.two-card__chips span { font-family: var(--font-mono), monospace; font-size: 11.5px; color: var(--sp-soft); padding: 6px 10px; border-radius: 999px; background: var(--well); box-shadow: var(--well-shadow); }
+
+.two-card__go {
+  flex: none; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 7px 0 18px; border-radius: 999px;
+  font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 14.5px; color: #140a00;
+  background: radial-gradient(120% 100% at 30% -10%, rgba(255, 255, 255, .55), transparent 45%), linear-gradient(180deg, color-mix(in srgb, var(--acc) 70%, #fff), var(--acc) 60%, color-mix(in srgb, var(--acc) 80%, #000));
+  box-shadow: inset 0 2px 1px rgba(255, 255, 255, .55), inset 0 -5px 9px rgba(0, 0, 0, .28), 0 0 0 1px rgba(0, 0, 0, .5), 0 10px 20px -10px rgba(0, 0, 0, .9);
+}
+.two-card--creative .two-card__go { color: #0a0820; }
+.two-card__go i { font-style: normal; width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; background: rgba(0, 0, 0, .14); box-shadow: inset 0 2px 3px rgba(0, 0, 0, .25); transition: transform .3s var(--ease-clay); }
+.two-card:hover .two-card__go i, .two-takes:hover .two-card__go i { transform: translateX(3px) rotate(-8deg); }
+
+/* Takes: slim lime bar spanning both columns */
+.two-takes {
+  --acc: var(--sp-lime);
+  grid-column: 1 / -1;
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s4);
+  padding: 14px 14px 14px 24px; border-radius: var(--r-md);
+  background: linear-gradient(170deg, var(--clay-hi), var(--clay-lo));
+  box-shadow: var(--clay-rest), 0 0 0 1px color-mix(in srgb, var(--acc) 14%, transparent);
+  transition: transform .4s var(--ease-clay), box-shadow .35s ease;
+}
+.two-takes:hover { transform: translateY(-3px); box-shadow: var(--clay-raised), 0 0 0 1.5px color-mix(in srgb, var(--acc) 45%, transparent); }
+.two-takes:active { transform: translateY(1px); box-shadow: var(--clay-pressed); transition-duration: .08s; }
+.two-takes__tag { font-family: var(--font-mono), monospace; font-size: var(--t-small); color: var(--acc); }
+.two-takes__copy { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; min-width: 0; }
+.two-takes__title { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: var(--t-h3); letter-spacing: -0.03em; color: var(--sp-paper); }
+.two-takes__body { font-size: 14.5px; color: var(--sp-soft); }
+.two-takes .two-card__go { color: #111400; }
+
+.sp .two-card:focus-visible, .sp .two-takes:focus-visible { outline: 3px solid var(--sp-lime); outline-offset: 4px; border-radius: var(--r-lg); }
+
+@media (max-width: 900px) {
+  .two__grid { grid-template-columns: minmax(0, 1fr); }
+  .sp .two-card__title { font-size: clamp(28px, 8.4vw, 40px) !important; line-height: .94 !important; }
+  .two-takes { grid-template-columns: minmax(0, 1fr) auto; padding-left: 20px; }
+  .two-takes__tag { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .two-card__foot { align-items: stretch; }
+  .two-card__go { justify-content: space-between; }
+  .two-takes { grid-template-columns: minmax(0, 1fr); }
+  .two-takes .two-card__go { justify-self: stretch; }
+  .two-card__glyph { top: 56px; font-size: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .two-card, .two-takes, .two-card__glyph, .two-card__go i { transition: none !important; }
+  .two-card:hover, .two-takes:hover, .two-card:hover .two-card__glyph { transform: none; }
+}

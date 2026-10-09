@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PROJECTS, getProject } from "@/data/projects";
+import type { Project } from "@/data/projects";
+import { ID, OG_DEFAULT, abs, breadcrumbs, describe, graph, ldJson, pageMetadata, personRef } from "@/lib/seo";
 import { REELS } from "@/data/media";
 import { SITE, waLink } from "@/data/facts";
 import Reel from "@/components/signal/Reel";
@@ -11,16 +13,82 @@ export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
 }
 
+/** OG/schema image: the project's landscape reel poster when ready, else the site card. */
+function imageOf(p: Project) {
+  const r = REELS[p.slug];
+  return r?.ready && r.poster && p.reel.ratio === "16:9"
+    ? { url: r.poster, width: 1280, height: 720 }
+    : { url: OG_DEFAULT.url, width: OG_DEFAULT.width, height: OG_DEFAULT.height };
+}
+
+function describeProject(p: Project) {
+  return describe(`${p.name}: ${p.tagline} ${p.summary}`);
+}
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getProject(params.slug);
   if (!p) return {};
-  return {
+  const img = imageOf(p);
+  return pageMetadata({
     title: `${p.name} case study`,
-    description: p.summary.length > 155 ? p.summary.slice(0, p.summary.lastIndexOf(" ", 152)) + "…" : p.summary,
-    alternates: { canonical: `${SITE.url}/work/${p.slug}` },
-    openGraph: { title: `${p.name} | Levis Kibirie`, description: p.tagline, url: `${SITE.url}/work/${p.slug}`, images: [{ url: "/og-image.png", width: 1200, height: 630 }] },
-    twitter: { card: "summary_large_image", title: `${p.name} | Levis Kibirie`, description: p.tagline, images: ["/og-image.png"] },
-  };
+    description: describeProject(p),
+    path: `/work/${p.slug}`,
+    type: "article",
+    section: "Case studies",
+    tags: [p.kind, ...p.stack],
+    images: [{ ...img, alt: `${p.name} case study by Levis Kibirie` }],
+    keywords: [p.name, `${p.name} case study`, ...p.kind.split("·").map((x) => x.trim()), ...p.stack],
+  });
+}
+
+/** Case study JSON-LD: the page is a TechArticle about the product, plus breadcrumbs. */
+function caseStudyLd(p: Project) {
+  const path = `/work/${p.slug}`;
+  const url = abs(path);
+  const img = abs(imageOf(p).url);
+  const isClient = p.kind.startsWith("Client");
+  const product = isClient
+    ? {
+        "@type": "WebSite",
+        name: p.name,
+        ...(p.live ? { url: p.live } : {}),
+        description: p.tagline,
+        creator: { "@id": ID.person },
+      }
+    : {
+        "@type": "SoftwareApplication",
+        name: p.name,
+        ...(p.live ? { url: p.live } : {}),
+        ...(p.repo ? { codeRepository: p.repo } : {}),
+        description: p.tagline,
+        applicationCategory: p.slug === "makeja-homes" ? "BusinessApplication" : "DeveloperApplication",
+        operatingSystem: "Web",
+        creator: { "@id": ID.person },
+        ...(p.slug === "makeja-homes" ? { publisher: { "@id": ID.makeja } } : {}),
+      };
+  return graph(
+    {
+      "@type": "TechArticle",
+      "@id": `${url}#article`,
+      url,
+      headline: `${p.name} case study: ${p.tagline}`.slice(0, 110),
+      description: describeProject(p),
+      image: img,
+      inLanguage: "en-KE",
+      author: personRef,
+      publisher: { "@id": ID.person },
+      isPartOf: { "@id": ID.website },
+      mainEntityOfPage: url,
+      articleSection: p.kind,
+      keywords: [p.name, ...p.stack].join(", "),
+      about: product,
+      breadcrumb: { "@id": `${url}#breadcrumb` },
+    },
+    breadcrumbs([
+      { name: "Case studies", path: "/work" },
+      { name: p.name, path },
+    ]),
+  );
 }
 
 function Block({ no, title, children }: { no: string; title: string; children: React.ReactNode }) {
@@ -97,6 +165,7 @@ export default function CaseStudy({ params }: { params: { slug: string } }) {
 
   return (
     <main className="sp" style={{ minHeight: "100vh", ["--accent" as string]: p.accent }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(caseStudyLd(p)) }} />
       <article className="sp-wrap">
         <header className="cs-hero">
           <ClayButton href="/work" variant="ghost" icon="←">All case studies</ClayButton>

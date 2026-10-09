@@ -10,6 +10,9 @@ export default function Footer() {
           <div>© {new Date().getFullYear()} {SITE.name}, {SITE.city}, working remote</div>
           <nav aria-label="Footer" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <Link href="/work">Work</Link>
+            <Link href="/creative">Creative &amp; Strategy</Link>
+            <Link href="/thoughts">Takes</Link>
+            <Link href="/contact">Contact</Link>
             <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>
             <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
             <a href={`mailto:${SITE.email}`}>Email</a>

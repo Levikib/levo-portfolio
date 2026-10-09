@@ -6,7 +6,8 @@ import { EDITORIAL } from "@/data/editorial";
 import { SITE, waLink } from "@/data/facts";
 import { ClayButton, ClayCard, CtaBand } from "@/components/signal";
 import Reader from "@/components/editorial/Reader";
-import { KIND_META, clip, pagesOf, volOf } from "@/components/editorial/meta";
+import { KIND_META, pagesOf, volOf } from "@/components/editorial/meta";
+import { ID, abs, breadcrumbs, describe, graph, ldJson, pageMetadata, personRef } from "@/lib/seo";
 
 /** Every page set in the Editorial data becomes a reader route, keyed by its folder name. */
 function volumes() {
@@ -20,18 +21,54 @@ export function generateStaticParams() {
   return volumes().map(({ vol }) => ({ vol }));
 }
 
+function describeVol(v: NonNullable<ReturnType<typeof getVol>>) {
+  return describe(
+    `Read ${v.item.title} online, all ${v.m.count} pages, free. ${v.item.blurb}`,
+    "Designed and laid out by Levis Kibirie in Nairobi, Kenya",
+  );
+}
+
 export function generateMetadata({ params }: { params: { vol: string } }): Metadata {
   const v = getVol(params.vol);
   if (!v) return {};
-  const url = `${SITE.url}/editorial/read/${v.vol}`;
-  const description = clip(`Read ${v.item.title} online, all ${v.m.count} pages, free. ${v.item.blurb}`);
   const cover = `${v.m.folder}/page-01.${v.m.ext}`;
-  return {
-    title: `Read ${v.item.title}`,
-    description,
-    alternates: { canonical: url },
-    openGraph: { title: `Read ${v.item.title} | Levis Kibirie`, description, url, images: [{ url: cover, width: v.m.w, height: v.m.h }] },
-  };
+  return pageMetadata({
+    title: `Read ${v.item.title} online`,
+    description: describeVol(v),
+    path: `/editorial/read/${v.vol}`,
+    type: "article",
+    section: KIND_META[v.item.kind].label,
+    images: [{ url: cover, width: v.m.w, height: v.m.h, alt: `${v.item.title} cover` }],
+    keywords: [v.item.title, `${v.item.client} magazine`, `read ${v.item.client} online`, "student mental wellness magazine Kenya", "mental health magazine", "magazine design Kenya"],
+  });
+}
+
+function readerLd(v: NonNullable<ReturnType<typeof getVol>>) {
+  const path = `/editorial/read/${v.vol}`;
+  const url = abs(path);
+  return graph(
+    {
+      "@type": "PublicationIssue",
+      "@id": `${url}#issue`,
+      url,
+      name: v.item.title,
+      description: describeVol(v),
+      inLanguage: "en-KE",
+      numberOfPages: v.m.count,
+      datePublished: v.item.year,
+      image: { "@type": "ImageObject", url: abs(`${v.m.folder}/page-01.${v.m.ext}`), width: v.m.w, height: v.m.h },
+      isPartOf: { "@type": "Periodical", name: v.item.client },
+      creator: personRef,
+      author: { "@id": ID.person },
+      isAccessibleForFree: true,
+      mainEntityOfPage: url,
+    },
+    breadcrumbs([
+      { name: "Editorial", path: "/editorial" },
+      { name: v.item.title, path: `/editorial/${v.item.slug}` },
+      { name: "Read online", path },
+    ]),
+  );
 }
 
 export default function ReadPage({ params }: { params: { vol: string } }) {
@@ -42,6 +79,7 @@ export default function ReadPage({ params }: { params: { vol: string } }) {
 
   return (
     <main className="sp ed ed-read" style={{ minHeight: "100vh", ["--accent" as string]: accent }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(readerLd(v)) }} />
       <section className="sp-wrap ed-read__head" aria-labelledby="ed-read-h1">
         <nav aria-label="Breadcrumb" className="ed-crumbs">
           <Link href="/editorial">Editorial</Link>

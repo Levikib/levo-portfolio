@@ -1,11 +1,12 @@
 import { MAKEJA, CAREER, fmt } from "@/data/facts";
 import { HERO } from "@/data/media";
-import { Star, Squiggle, Arrow, Underline, Bolt, Burst } from "./Doodles";
+import { Star, Squiggle, Arrow, Underline, Burst } from "./Doodles";
 import ClayCard from "./ClayCard";
+import HeroRing from "./HeroRing";
+import "./hero-ring.css";
 import ClayButton from "./ClayButton";
 import Marquee from "./Marquee";
 
-const STAGES = "idea  ·  design  ·  build  ·  verify  ·  ship  ·  ";
 
 export default function Hero() {
   const stats = [
@@ -47,16 +48,7 @@ export default function Hero() {
 
           <div className="sp-stage">
             <div className="sp-stage__halo" aria-hidden />
-            {/* back half of the ribbon, behind the orb */}
-            <svg className="sp-stage__ribbon" viewBox="0 0 600 600" aria-hidden style={{ zIndex: 0 }}>
-              <defs>
-                <linearGradient id="ribBack" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#a8560c" />
-                  <stop offset="1" stopColor="#5a2a03" />
-                </linearGradient>
-              </defs>
-              <path d="M40 380 C 120 120, 480 90, 560 250" stroke="url(#ribBack)" strokeWidth="32" fill="none" strokeLinecap="round" />
-            </svg>
+            <HeroRing />
             <div className="sp-stage__orb" style={{ zIndex: 1 }} data-slot={HERO.loop.note}>
               {HERO.loop.ready ? (
                 <video autoPlay muted loop playsInline poster={HERO.loop.poster} aria-label="Animated 3D centrepiece">
@@ -73,33 +65,8 @@ export default function Hero() {
             </div>
             <span className="sp-pebble sp-pebble--violet sp-float" aria-hidden style={{ zIndex: 1, ["--r" as string]: "0deg" }} />
             <span className="sp-pebble sp-pebble--amber sp-float" aria-hidden style={{ zIndex: 3, animationDelay: "2s" }} />
-            {/* front half of the ribbon, over the orb, with the build stages riding on it */}
-            <svg className="sp-stage__ribbon" viewBox="0 0 600 600" aria-hidden style={{ zIndex: 2 }}>
-              <defs>
-                <linearGradient id="rib" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#ffd39a" />
-                  <stop offset=".35" stopColor="#ffa040" />
-                  <stop offset=".75" stopColor="#ff8a1f" />
-                  <stop offset="1" stopColor="#c45a00" />
-                </linearGradient>
-                <filter id="ribShadow" x="-20%" y="-20%" width="140%" height="160%">
-                  <feDropShadow dx="0" dy="14" stdDeviation="12" floodColor="#000" floodOpacity=".6" />
-                </filter>
-                <path id="ribPath" d="M560 250 C 600 420, 220 560, 40 380" />
-              </defs>
-              <use href="#ribPath" stroke="url(#rib)" strokeWidth="38" fill="none" strokeLinecap="round" filter="url(#ribShadow)" />
-              <use href="#ribPath" stroke="rgba(255,255,255,.35)" strokeWidth="2" fill="none" transform="translate(0 -15)" />
-              <text fontFamily="var(--font-mono)" fontSize="15" fontWeight="600" fill="#2a1400" letterSpacing="2" dy="5">
-                <textPath href="#ribPath" startOffset="4%">{STAGES + STAGES}</textPath>
-              </text>
-            </svg>
-
             <div className="sp-bubble sp-hand sp-float" style={{ top: "2%", left: "-4%", ["--r" as string]: "-6deg", zIndex: 3 }}>
               let&apos;s build<br />something real!
-            </div>
-            <div className="sp-sticker sp-float" style={{ bottom: "4%", right: "-2%", zIndex: 3, animationDelay: "1.5s", ["--r" as string]: "3deg" }}>
-              <Bolt style={{ width: 18 }} />
-              <div><b>{fmt(MAKEJA.leases)}</b><small>leases signed online</small></div>
             </div>
             <Burst style={{ position: "absolute", top: "20%", right: "2%", width: 46, zIndex: 3 }} />
           </div>

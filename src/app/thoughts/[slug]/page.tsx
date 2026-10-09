@@ -5,10 +5,11 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import "../../editorial.css";
 import { SUBSTACK_URL, THOUGHTS } from "@/data/thoughts";
-import type { Block } from "@/data/thoughts";
+import type { Block, Thought } from "@/data/thoughts";
+import { ID, OG_DEFAULT, abs, breadcrumbs, describe, graph, ldJson, pageMetadata, personRef } from "@/lib/seo";
 import { SITE, waLink } from "@/data/facts";
 import { ClayButton, ClayCard, CtaBand } from "@/components/signal";
-import { TOPIC_META, clip, fmtDate, published, subscribeHref } from "@/components/editorial/meta";
+import { TOPIC_META, fmtDate, published, subscribeHref } from "@/components/editorial/meta";
 
 const posts = () => published(THOUGHTS);
 const get = (slug: string) => posts().find((t) => t.slug === slug);
@@ -20,19 +21,69 @@ export function generateStaticParams() {
   return posts().map((t) => ({ slug: t.slug }));
 }
 
+function describePost(t: Thought) {
+  return describe(t.dek, `${TOPIC_META[t.topic].label} essay by Levis Kibirie (Levo), fullstack engineer and founder in Nairobi, Kenya`);
+}
+
+const coverOf = (t: Thought) =>
+  t.cover
+    ? { url: t.cover.src, width: t.cover.w, height: t.cover.h, alt: t.cover.alt }
+    : { url: OG_DEFAULT.url, width: OG_DEFAULT.width, height: OG_DEFAULT.height, alt: t.title };
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const t = get(params.slug);
   if (!t) return {};
-  const url = `${SITE.url}/thoughts/${t.slug}`;
-  const description = clip(t.dek);
-  const images = t.cover ? [{ url: t.cover.src, width: t.cover.w, height: t.cover.h, alt: t.cover.alt }] : [{ url: "/og-image.png", width: 1200, height: 630 }];
-  return {
+  return pageMetadata({
     title: t.title,
-    description,
-    alternates: { canonical: url },
-    openGraph: { type: "article", title: t.title, description, url, publishedTime: t.date, authors: [SITE.name], images },
-    twitter: { card: "summary_large_image", title: t.title, description, images: images.map((i) => i.url) },
-  };
+    description: describePost(t),
+    path: `/thoughts/${t.slug}`,
+    type: "article",
+    publishedTime: t.date,
+    section: TOPIC_META[t.topic].label,
+    tags: [TOPIC_META[t.topic].label],
+    images: [coverOf(t)],
+    keywords: [t.title, TOPIC_META[t.topic].label, "Levis Kibirie blog"],
+  });
+}
+
+/** Plain-text word count of a post, for BlogPosting.wordCount. */
+function wordsOf(t: Thought) {
+  const text = t.body
+    .map((b) => (b.t === "list" ? b.items.join(" ") : b.t === "image" ? b.caption ?? "" : b.text))
+    .join(" ");
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
+function postLd(t: Thought) {
+  const path = `/thoughts/${t.slug}`;
+  const url = abs(path);
+  const img = coverOf(t);
+  return graph(
+    {
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      url,
+      mainEntityOfPage: { "@type": "WebPage", "@id": url },
+      headline: t.title.slice(0, 110),
+      description: describePost(t),
+      abstract: t.dek,
+      datePublished: t.date,
+      dateModified: t.date,
+      inLanguage: "en-KE",
+      author: personRef,
+      publisher: { "@id": ID.person },
+      image: { "@type": "ImageObject", url: abs(img.url), width: img.width, height: img.height },
+      articleSection: TOPIC_META[t.topic].label,
+      wordCount: wordsOf(t),
+      timeRequired: `PT${t.minutes}M`,
+      isPartOf: { "@type": "Blog", "@id": ID.blog, name: "Thoughts by Levis Kibirie", url: abs("/thoughts") },
+      ...(t.substack ? { sameAs: t.substack } : {}),
+    },
+    breadcrumbs([
+      { name: "Thoughts", path: "/thoughts" },
+      { name: t.title, path },
+    ]),
+  );
 }
 
 function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
@@ -78,20 +129,10 @@ export default function ThoughtPage({ params }: { params: { slug: string } }) {
   const older = i < list.length - 1 ? list[i + 1] : null;
   const substack = t.substack ?? null;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: t.title,
-    description: t.dek,
-    datePublished: t.date,
-    author: { "@type": "Person", name: SITE.name, url: SITE.url },
-    url: `${SITE.url}/thoughts/${t.slug}`,
-    ...(t.cover ? { image: `${SITE.url}${t.cover.src}` } : {}),
-  };
 
   return (
     <main className="sp ed th" style={{ minHeight: "100vh", "--accent": m.accent } as CSSProperties}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(postLd(t)) }} />
       <article className="th-article">
         <header className="sp-wrap th-article__head">
           <nav aria-label="Breadcrumb" className="ed-crumbs">

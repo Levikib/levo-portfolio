@@ -3,7 +3,9 @@ import { Bricolage_Grotesque, JetBrains_Mono, DM_Sans, Permanent_Marker } from "
 import "./globals.css";
 import "./mobile.css";
 import "./signal.css";
-import { MAKEJA, fmt } from "@/data/facts";
+import { SAME_AS, SITE_NAME, SITE_URL, graph, ldJson, makejaOrg, person, website } from "@/lib/seo";
+import { ROUTE_COPY, ROUTE_META, routeJsonLd } from "@/lib/seo-routes";
+import RouteJsonLd from "@/lib/RouteJsonLd";
 import CustomCursor from "@/components/ui/CustomCursor";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import SmoothScroll from "@/components/ui/SmoothScroll";
@@ -36,53 +38,22 @@ const dmSans = DM_Sans({
   preload: false,
 });
 
-const BASE_URL = "https://levis.makejahomes.co.ke";
-
-export const icons = {
-  icon: [
-    { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
-    { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-  ],
-  apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
-};
-
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  ...ROUTE_META.home,
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    template: "%s | Levis Kibirie",
+    default: ROUTE_COPY.home.title,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    `Product engineer and designer in Nairobi. Founder of Makeja Homes (${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units). Open to senior remote roles and contract builds.`,
-  keywords: [
-    "Fullstack Engineer", "SaaS Founder", "Next.js Developer", "TypeScript",
-    "Nairobi Kenya", "Remote Engineer", "Levis Kibirie", "Makeja Homes",
-    "GhostNet", "Cybersecurity", "Property Management SaaS", "Paystack",
-    "React Developer Kenya", "Software Engineer Africa",
-  ],
-  authors: [{ name: "Levis Kibirie", url: BASE_URL }],
-  creator: "Levis Kibirie",
-  publisher: "Levis Kibirie",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
-  },
-  alternates: { canonical: BASE_URL },
-  openGraph: {
-    type: "website",
-    url: BASE_URL,
-    title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Follow the signal: deep case studies from Makeja Homes, client builds and the lab.",
-    siteName: "Levis Kibirie",
-    locale: "en_US",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Levis Kibirie: Fullstack Engineer & SaaS Founder" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Follow the signal: deep case studies from Makeja Homes, client builds and the lab.",
-    images: ["/og-image.png"],
+  applicationName: SITE_NAME,
+  referrer: "origin-when-cross-origin",
+  formatDetection: { telephone: false, email: false, address: false },
+  icons: {
+    icon: [
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
 
@@ -93,24 +64,9 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Levis Kibirie",
-  url: BASE_URL,
-  image: `${BASE_URL}/levo.jpg`,
-  jobTitle: "Fullstack Software Engineer & SaaS Founder",
-  description: "Fullstack Engineer from Nairobi, Kenya. Built Makeja Homes and GhostNet. 8+ years in tech.",
-  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-  sameAs: [
-    "https://github.com/Levikib",
-    "https://linkedin.com/in/levis-kibirie-6bba13344",
-  ],
-  knowsAbout: ["TypeScript", "Next.js", "PostgreSQL", "Cybersecurity", "SaaS", "Paystack", "Supabase"],
-  worksFor: [
-    { "@type": "Organization", name: "Makeja Homes", url: "https://makejahomes.co.ke" },
-  ],
-};
+/** Site-wide entities. Per-route nodes (ProfilePage, CollectionPage, ...) come from RouteJsonLd. */
+const siteJsonLd = ldJson(graph(person, makejaOrg, website));
+const routeLd = routeJsonLd();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -118,10 +74,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-                <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        {SAME_AS.map((href) => <link key={href} rel="me" href={href} />)}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: siteJsonLd }} />
+        <RouteJsonLd map={routeLd} />
       </head>
       <body>
         <CustomCursor />

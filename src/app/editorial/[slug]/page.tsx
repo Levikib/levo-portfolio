@@ -5,12 +5,13 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import "../../editorial.css";
 import { EDITORIAL, EDITORIAL_KINDS } from "@/data/editorial";
-import type { Media } from "@/data/editorial";
+import type { EditorialItem, Media } from "@/data/editorial";
+import { ID, abs, breadcrumbs, describe, graph, ldJson, pageMetadata, personRef } from "@/lib/seo";
 import { SITE, waLink } from "@/data/facts";
 import { ClayButton, ClayCard, CtaBand } from "@/components/signal";
 import Frame from "@/components/editorial/Frame";
 import EdCard from "@/components/editorial/EdCard";
-import { KIND_META, clip, mediaCount, pageSrc, stillOf, volOf } from "@/components/editorial/meta";
+import { KIND_META, mediaCount, pageSrc, pagesOf, stillOf, volOf } from "@/components/editorial/meta";
 
 const get = (slug: string) => EDITORIAL.find((i) => i.slug === slug);
 
@@ -20,21 +21,91 @@ export function generateStaticParams() {
   return EDITORIAL.map((i) => ({ slug: i.slug }));
 }
 
+/** "Various" and "Personal" are not real clients, so they never read as "for Various". */
+const realClient = (item: EditorialItem) => !["Personal", "Various"].includes(item.client);
+
+function describeItem(item: EditorialItem) {
+  const label = KIND_META[item.kind].label.toLowerCase();
+  return describe(
+    item.blurb,
+    `A ${label} piece${realClient(item) ? ` for ${item.client}` : ""} (${item.year}) by Levis Kibirie, designer and engineer in Nairobi, Kenya`,
+    "See the full set online",
+  );
+}
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const item = get(params.slug);
   if (!item) return {};
   const og = stillOf(item.cover);
-  const title = `${item.title}, ${KIND_META[item.kind].label.toLowerCase()} for ${item.client}`;
-  const description = clip(item.blurb);
-  const url = `${SITE.url}/editorial/${item.slug}`;
-  const images = og ? [{ url: og.src, width: og.w, height: og.h, alt: item.title }] : undefined;
-  return {
-    title,
+  const label = KIND_META[item.kind].label.toLowerCase();
+  return pageMetadata({
+    title: realClient(item) ? `${item.title}, ${label} for ${item.client}` : `${item.title}, ${label} design`,
+    description: describeItem(item),
+    path: `/editorial/${item.slug}`,
+    type: "article",
+    section: KIND_META[item.kind].label,
+    tags: [KIND_META[item.kind].label, item.client, ...item.tools],
+    images: og ? [{ url: og.src, width: og.w, height: og.h, alt: `${item.title}, ${label} by Levis Kibirie` }] : undefined,
+    keywords: [item.title, item.client, `${KIND_META[item.kind].label} design Kenya`, "brand design Nairobi", ...item.tools],
+  });
+}
+
+/** Schema type follows the cover: video -> VideoObject, page set -> PublicationIssue, image -> CreativeWork. */
+function itemLd(item: EditorialItem) {
+  const path = `/editorial/${item.slug}`;
+  const url = abs(path);
+  const still = stillOf(item.cover);
+  const image = still ? { "@type": "ImageObject", url: abs(still.src), width: still.w, height: still.h } : undefined;
+  const description = describeItem(item);
+  const base = {
+    "@id": `${url}#work`,
+    url,
+    name: item.title,
     description,
-    alternates: { canonical: url },
-    openGraph: { title: `${item.title} | Levis Kibirie`, description, url, images },
-    twitter: { card: "summary_large_image", title: `${item.title} | Levis Kibirie`, description, images: og ? [og.src] : undefined },
+    inLanguage: "en-KE",
+    creator: personRef,
+    author: { "@id": ID.person },
+    copyrightHolder: { "@id": ID.person },
+    dateCreated: item.year,
+    genre: KIND_META[item.kind].label,
+    keywords: [item.client, ...item.tools].join(", "),
+    isPartOf: { "@id": ID.website },
+    mainEntityOfPage: url,
+    ...(realClient(item) ? { sourceOrganization: { "@type": "Organization", name: item.client } } : {}),
   };
+  const c = item.cover;
+  const main =
+    c.type === "video"
+      ? {
+          "@type": "VideoObject",
+          ...base,
+          contentUrl: abs(c.src),
+          thumbnailUrl: still ? abs(still.src) : abs("/og-image.png"),
+          uploadDate: item.year,
+          width: c.w,
+          height: c.h,
+        }
+      : item.kind === "magazine"
+        ? {
+            "@type": "PublicationIssue",
+            ...base,
+            ...(image ? { image } : {}),
+            numberOfPages: pagesOf(item).reduce((n, m) => n + m.count, 0) || undefined,
+            isPartOf: { "@type": "Periodical", name: item.client },
+            datePublished: item.year,
+          }
+        : {
+            "@type": "CreativeWork",
+            ...base,
+            ...(image ? { image } : {}),
+          };
+  return graph(
+    main,
+    breadcrumbs([
+      { name: "Editorial", path: "/editorial" },
+      { name: item.title, path },
+    ]),
+  );
 }
 
 function PageGrid({ m, title }: { m: Extract<Media, { type: "pages" }>; title: string }) {
@@ -77,6 +148,7 @@ export default function EditorialItemPage({ params }: { params: { slug: string }
 
   return (
     <main className="sp ed" style={{ minHeight: "100vh", "--accent": k.accent } as CSSProperties}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(itemLd(item)) }} />
       <article>
         <header className="sp-wrap ed-detail__hero">
           <nav aria-label="Breadcrumb" className="ed-crumbs">

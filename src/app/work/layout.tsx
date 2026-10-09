@@ -1,17 +1,6 @@
-import type { Metadata } from "next";
-import { MAKEJA, fmt } from "@/data/facts";
+import { ROUTE_META } from "@/lib/seo-routes";
 
-export const metadata: Metadata = {
-  title: { default: "Case studies", template: "%s | Levis Kibirie" },
-  description: `Case studies by Levis Kibirie: Makeja Homes (${fmt(MAKEJA.tenants)} tenants), Mikono Creations, Elatec, Noevella Group, GhostNet and levo-cli.`,
-  alternates: { canonical: "https://levis.makejahomes.co.ke/work" },
-  openGraph: {
-    title: "Case studies | Levis Kibirie",
-    description: "Architecture, decisions and real code behind every build.",
-    url: "https://levis.makejahomes.co.ke/work",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-};
+export const metadata = ROUTE_META.work;
 
 export default function WorkLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

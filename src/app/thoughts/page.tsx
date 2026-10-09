@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ROUTE_META } from "@/lib/seo-routes";
 import "../editorial.css";
 import { COMING, SUBSTACK_URL, THOUGHTS } from "@/data/thoughts";
 import { SITE, waLink } from "@/data/facts";
@@ -6,17 +7,7 @@ import { ClayButton, CtaBand, SectionHeader } from "@/components/signal";
 import ThoughtsBrowser from "@/components/editorial/ThoughtsBrowser";
 import { published, subscribeHref } from "@/components/editorial/meta";
 
-export const metadata: Metadata = {
-  title: "Thoughts: writing on engineering, founding and design",
-  description: "Essays by Levis Kibirie on engineering, building a company from Nairobi, design, anime and African tech.",
-  alternates: { canonical: `${SITE.url}/thoughts` },
-  openGraph: {
-    title: "Thoughts | Levis Kibirie",
-    description: "Essays on engineering, founding, design, anime and African tech.",
-    url: `${SITE.url}/thoughts`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-};
+export const metadata: Metadata = ROUTE_META.thoughts;
 
 export default function ThoughtsPage() {
   const posts = published(THOUGHTS);

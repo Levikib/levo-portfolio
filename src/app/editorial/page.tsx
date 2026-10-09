@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ROUTE_META } from "@/lib/seo-routes";
 import "../editorial.css";
 import { EDITORIAL } from "@/data/editorial";
 import { SITE, waLink } from "@/data/facts";
@@ -8,17 +9,7 @@ import ShelfControls from "@/components/editorial/ShelfControls";
 import EditorialBrowser from "@/components/editorial/EditorialBrowser";
 import { KIND_META } from "@/components/editorial/meta";
 
-export const metadata: Metadata = {
-  title: "Editorial: design, motion and print",
-  description: "Magazines, motion, brand systems and print designed by Levis Kibirie for Chill Minds, Makeja Homes, Smokers Vine and Mikono Creations.",
-  alternates: { canonical: `${SITE.url}/editorial` },
-  openGraph: {
-    title: "Editorial | Levis Kibirie",
-    description: "Magazines, motion, brand systems and print.",
-    url: `${SITE.url}/editorial`,
-    images: [{ url: "/editorial/vol1/page-01.jpg", width: 1000, height: 1421, alt: "Chill Minds Vol. 1A cover" }],
-  },
-};
+export const metadata: Metadata = ROUTE_META.editorial;
 
 export default function EditorialPage() {
   const featured = EDITORIAL.filter((i) => i.featured);

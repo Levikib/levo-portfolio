@@ -2,10 +2,12 @@ import Hero from "@/components/signal/Hero";
 import SignalPath from "@/components/signal/SignalPath";
 import Station from "@/components/signal/Station";
 import Terminal from "@/components/sections/Terminal";
-import { ClayCard, ClayButton, SectionHeader, CtaBand } from "@/components/signal";
+import { ClayCard, ClayButton, SectionHeader } from "@/components/signal";
 import { Star, Squiggle } from "@/components/signal/Doodles";
+import TwoSides from "@/components/signal/TwoSides";
 import { PROJECTS } from "@/data/projects";
 import { SITE, waLink } from "@/data/facts";
+import LeadForm from "@/components/contact/LeadForm";
 
 const STEPS = [
   { n: "1", a: "#ff8a1f", k: "strategy", t: "Brief to binding decisions", d: "Business, SEO, content and design plans run in parallel, then one audit reconciles them into a single decisions file." },
@@ -41,6 +43,7 @@ export default function Home() {
           </div>
         </SignalPath>
       </section>
+      <TwoSides />
 
       <section className="sp-section sp-wrap" aria-labelledby="term-title" style={{ paddingBottom: 40 }}>
         <SectionHeader
@@ -79,16 +82,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="sp-wrap" style={{ paddingBottom: 112 }} aria-labelledby="contact-title">
-        <CtaBand
-          id="contact-title"
-          title="Got something worth building? Let's talk this week."
-          body={`Senior remote roles and contract builds. Replies within a day, ${SITE.timezone}.`}
-        >
-          <ClayButton variant="dark" size="lg" href={waLink("Hi Levo, I saw your portfolio and want to talk about a project.")} external>WhatsApp</ClayButton>
-          <ClayButton variant="ghost" size="lg" href={`mailto:${SITE.email}`} icon="@">Email</ClayButton>
-          <ClayButton variant="ghost" size="lg" href={SITE.linkedin} external>LinkedIn</ClayButton>
-        </CtaBand>
+      <section id="contact" className="sp-wrap lf-home" style={{ paddingBottom: 112 }} aria-labelledby="contact-title">
+        <div className="lf-home__intro">
+          <SectionHeader
+            eyebrow="$ ./contact --levo"
+            id="contact-title"
+            title="Got something worth building? Tell me."
+            kicker={`Clients, recruiters, partners, investors, press. Pick your lane, answer a few sharp questions, and get a reply within a day, ${SITE.timezone}.`}
+          />
+          <div className="lf-home__direct">
+            <span className="sp-eyebrow">Rather skip the form?</span>
+            <div className="cta-row">
+              <ClayButton variant="ghost" href={waLink("Hi Levo, I saw your portfolio and want to talk.")} external>WhatsApp</ClayButton>
+              <ClayButton variant="ghost" href={`mailto:${SITE.email}`} icon="@">Email</ClayButton>
+              <ClayButton variant="ghost" href={SITE.linkedin} external>LinkedIn</ClayButton>
+            </div>
+          </div>
+        </div>
+        <ClayCard pad="lg" className="lf-home__card" accent="#d4ff3a">
+          <LeadForm compact source="home" />
+        </ClayCard>
       </section>
     </main>
   );

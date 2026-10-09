@@ -161,3 +161,12 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 - Makeja and core-banking reels are pure concept (no screenshots). The Makeja reel file name is now `makeja-reel-16x9-10s.mp4`; update `REELS["makeja-homes"].src` when wiring.
 - Levo drops files in `C:\Users\admin\Downloads\portfolio-media\` and says "media is ready" → stage, compress (ffmpeg line in docs/MEDIA-PROMPTS.md), wire in src/data/media.ts, build with the font mock, push signal-path and main.
 - 2026-10-09 DONE: 6 reels + avatar (public/media/levo-avatar.webp, cropped from AI Studio art) + new og-image.png wired and live. Core banking REMOVED for good (Levo: not his work); Hookah hidden (kept in ALL, out of ORDER) until the shader ships. Type scale compacted ~30% site-wide (signal.css tokens + editorial.css). Hero loop video still not made (optional).
+
+## 13. Two sides, lead form, SEO, hero ring (2026-10-09)
+
+- Nav rebuilt (src/components/signal/Nav.tsx + nav.css, `.nv-*` classes): centred links Work / Creative & Strategy / Takes / About, mega menus, "Let's talk" → /contact. Old `.sp-nav`/`.sp-mega` rules in signal.css are dead and can be deleted.
+- New /creative page (copy in src/data/creative.ts) = the creative + business strategy + growth side. Home has a TwoSides section. "How I think" principles on /creative were drafted, Levo should confirm them.
+- New /contact page + LeadForm (src/components/contact/*): 7 personas, branching questions, deep links `/contact?as=build|role|partner|invest|makeja|press|other`. API: src/app/api/contact/route.ts. NEEDS Vercel env `RESEND_API_KEY`; set `CONTACT_FROM` to a verified makejahomes.co.ke sender (onboarding@resend.dev only delivers to the Resend account owner).
+- SEO: src/lib/seo.ts + seo-routes.ts + RouteJsonLd.tsx; Person/WebSite/ProfilePage/Breadcrumb/TechArticle/etc JSON-LD, sitemap incl. /creative /contact, manifest.
+- Hero: tilted rotating type ring (HeroRing.tsx + hero-ring.css) reacts to hover/scroll/pointer; leases sticker removed.
+- Core banking: Levo says he has NOT done it. Ignore any mention earlier in this file.
