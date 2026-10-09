@@ -67,7 +67,7 @@
 }
 .nv-brand__key i { font-style: normal; animation: nv-blink 1.1s steps(1) infinite; }
 .nv-brand:hover .nv-brand__key { transform: translateY(1px) rotate(-6deg); box-shadow: inset 0 4px 8px rgba(70, 95, 0, .45), inset 0 -2px 4px rgba(70, 95, 0, .35), 0 0 0 1px rgba(0, 0, 0, .5), 0 3px 8px -4px rgba(0, 0, 0, .9); }
-.nv-brand__word { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.04em; color: var(--sp-paper); }
+.nv-brand__word { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; white-space: nowrap; color: var(--sp-paper); }
 .nv-brand__at { font-family: var(--font-mono), monospace; font-weight: 400; font-size: 12px; letter-spacing: 0; color: var(--sp-muted); margin-left: 2px; transition: color .25s ease; }
 .nv-brand:hover .nv-brand__at { color: var(--sp-signal); }
 @keyframes nv-blink { 50% { opacity: 0; } }

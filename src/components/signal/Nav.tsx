@@ -255,7 +255,7 @@ export default function Nav() {
         <nav aria-label="Main" className="nv__bar">
           <Link href="/" className="nv-brand" aria-label="Levis Kibirie, home" onPointerEnter={enterPlain("brand")} onPointerLeave={leaveList}>
             <span className="nv-brand__key" aria-hidden><span>&gt;</span><i>_</i></span>
-            <span className="nv-brand__word" aria-hidden>levo<span className="nv-brand__at">@nairobi</span></span>
+            <span className="nv-brand__word" aria-hidden>Levis Kibirie</span>
           </Link>
 
           <div className="nv__links" onPointerLeave={leaveList}>
