@@ -3,6 +3,7 @@ import { ClayCard, SectionHeader, CtaBand, ClayButton } from "@/components/signa
 import { Underline, Squiggle, Star } from "@/components/signal/Doodles";
 import { MAKEJA, CAREER, fmt, waLink } from "@/data/facts";
 import "./about.css";
+import Socials from "@/components/signal/Socials";
 
 const STATS = [
   { v: fmt(MAKEJA.tenants), l: "tenants on Makeja Homes", a: "#ff8a1f" },
@@ -58,6 +59,7 @@ export default function About() {
               <ClayButton href="/work" variant="primary" size="lg">See the work</ClayButton>
               <ClayButton href="/contact" variant="ghost" size="lg">Let&apos;s talk</ClayButton>
             </div>
+            <Socials className="ab-hero__socials" />
           </div>
           <div className="ab-portrait">
             <div className="ab-portrait__frame">

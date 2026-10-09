@@ -3,6 +3,7 @@ import { HERO } from "@/data/media";
 import { Star, Squiggle, Arrow, Underline, Burst } from "./Doodles";
 import ClayCard from "./ClayCard";
 import HeroRing from "./HeroRing";
+import Socials from "./Socials";
 import "./hero-ring.css";
 import ClayButton from "./ClayButton";
 import Marquee from "./Marquee";
@@ -44,6 +45,7 @@ export default function Hero() {
               <ClayButton href="#path" variant="primary" size="lg" icon="↓">Follow the signal</ClayButton>
               <ClayButton href="/#contact" variant="ghost" size="lg">Hire me</ClayButton>
             </div>
+            <Socials className="sp-hero__socials" />
           </div>
 
           <div className="sp-stage">

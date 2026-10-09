@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Socials from "./Socials";
 import { SITE } from "@/data/facts";
 import ClayCard from "./ClayCard";
 
@@ -13,10 +14,8 @@ export default function Footer() {
             <Link href="/creative">Creative &amp; Strategy</Link>
             <Link href="/thoughts">Takes</Link>
             <Link href="/contact">Contact</Link>
-            <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>
-            <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href={`mailto:${SITE.email}`}>Email</a>
           </nav>
+          <Socials size="sm" />
           <div className="sp-mono" style={{ fontSize: 12 }}>type <span style={{ color: "var(--sp-lime)" }}>open makeja</span> in the terminal</div>
         </ClayCard>
       </div>
