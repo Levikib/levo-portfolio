@@ -268,7 +268,7 @@
    WHATSAPP FLOAT
 ───────────────────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  a[href*="wa.me"] {
+  aside[aria-label="Chat on WhatsApp"] > a[href*="wa.me"] {
     right: 16px !important;
     bottom: 20px !important;
     width: 52px !important;
