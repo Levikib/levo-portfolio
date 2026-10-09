@@ -188,7 +188,7 @@ export default function CaseStudy({ params }: { params: { slug: string } }) {
             <ClayCard pad="sm" accent={p.accent}><dt>Links</dt><dd style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               {p.live && <a href={p.live} target="_blank" rel="noreferrer">Live site ↗</a>}
               {p.repo && <a href={p.repo} target="_blank" rel="noreferrer">Source ↗</a>}
-              {!p.live && !p.repo && <span style={{ color: "var(--sp-muted)" }}>Private</span>}
+              {!p.repo && <span style={{ color: "var(--sp-muted)" }}>{p.repoNote ?? "Private"}</span>}
             </dd></ClayCard>
           </dl>
 

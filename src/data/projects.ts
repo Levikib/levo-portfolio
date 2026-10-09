@@ -28,6 +28,8 @@ export type Project = {
   next: string[];
   reel: Reel;
   placeholders?: string[];
+  /** Shown instead of a source link when the repo is private. */
+  repoNote?: string;
 };
 
 const ALL: Project[] = [
@@ -41,6 +43,7 @@ const ALL: Project[] = [
     summary:
       "A multi-tenant SaaS where every property company gets its own isolated Postgres schema: leases signed online, bills generated in one click, payments reconciled automatically, and an AI assistant that knows the portfolio.",
     live: "https://makejahomes.co.ke",
+    repoNote: "Private repo. Code walkthrough on request.",
     role: "Co-founder, founding engineer and product designer",
     when: "2024 to now",
     stack: ["Next.js 14", "TypeScript", "PostgreSQL (Neon)", "Prisma + raw SQL", "Upstash Redis", "Paystack (cards + M-Pesa)", "Groq (gpt-oss-120b + fallbacks)", "KRA eTIMS", "QuickBooks Online"],
@@ -208,7 +211,7 @@ export async function isRevoked(jti: string) {
     summary:
       "A full store for a Nairobi craft business that supports 25+ women: 30 animals, a custom-order studio with 29 order types, gift and size finders, a budgeted animal layer, and a checkout that writes a referenced WhatsApp order sized to fit the link.",
     live: "https://mikono-creations.vercel.app",
-    repo: "https://github.com/Levikib/mikono-creations",
+    repo: "https://github.com/Levikib/Mikono-Creations",
     role: "Strategy, design and full build, run as a multi-agent pipeline with audit gates",
     when: "2026",
     stack: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS 4", "sharp (build-time WebP pipeline)", "WhatsApp deep links", "Playwright (mobile QA scripts)", "Vercel"],
@@ -349,7 +352,7 @@ export function activeSteps(path: PathMode, b: Brief): StepId[] {
     summary:
       "A service business site with a real shop, bookings, a WhatsApp order hand-off, a towns-served index computed from real project records, and structured data written by hand for local search.",
     live: "https://elatecsafetysystems.co.ke",
-    repo: undefined,
+    repoNote: "Client repo, private. Walkthrough on request.",
     role: "Design and full build through ShanTech",
     when: "2026",
     stack: ["Next.js 14", "TypeScript", "Supabase (Postgres)", "Typed data files", "WhatsApp", "Africa's Talking SMS"],
@@ -426,6 +429,7 @@ export function calcDeposit(subtotal, category?, overridePct?) {
     summary:
       "A media-forward agency site on a headless CMS: divisions, work, journal and a shop, with a design language locked with the client before a page was built.",
     live: "https://noevellagroup.com",
+    repoNote: "Client repo, private. Walkthrough on request.",
     role: "Design and full build through Shannara",
     when: "2026",
     stack: ["Next.js 16", "React 19", "Payload CMS 3", "PostgreSQL", "Vercel Blob", "GSAP + Lenis"],

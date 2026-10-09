@@ -33,7 +33,8 @@ export default function WorkIndex() {
                 )}
                 <div className="clay-foot">
                   <div className="sp-chips">
-                    {p.stack.slice(0, 3).map((t) => <span key={t} className="sp-chip">{t}</span>)}
+                    {p.repo && <span className="sp-chip" style={{ color: "var(--sp-lime)" }}>Open source</span>}
+                    {p.stack.slice(0, p.repo ? 2 : 3).map((t) => <span key={t} className="sp-chip">{t}</span>)}
                   </div>
                   <span className="clay-fake-btn" aria-hidden>Read<i>→</i></span>
                 </div>

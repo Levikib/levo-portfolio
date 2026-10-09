@@ -35,6 +35,7 @@ export default function Station({ p, side, children }: { p: Project; side: "left
         <div className="cta-row sp-station__links">
           <ClayButton href={`/work/${p.slug}`} variant="primary" aria-label={`Read the ${p.name} case study`}>Read the case study</ClayButton>
           {p.live && <ClayButton href={p.live} external variant="ghost" aria-label={`Open the ${p.name} live site`}>Live site</ClayButton>}
+          {p.repo && <ClayButton href={p.repo} external variant="ghost" aria-label={`Read the ${p.name} source on GitHub`}>GitHub</ClayButton>}
         </div>
       </ClayCard>
     </article>
