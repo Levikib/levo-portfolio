@@ -31,16 +31,7 @@ export default function Home() {
         </div>
         <SignalPath>
           {PROJECTS.map((p, i) => (
-            <Station key={p.slug} p={p} side={i % 2 ? "right" : "left"}>
-              {p.slug === "levo-cli" ? (
-                <a href="#terminal" className="screen__slot" style={{ ["--accent" as string]: p.accent, justifyContent: "center", alignItems: "center", textAlign: "center" }}>
-                  <span className="sp-mono" style={{ color: "var(--sp-lime)", fontSize: 16 }}>
-                    levo@nairobi:~$ <span style={{ color: "var(--sp-paper)" }}>open makeja</span>
-                  </span>
-                  <span className="sp-mono" style={{ color: "var(--sp-muted)", fontSize: 12, marginTop: 10 }}>try the live terminal below ↓</span>
-                </a>
-              ) : undefined}
-            </Station>
+            <Station key={p.slug} p={p} side={i % 2 ? "right" : "left"} />
           ))}
           <div className="sp-path__end">
             <div className="cta-row" style={{ justifyContent: "center" }}>
