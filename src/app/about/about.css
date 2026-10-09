@@ -43,3 +43,7 @@
 @media (max-width: 600px) {
   .ab-path { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 900px) {
+  .ab-portrait { margin-top: 64px; }
+  .ab-portrait__bubble { top: -58px; left: 0; }
+}

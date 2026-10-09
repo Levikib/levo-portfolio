@@ -14,3 +14,9 @@
   fill: #2a1300;
 }
 @media (prefers-reduced-motion: reduce) { .hr-ring__spin { transform: rotate(-20deg); } }
+
+/* Mobile: the speech bubble gets its own row above the avatar instead of covering the head */
+@media (max-width: 900px) {
+  .sp-hero .sp-stage { margin-top: 84px !important; }
+  .sp-hero .sp-stage .sp-bubble { top: -76px !important; left: 4% !important; right: auto !important; }
+}
