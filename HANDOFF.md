@@ -153,3 +153,10 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
   - Per-platform posts for the 6 Makeja tutorials in the "Real Estate OS" voice, with a posting schedule (Oct 9 to Oct 21).
   - "Tutorial posters + Veo films": a poster prompt (AI Studio), a 6s Veo concept prompt, outro tagline and caption with the tutorial link, for all 6 tutorials. Leases Management goes first.
 - Open: trial length (30 vs 14 days, doc comment); the pitch deck has 21 em dashes (cleanup offered, not approved).
+
+## 12. Portfolio media pack (2026-10-09)
+
+- Claude Doc "Portfolio Media Pack": https://claude.ai/code/artifact/b2aa399c-dc9f-4580-bb50-a87475b09614 (supersedes docs/MEDIA-PROMPTS.md for prompts).
+- 13 files: avatar (green, transparent, 4 poses), hero loop, og-image, 7 Veo reels, Hookah screen recording last.
+- Makeja and core-banking reels are pure concept (no screenshots). The Makeja reel file name is now `makeja-reel-16x9-10s.mp4`; update `REELS["makeja-homes"].src` when wiring.
+- Levo drops files in `C:\Users\admin\Downloads\portfolio-media\` and says "media is ready" → stage, compress (ffmpeg line in docs/MEDIA-PROMPTS.md), wire in src/data/media.ts, build with the font mock, push signal-path and main.
