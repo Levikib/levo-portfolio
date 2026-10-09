@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Follow the signal: deep case studies from Makeja Homes, client builds and core banking.",
+    description: "Follow the signal: deep case studies from Makeja Homes, client builds and the lab.",
     siteName: "Levis Kibirie",
     locale: "en_US",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Levis Kibirie: Fullstack Engineer & SaaS Founder" }],
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Levis Kibirie: Fullstack Engineer & SaaS Founder",
-    description: "Follow the signal: deep case studies from Makeja Homes, client builds and core banking.",
+    description: "Follow the signal: deep case studies from Makeja Homes, client builds and the lab.",
     images: ["/og-image.png"],
   },
 };

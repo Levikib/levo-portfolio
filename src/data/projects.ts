@@ -499,35 +499,6 @@ const failSafe = window.setTimeout(() => el.classList.add('is-in'), 3000)`,
     reel: { file: "reels/noevella-hero-16x9-8s.mp4", ratio: "16:9", seconds: 8, shot: "Splash, hero video, open the mega menu, scroll the division cards." },
   },
   {
-    slug: "core-banking",
-    station: "05",
-    name: "Core banking environments",
-    kind: "Contract · Sensys",
-    accent: "#9DB4FF",
-    tagline: "Four years building the environments banks test on.",
-    summary:
-      "As an independent contractor for Sensys, I build and run Temenos T24 core banking development and test environments for financial institutions, including NCBA.",
-    role: "Independent technical contractor",
-    when: "About 4 years",
-    stack: ["Temenos T24", "Linux", "Databases", "Environment provisioning"],
-    stats: [{ value: "4", label: "years" }],
-    problem: ["Banks need faithful, stable copies of their core system to develop and test against, without touching production."],
-    architecture: [
-      { name: "Environments", detail: "Dev and test environments for T24 core banking." },
-      { name: "Clients", detail: "Financial institutions including NCBA." },
-    ],
-    decisions: [],
-    code: [],
-    qa: [],
-    results: [],
-    next: [],
-    reel: { file: "reels/banking-abstract-16x9-8s.mp4", ratio: "16:9", seconds: 8, shot: "Veo abstract: server rooms of light, no logos, no real data." },
-    placeholders: [
-      "One or two concrete results you are allowed to share (environments built, refresh times, incidents avoided).",
-      "Confirm what can be said publicly about clients.",
-    ],
-  },
-  {
     slug: "levo-cli",
     station: "06",
     name: "levo-cli",
@@ -655,8 +626,11 @@ void main() {
   },
 ];
 
-/** Display order (Levo, 2026-10-05): flagship and client work first, Hookah last while it is still in progress. */
-const ORDER = ["makeja-homes", "mikono-creations", "noevella-group", "elatec-safety-systems", "core-banking", "ghostnet", "levo-cli", "hookah-3d"];
+/**
+ * Display order (Levo, 2026-10-09). Core banking removed for good.
+ * hookah-3d stays in ALL but is hidden until the shader ships; add it back to ORDER to publish it.
+ */
+const ORDER = ["makeja-homes", "mikono-creations", "noevella-group", "elatec-safety-systems", "ghostnet", "levo-cli"];
 
 export const PROJECTS: Project[] = ORDER.map((slug, i) => {
   const p = ALL.find((x) => x.slug === slug)!;

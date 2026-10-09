@@ -12,7 +12,7 @@ export default function Hero() {
     { v: fmt(MAKEJA.tenants), l: "tenants on Makeja Homes", a: "#ff8a1f" },
     { v: fmt(MAKEJA.units), l: "units managed", a: "#d4ff3a" },
     { v: fmt(CAREER.years), l: CAREER.years.label, a: "#8b7cff" },
-    { v: fmt(CAREER.banking), l: CAREER.banking.label, a: "#6fe7ff" },
+    { v: fmt(MAKEJA.clients), l: "client companies", a: "#6fe7ff" },
   ];
 
   return (
@@ -37,7 +37,7 @@ export default function Hero() {
               <span>SaaS founder</span>
             </div>
             <p className="sp-hero__lede">
-              I build systems that move real money and real people, then design them to feel right. Founder of Makeja Homes. Four years inside core banking. Based in Nairobi, working worldwide.
+              I build systems that move real money and real people, then design them to feel right. Founder of Makeja Homes. Based in Nairobi, working worldwide.
             </p>
             <div className="cta-row sp-hero__ctas">
               <ClayButton href="#path" variant="primary" size="lg" icon="↓">Follow the signal</ClayButton>
@@ -64,7 +64,7 @@ export default function Hero() {
                 </video>
               ) : HERO.avatar.ready ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={HERO.avatar.src} alt="Portrait of Levis Kibirie" />
+                <img src={HERO.avatar.src} alt="Illustrated 3D character of Levis Kibirie" />
               ) : (
                 <div className="sp-key" aria-hidden>
                   <div className="sp-key__cap"><span className="sp-key__glyph">&gt;_</span></div>
@@ -117,7 +117,7 @@ export default function Hero() {
       </div>
 
       <div className="sp-hero__marquee">
-        <Marquee items={["Idea", "Design", "Build", "Verify", "Ship", "Schema per tenant", "Paystack + M-Pesa", "KRA eTIMS", "Core banking"]} />
+        <Marquee items={["Idea", "Design", "Build", "Verify", "Ship", "Schema per tenant", "Paystack + M-Pesa", "KRA eTIMS", "The Real Estate OS"]} />
       </div>
     </section>
   );

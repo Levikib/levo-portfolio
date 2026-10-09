@@ -89,7 +89,6 @@ const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: s
       { cmd: "nse", desc: "→  NSE Research Agent stats" },
       { cmd: "shantech", desc: "→  ShanTech Agency stats" },
       { cmd: "chillminds", desc: "→  Chill Minds Magazine stats" },
-      { cmd: "hookah", desc: "→  Hookah 3D experience stats" },
     ],
   },
   {
@@ -185,7 +184,6 @@ const WHOAMI_LINES = [
   "  Based in Nairobi, Kenya. 8+ years in tech.",
   "",
   `  Built Makeja Homes from scratch: ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units.`,
-  "  4 years building T24 core banking environments for banks.",
   "  Client sites: Mikono Creations, Elatec, Noevella Group.",
   "",
   "  Open to: senior remote engineering, SaaS collabs, interesting problems.",
@@ -208,7 +206,6 @@ const SOCIALS_LINES = [
   "",
   "  Makeja Homes   makejahomes.co.ke",
   "  GhostNet       ghostnet-pi.vercel.app",
-  "  Hookah         hookah-website-two.vercel.app",
 ];
 
 const PROJECTS_LINES = [
@@ -217,7 +214,6 @@ const PROJECTS_LINES = [
   "  03  NSE Research Agent   In Dev · AI Tool    Nairobi Securities Exchange intel",
   "  04  ShanTech Agency      2024-25 · Agency    12+ clients, 250K+ engagements",
   "  05  Chill Minds Magazine Published · Design  2 volumes, 72 pages",
-  "  06  Hookah Rental       Live · 3D           GLB hero model, 25 flavours, Paystack",
   "",
   "  Run a project name for stats, or `open <name>` for the full case study.",
 ];
@@ -410,7 +406,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "clear" || cmd === "cls") {
     return [{ type: "blank", text: "__CLEAR__" }];
   } else if (cmd === "ls" || cmd === "dir") {
-    out.push({ type: "output", text: "  makeja/    ghostnet/   nse-agent/   shantech/   chill-minds/   hookah/", color: "#4ead6a" });
+    out.push({ type: "output", text: "  makeja/    ghostnet/   nse-agent/   shantech/   chill-minds/", color: "#4ead6a" });
   } else if (cmd === "pwd") {
     out.push({ type: "output", text: "  /home/levis/portfolio/projects", color: "rgba(255,255,255,0.5)" });
   } else if (cmd === "date") {
@@ -435,13 +431,13 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
 
 const BOOT_SEQUENCE = [
   { text: "Initializing Levis Kibirie OS v2.0...", color: "rgba(255,255,255,0.3)" },
-  { text: "Loading projects: makeja ✓  mikono ✓  elatec ✓  noevella ✓  ghostnet ✓  hookah ✓", color: "#4ead6a" },
+  { text: "Loading projects: makeja ✓  mikono ✓  elatec ✓  noevella ✓  ghostnet ✓  levo-cli ✓", color: "#4ead6a" },
   { text: "Mounting skills: typescript ✓  nextjs ✓  supabase ✓  groq ✓", color: "#a855f7" },
   { text: "System ready. Type 'help' to get started.\n", color: "#d97706" },
 ];
 
 const TAB_COMPLETE_CMDS = [
-  "help","projects","open makeja","open mikono","open elatec","open noevella","open ghostnet","open hookah","open levo-cli","work","makeja","ghostnet","nse","shantech","chillminds","hookah",
+  "help","projects","open makeja","open mikono","open elatec","open noevella","open ghostnet","open levo-cli","work","makeja","ghostnet","nse","shantech","chillminds",
   "whoami","about","timeline","skills","stack","beyond",
   "contact","socials","hire levis","neofetch","history","man ",
   "clear","ls","pwd","date",
@@ -628,7 +624,7 @@ export default function Terminal() {
 
         {/* Quick-fire buttons */}
         <div style={{ display:"flex", flexWrap:"wrap", gap:"8px", marginTop:"16px" }}>
-          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","hookah","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
+          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
             <button key={cmd}
               onClick={() => { setInput(cmd); setTimeout(() => { setInput(""); setLines(prev => [...prev, { type:"input", text:cmd }, ...processCommand(cmd, history), { type:"blank", text:"" }]); setHistory(prev => [cmd, ...prev.slice(0, 49)]); }, 10); }}
               style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"rgba(16,185,129,0.05)", border:"1px solid rgba(16,185,129,0.18)", color:"rgba(16,185,129,0.85)", padding:"6px 14px", minHeight:"44px", cursor:"pointer", transition:"all 0.2s" }}

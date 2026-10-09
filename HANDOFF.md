@@ -160,3 +160,4 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 - 13 files: avatar (green, transparent, 4 poses), hero loop, og-image, 7 Veo reels, Hookah screen recording last.
 - Makeja and core-banking reels are pure concept (no screenshots). The Makeja reel file name is now `makeja-reel-16x9-10s.mp4`; update `REELS["makeja-homes"].src` when wiring.
 - Levo drops files in `C:\Users\admin\Downloads\portfolio-media\` and says "media is ready" → stage, compress (ffmpeg line in docs/MEDIA-PROMPTS.md), wire in src/data/media.ts, build with the font mock, push signal-path and main.
+- 2026-10-09 DONE: 6 reels + avatar (public/media/levo-avatar.webp, cropped from AI Studio art) + new og-image.png wired and live. Core banking REMOVED for good (Levo: not his work); Hookah hidden (kept in ALL, out of ORDER) until the shader ships. Type scale compacted ~30% site-wide (signal.css tokens + editorial.css). Hero loop video still not made (optional).

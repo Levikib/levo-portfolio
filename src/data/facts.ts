@@ -26,9 +26,8 @@ export const MAKEJA: Record<"tenants" | "units" | "leases" | "clients", Fact> = 
   clients: { value: 80, suffix: "+", label: "client companies", source: "Levo, 2026-10-05" },
 };
 
-export const CAREER: Record<"years" | "banking", Fact> = {
+export const CAREER: Record<"years", Fact> = {
   years: { value: 8, suffix: "+", label: "years shipping", source: "profile" },
-  banking: { value: 4, label: "years in core banking", source: "Sensys contract" },
 };
 
 /** Formats a fact for server-rendered output, e.g. 4500 -> "4,500+". */

@@ -9,7 +9,7 @@ import ClayCard from "./ClayCard";
 const GROUPS = [
   { label: "Products I founded", slugs: ["makeja-homes", "levo-cli"] },
   { label: "Client builds", slugs: ["mikono-creations", "elatec-safety-systems", "noevella-group"] },
-  { label: "Systems and lab", slugs: ["core-banking", "ghostnet", "hookah-3d"] },
+  { label: "Lab", slugs: ["ghostnet"] },
 ];
 
 export default function Nav() {

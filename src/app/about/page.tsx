@@ -444,7 +444,6 @@ const JOURNEY = [
   { year: "2024",      label: "Founded",   accent: "#7c3aed", title: "Founder, Makeja Homes",           org: "Production SaaS",                       desc: `Built a full multi-tenant property management SaaS. ${fmt(MAKEJA.tenants)} tenants, ${fmt(MAKEJA.units)} units.` },
   { year: "2025",      label: "Cert",      accent: "#d97706", title: "Oracle Cloud AI Foundations",      org: "Oracle",                                desc: "Validated cloud and AI fundamentals with an internationally recognised Oracle certification." },
   { year: "2025",      label: "Built",     accent: "#10b981", title: "Launched GhostNet",                org: "Live Cybersec Platform",                desc: "13 modules, 8 standalone tools, a live leaderboard and GHOST Agent. Built from scratch." },
-  { year: "2026",      label: "Built",     accent: "#9d5cf5", title: "Hookah Rental & Experience",       org: "Live 3D Platform",                      desc: "3D hero model, GPU disassembly shader, orbiting flavour wall, live Paystack checkout." },
   { year: "2026",      label: "Building",  accent: "#a855f7", title: "NSE Research Agent",               org: "In Development",                        desc: "AI-powered market intelligence for the Nairobi Securities Exchange." },
 ];
 
