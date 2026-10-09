@@ -15,8 +15,12 @@
 }
 @media (prefers-reduced-motion: reduce) { .hr-ring__spin { transform: rotate(-20deg); } }
 
-/* Mobile: the speech bubble gets its own row above the avatar instead of covering the head */
+/* Speech bubbles: floating on desktop; on phones a separate in-flow tag above the avatar, never over it */
+.sp-bubble--mob { display: none; }
 @media (max-width: 900px) {
-  .sp-hero .sp-stage { margin-top: 84px !important; }
-  .sp-hero .sp-stage .sp-bubble { top: -76px !important; left: 4% !important; right: auto !important; }
+  .sp-bubble--desk { display: none !important; }
+  .sp-bubble--mob {
+    display: block; position: relative !important; inset: auto !important;
+    width: max-content; max-width: 100%; margin: 8px 0 18px 4px; transform: rotate(-4deg);
+  }
 }

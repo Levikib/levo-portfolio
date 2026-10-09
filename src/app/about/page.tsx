@@ -62,11 +62,12 @@ export default function About() {
             <Socials className="ab-hero__socials" />
           </div>
           <div className="ab-portrait">
+            <div className="sp-bubble sp-hand sp-bubble--mob" aria-hidden>less talk, more ship.</div>
             <div className="ab-portrait__frame">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/media/levo-avatar-present.webp" alt="Illustrated 3D character of Levis Kibirie presenting" width={726} height={768} />
             </div>
-            <div className="sp-bubble sp-hand ab-portrait__bubble">less talk,<br />more ship.</div>
+            <div className="sp-bubble sp-hand ab-portrait__bubble sp-bubble--desk">less talk,<br />more ship.</div>
           </div>
         </div>
 

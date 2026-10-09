@@ -48,6 +48,7 @@ export default function Hero() {
             <Socials className="sp-hero__socials" />
           </div>
 
+          <div className="sp-bubble sp-hand sp-bubble--mob" aria-hidden>let&apos;s build something real!</div>
           <div className="sp-stage">
             <div className="sp-stage__halo" aria-hidden />
             <HeroRing />
@@ -67,7 +68,7 @@ export default function Hero() {
             </div>
             <span className="sp-pebble sp-pebble--violet sp-float" aria-hidden style={{ zIndex: 1, ["--r" as string]: "0deg" }} />
             <span className="sp-pebble sp-pebble--amber sp-float" aria-hidden style={{ zIndex: 3, animationDelay: "2s" }} />
-            <div className="sp-bubble sp-hand sp-float" style={{ top: "2%", left: "-4%", ["--r" as string]: "-6deg", zIndex: 3 }}>
+            <div className="sp-bubble sp-hand sp-float sp-bubble--desk" style={{ top: "2%", left: "-4%", ["--r" as string]: "-6deg", zIndex: 3 }}>
               let&apos;s build<br />something real!
             </div>
             <Burst style={{ position: "absolute", top: "20%", right: "2%", width: 46, zIndex: 3 }} />

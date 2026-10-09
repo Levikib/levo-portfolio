@@ -43,7 +43,9 @@
 @media (max-width: 600px) {
   .ab-path { grid-template-columns: minmax(0, 1fr); }
 }
+/* Speech bubble: floating on desktop, in-flow tag above the portrait on phones */
+.ab-portrait .sp-bubble--mob { display: none; }
 @media (max-width: 900px) {
-  .ab-portrait { margin-top: 64px; }
-  .ab-portrait__bubble { top: -58px; left: 0; }
+  .ab-portrait .sp-bubble--desk { display: none !important; }
+  .ab-portrait .sp-bubble--mob { display: block; position: relative; width: max-content; max-width: 100%; margin: 0 0 16px 4px; transform: rotate(-4deg); }
 }
