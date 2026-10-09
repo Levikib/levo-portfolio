@@ -90,6 +90,7 @@ export default function LeadForm({ compact = false, source = "site", titleAs = "
   const [failMsg, setFailMsg] = useState("");
   const [restored, setRestored] = useState(false);
   const [hp, setHp] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
 
   const hydrated = useRef(false);
   const startedAt = useRef(0);
@@ -260,9 +261,10 @@ export default function LeadForm({ compact = false, source = "site", titleAs = "
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; errors?: Errors; step?: number };
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; errors?: Errors; step?: number; confirmation?: boolean };
       if (res.ok && data.ok !== false) {
         clearDraft();
+        setConfirmed(!!data.confirmation);
         setStatus("done");
         return;
       }
@@ -295,7 +297,16 @@ export default function LeadForm({ compact = false, source = "site", titleAs = "
   if (status === "done" && p) {
     const first = contact.name.trim().split(/\s+/)[0] || "there";
     const org = p.orgField ? String(answers[p.orgField] ?? "").trim() : contact.company.trim();
-    const wa = waLink(`Hi Levo, I just sent the ${p.tag.toLowerCase()} form on your site. ${contact.name.trim()}${org ? `, ${org}` : ""}.`);
+    const summary = [
+      `Hi Levo, ${contact.name.trim()}${org ? ` from ${org}` : ""} here. I just sent the ${p.tag.toLowerCase()} form on your site.`,
+      "",
+      ...p.fields.map((f) => [f.label, displayValue(f, answers[f.id])] as const).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`),
+      `${p.message.label}: ${contact.message.trim().slice(0, 500)}`,
+      "",
+      `Email: ${contact.email.trim()}`,
+    ].join("\n");
+    const wa = waLink(summary);
+    const mail = `mailto:${SITE.email}?subject=${encodeURIComponent(`${p.tag}: ${contact.name.trim()}${org ? `, ${org}` : ""}`)}&body=${encodeURIComponent(summary)}`;
     return (
       <div className={`lf lf--done${compact ? " lf--compact" : ""}`}>
         <div className="lf-done" ref={doneRef} tabIndex={-1} role="status" aria-live="polite">
@@ -306,10 +317,16 @@ export default function LeadForm({ compact = false, source = "site", titleAs = "
             Reply goes to <strong>{contact.email.trim()}</strong>
             {contact.channel !== "email" && contact.phone ? `, or ${optionLabel(CHANNELS, contact.channel)} on ${contact.phoneCode === "other" ? "" : contact.phoneCode + " "}${contact.phone.trim()}` : ""}.
           </p>
+          {confirmed && <p className="lf-done__meta">A copy of what you sent is on its way to your inbox.</p>}
+          <p className="lf-done__meta">Want it faster? Send the same details straight to my WhatsApp or email.</p>
           <div className="lf-done__actions">
             <a className="cbtn cbtn--primary cbtn--lg" href={wa} target="_blank" rel="noreferrer">
-              <span className="cbtn__label">Skip the queue on WhatsApp</span>
+              <span className="cbtn__label">Send it on WhatsApp</span>
               <span className="cbtn__icon" aria-hidden>↗</span>
+            </a>
+            <a className="cbtn cbtn--ghost cbtn--lg" href={mail}>
+              <span className="cbtn__label">Email it too</span>
+              <span className="cbtn__icon" aria-hidden>@</span>
             </a>
             <button type="button" className="cbtn cbtn--ghost cbtn--lg lf-b" onClick={startOver}>
               <span className="cbtn__label">Send another</span>

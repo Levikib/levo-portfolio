@@ -170,3 +170,4 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 - SEO: src/lib/seo.ts + seo-routes.ts + RouteJsonLd.tsx; Person/WebSite/ProfilePage/Breadcrumb/TechArticle/etc JSON-LD, sitemap incl. /creative /contact, manifest.
 - Hero: tilted rotating type ring (HeroRing.tsx + hero-ring.css) reacts to hover/scroll/pointer; leases sticker removed.
 - Core banking: Levo says he has NOT done it. Ignore any mention earlier in this file.
+- Lead flow (2026-10-09): on submit → (1) full lead email to Levo (reply-to = sender), (2) confirmation copy to the sender with a summary + WhatsApp button, (3) optional instant WhatsApp ping to Levo via Twilio when TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, LEAD_WHATSAPP_TO are set. Success screen offers "Send it on WhatsApp" and "Email it too", both prefilled with their full summary. Confirmation emails need CONTACT_FROM on a Resend-verified domain.

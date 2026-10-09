@@ -24,6 +24,7 @@ import type { Answers, ContactInfo, LeadPayload, Persona, PersonaId } from "@/co
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const WA_NUMBER = "254723819934";
 const TO = process.env.CONTACT_TO || "leviskibirie2110@gmail.com";
 const FROM = process.env.CONTACT_FROM || "Portfolio Leads <onboarding@resend.dev>";
 const SITE_HOST = "levis.makejahomes.co.ke";
@@ -221,6 +222,83 @@ function buildEmail(p: Persona, answers: Answers, c: ContactInfo, meta: NonNulla
 }
 
 /* ─── handler ──────────────────────────────────────────────────────────── */
+/** Plain-text summary of what they sent, used in the confirmation email and the WhatsApp ping. */
+function summaryLines(p: Persona, answers: Answers, c: ContactInfo): string[] {
+  return [
+    `Enquiry: ${p.label}`,
+    ...p.fields.map((f) => [f.label, displayValue(f, answers[f.id])] as const).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`),
+    `${p.message.label}: ${oneLine(c.message).slice(0, 600)}`,
+  ];
+}
+
+function buildConfirmation(p: Persona, answers: Answers, c: ContactInfo) {
+  const first = oneLine(c.name).split(" ")[0] || "there";
+  const lines = summaryLines(p, answers, c);
+  const wa = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi Levo, it's ${oneLine(c.name)}. I just sent the ${p.tag.toLowerCase()} form on your site.`)}`;
+  const subject = `Got it, ${first}. Here's what you sent.`;
+  const rows = lines.map((l) => {
+    const i = l.indexOf(": ");
+    return `<tr><td style="padding:8px 0;border-bottom:1px solid #ece6da;font:600 12px/1.4 ui-monospace,Menlo,monospace;color:#8a857b;vertical-align:top;width:34%;">${esc(l.slice(0, i))}</td><td style="padding:8px 0 8px 12px;border-bottom:1px solid #ece6da;font:14.5px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;color:#1a1814;">${esc(l.slice(i + 2))}</td></tr>`;
+  }).join("");
+  const html = `<!doctype html><html><body style="margin:0;background:#f3eee4;">
+<div style="max-width:600px;margin:0 auto;padding:28px 16px;font-family:-apple-system,Segoe UI,Roboto,sans-serif;">
+  <div style="background:#111316;border-radius:20px;padding:26px 24px;">
+    <p style="margin:0;font:600 12px/1 ui-monospace,Menlo,monospace;color:#ff8a1f;letter-spacing:.08em;text-transform:uppercase;">Levis Kibirie</p>
+    <h1 style="margin:12px 0 8px;font:800 26px/1.15 -apple-system,Segoe UI,Roboto,sans-serif;color:#f3eee4;">Got it, ${esc(first)}.</h1>
+    <p style="margin:0;font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;color:#d9d3c7;">Your message is on my desk. You'll hear from me within a day, usually sooner. If it can't wait, WhatsApp me and mention this form.</p>
+    <div style="margin-top:18px;">
+      <a href="${esc(wa)}" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:999px;background:#25d366;color:#06200f;font:700 14px/1 -apple-system,Segoe UI,Roboto,sans-serif;text-decoration:none;">WhatsApp me</a>
+      <a href="https://${SITE_HOST}/work" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:999px;background:#d4ff3a;color:#111400;font:700 14px/1 -apple-system,Segoe UI,Roboto,sans-serif;text-decoration:none;">See the work</a>
+    </div>
+  </div>
+  <div style="background:#fff;border-radius:16px;padding:18px 20px;margin-top:14px;">
+    <p style="margin:0 0 6px;font:600 12px/1 ui-monospace,Menlo,monospace;color:#8a857b;text-transform:uppercase;letter-spacing:.08em;">What you sent</p>
+    <table role="presentation" style="width:100%;border-collapse:collapse;">${rows}</table>
+  </div>
+  <p style="margin:18px 0 0;font:12px/1.5 ui-monospace,Menlo,monospace;color:#8a857b;">You're getting this because you used the form on ${SITE_HOST}. Just reply to this email to add anything.</p>
+</div></body></html>`;
+  const text = [`Got it, ${first}.`, "", "You'll hear from me within a day, usually sooner.", `WhatsApp: ${wa}`, "", "WHAT YOU SENT", ...lines, "", `Levis Kibirie, ${SITE_HOST}`].join("\n");
+  return { subject, html, text };
+}
+
+async function sendEmail(apiKey: string, payload: Record<string, unknown>): Promise<{ ok: boolean; detail?: string }> {
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) return { ok: true };
+    return { ok: false, detail: `${res.status} ${(await res.text().catch(() => "")).slice(0, 300)}` };
+  } catch (e) {
+    return { ok: false, detail: String(e) };
+  }
+}
+
+/**
+ * Optional instant WhatsApp ping to Levo via Twilio. Runs only when TWILIO_ACCOUNT_SID,
+ * TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM and LEAD_WHATSAPP_TO are all set. Never blocks the lead.
+ */
+async function pingWhatsApp(p: Persona, answers: Answers, c: ContactInfo): Promise<boolean> {
+  const sid = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_WHATSAPP_FROM, to = process.env.LEAD_WHATSAPP_TO;
+  if (!sid || !token || !from || !to) return false;
+  const body = [`New lead · ${p.tag}`, `${oneLine(c.name)} <${c.email}>${c.phone ? ` ${c.phoneCode !== "other" ? c.phoneCode : ""} ${c.phone}` : ""}`, ...summaryLines(p, answers, c).slice(1)].join("\n").slice(0, 1500);
+  const wa = (n: string) => (n.startsWith("whatsapp:") ? n : `whatsapp:${n}`);
+  try {
+    const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+      method: "POST",
+      headers: { Authorization: `Basic ${Buffer.from(`${sid}:${token}`).toString("base64")}`, "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ From: wa(from), To: wa(to), Body: body }).toString(),
+    });
+    if (!res.ok) console.error("[contact] WhatsApp ping failed", res.status);
+    return res.ok;
+  } catch (e) {
+    console.error("[contact] WhatsApp ping error", e);
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
   const ip = clientIp(req);
   if (rateLimited(ip)) {
@@ -260,26 +338,22 @@ export async function POST(req: NextRequest) {
 
   const { subject, html, text } = buildEmail(persona, answers, contact, meta, ip);
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        from: FROM,
-        to: [TO],
-        reply_to: contact.email,
-        subject,
-        html,
-        text,
-        tags: [{ name: "persona", value: persona.id }],
-      }),
-    });
-    if (res.ok) return json({ ok: true, success: true });
-    const detail = await res.text().catch(() => "");
-    console.error("[contact] Resend rejected the email", res.status, detail.slice(0, 300));
-    return json({ ok: false, error: "That didn't go through." }, 502);
-  } catch (e) {
-    console.error("[contact] Resend request failed", e);
+  const lead = await sendEmail(apiKey, {
+    from: FROM, to: [TO], reply_to: contact.email, subject, html, text,
+    tags: [{ name: "persona", value: persona.id }],
+  });
+  if (!lead.ok) {
+    console.error("[contact] Resend rejected the lead email", lead.detail);
     return json({ ok: false, error: "That didn't go through." }, 502);
   }
+
+  // Lead is safe in the inbox. Now the extras, in parallel, best effort: a confirmation copy to the
+  // sender and an instant WhatsApp ping to Levo. Neither can fail the request.
+  const conf = buildConfirmation(persona, answers, contact);
+  const [confirmation, whatsapp] = await Promise.all([
+    sendEmail(apiKey, { from: FROM, to: [contact.email], reply_to: TO, subject: conf.subject, html: conf.html, text: conf.text, tags: [{ name: "type", value: "lead-confirmation" }] }),
+    pingWhatsApp(persona, answers, contact),
+  ]);
+  if (!confirmation.ok) console.warn("[contact] Confirmation email not sent", confirmation.detail);
+  return json({ ok: true, success: true, confirmation: confirmation.ok, whatsapp });
 }
