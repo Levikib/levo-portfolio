@@ -171,3 +171,7 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 - Hero: tilted rotating type ring (HeroRing.tsx + hero-ring.css) reacts to hover/scroll/pointer; leases sticker removed.
 - Core banking: Levo says he has NOT done it. Ignore any mention earlier in this file.
 - Lead flow (2026-10-09): on submit → (1) full lead email to Levo (reply-to = sender), (2) confirmation copy to the sender with a summary + WhatsApp button, (3) optional instant WhatsApp ping to Levo via Twilio when TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, LEAD_WHATSAPP_TO are set. Success screen offers "Send it on WhatsApp" and "Email it too", both prefilled with their full summary. Confirmation emails need CONTACT_FROM on a Resend-verified domain.
+
+## 14. Makeja BUILD marketplace (2026-10-11)
+
+Separate repo work: Levikib/makeja-homes. Start with `docs/build/HANDOFF.md` on branch `build/marketplace-v2` (draft PR #1). Round 2 (shop, public, deals, money) is done; round 3 (accounts done, identity mostly done, discover and AI not done) is on `build/mv3-*` branches with briefs in `docs/build/agent-briefs/`.
