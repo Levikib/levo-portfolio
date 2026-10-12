@@ -174,4 +174,4 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 
 ## 14. Makeja BUILD marketplace (2026-10-11)
 
-Separate repo work: Levikib/makeja-homes. Start with `docs/build/HANDOFF.md` on branch `build/marketplace-v2` (draft PR #1). Round 2 (shop, public, deals, money) is done; round 3 (accounts done, identity mostly done, discover and AI not done) is on `build/mv3-*` branches with briefs in `docs/build/agent-briefs/`.
+Separate repo work: Levikib/makeja-homes. Merged to production on 2026-10-12 (PR #1). Start with `docs/build/HANDOFF.md` and `docs/build/CHECKLISTS.md` on `main`.
