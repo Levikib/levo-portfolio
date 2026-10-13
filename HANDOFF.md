@@ -184,3 +184,12 @@ Separate repo work: Levikib/makeja-homes. Merged to production on 2026-10-12 (PR
 - `ClayButton` now takes `download` for file links.
 - Fixed: the mobile menu crashed on open (`window.lenis` is not a Lenis instance, `.stop` is not a function); Nav now checks before calling stop/start.
 - Master CV source (HTML) was generated in a Claude session; the user's local copy is `Documents/Professional Documents/Levis_Kibirie_CV_2026_v3.pdf`.
+
+## 16. Thoughts: real posts (2026-10-13)
+
+- Posts live one per file in `src/data/posts/*.ts` and are registered in `THOUGHTS` (newest first) in `src/data/thoughts.ts`.
+- Topics now: Life & lessons, Anime, Films, Books, Games, Politics, Fun facts, 2 a.m. thoughts, plus Engineering, Founder notes, Design, Africa tech, Career (`TOPICS` + `TOPIC_META`).
+- Block types: p, h, quote, list, code, image (with `credit`), note (callout), sources (numbered links). Posts can have `series: { name, part }`.
+- Images: free-licence Unsplash photos hot-linked from images.unsplash.com (allowed in `next.config.mjs`), cropped to exact size by URL (`?w=&h=&fit=crop`) so width/height are always true, with photographer credit under each. The sandbox and Levo's laptop bridge cannot download images, so they were not viewed before publishing: check them on the live site. Do not use official anime screenshots/key art (copyrighted); photos of figures/manga on Unsplash are fine.
+- Published: "I wanted Robin punished. One Piece taught me better." (anime, One Piece and me part 1) and "Kenya is on the upswing. I can feel it." (politics, facts sourced, sources block at the end).
+- Voice: Levo's own, first person, honest, plain words, no em dashes.

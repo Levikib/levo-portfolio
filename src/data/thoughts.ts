@@ -17,7 +17,8 @@ export type Block =
   | { t: "list"; items: string[] }
   | { t: "code"; lang: string; text: string }
   | { t: "image"; src: string; alt: string; w: number; h: number; caption?: string; credit?: Credit }
-  | { t: "note"; text: string };
+  | { t: "note"; text: string }
+  | { t: "sources"; items: { label: string; href: string }[] };
 
 export type Thought = {
   slug: string;
@@ -61,6 +62,7 @@ export const COMING: { title: string; topic: ThoughtTopic }[] = [
 ];
 
 import { onePieceRobin } from "./posts/one-piece-robin";
+import { kenyaUpswing } from "./posts/kenya-upswing";
 
 /** Newest first. Each post lives in its own file under src/data/posts/. */
-export const THOUGHTS: Thought[] = [onePieceRobin];
+export const THOUGHTS: Thought[] = [kenyaUpswing, onePieceRobin];

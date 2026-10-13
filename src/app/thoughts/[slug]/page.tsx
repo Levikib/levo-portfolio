@@ -49,7 +49,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 /** Plain-text word count of a post, for BlogPosting.wordCount. */
 function wordsOf(t: Thought) {
   const text = t.body
-    .map((b) => (b.t === "list" ? b.items.join(" ") : b.t === "image" ? b.caption ?? "" : b.text))
+    .map((b) => (b.t === "list" ? b.items.join(" ") : b.t === "image" ? b.caption ?? "" : b.t === "sources" ? "" : b.text))
     .join(" ");
   return text.split(/\s+/).filter(Boolean).length;
 }
@@ -109,6 +109,17 @@ function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
       );
     case "list":
       return <ul className="cs-list th-list">{b.items.map((x, j) => <li key={j}>{x}</li>)}</ul>;
+    case "sources":
+      return (
+        <section className="th-sources" aria-label="Sources">
+          <h2 id={`s-${i}`}>Sources</h2>
+          <ol>
+            {b.items.map((x, j) => (
+              <li key={j}><a href={x.href} target="_blank" rel="noopener noreferrer">{x.label}</a></li>
+            ))}
+          </ol>
+        </section>
+      );
     case "note":
       return <p className="th-note" role="note">{b.text}</p>;
     case "code":
