@@ -4,7 +4,7 @@
 
 **Last updated:** 2026-10-06 morning (end of the first Claude account's session; Levo is moving to a second Claude account because the first hit its weekly limit)
 **Live site:** levis.makejahomes.co.ke (Vercel auto-deploys `main`). All canonicals, sitemap and OG URLs use this domain (`SITE.url` in `src/data/facts.ts`).
-**Repo:** github.com/Levikib/levo-portfolio. Work on `signal-path`, then fast-forward `main` to it (`git push origin signal-path && git push origin signal-path:main`). Both are identical right now.
+**Repo:** github.com/Levikib/levo-portfolio. Work on `signal-path`, then ALWAYS fast-forward `main` to it (main is what goes live) (`git push origin signal-path && git push origin signal-path:main`). Both are identical right now.
 
 ---
 
