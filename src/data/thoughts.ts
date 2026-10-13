@@ -63,6 +63,7 @@ export const COMING: { title: string; topic: ThoughtTopic }[] = [
 
 import { onePieceRobin } from "./posts/one-piece-robin";
 import { kenyaUpswing } from "./posts/kenya-upswing";
+import { zombieCranberries } from "./posts/zombie-cranberries";
 
 /** Newest first. Each post lives in its own file under src/data/posts/. */
-export const THOUGHTS: Thought[] = [kenyaUpswing, onePieceRobin];
+export const THOUGHTS: Thought[] = [zombieCranberries, kenyaUpswing, onePieceRobin];
