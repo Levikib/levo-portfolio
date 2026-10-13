@@ -27,6 +27,7 @@ function PostCard({ t, big }: { t: Thought; big?: boolean }) {
         <div className="ed-card__meta">
           <span className="ed-badge" style={{ "--accent": m.accent } as CSSProperties}>{m.label}</span>
           <span className="ed-card__client"><time dateTime={t.date}>{fmtDate(t.date)}</time> · {t.minutes} min</span>
+          {t.series && <span className="th-series">{t.series.name} · Part {t.series.part}</span>}
         </div>
         {big ? <h2 className="th-card__title">{t.title}</h2> : <h3 className="th-card__title">{t.title}</h3>}
         <p className="ed-card__blurb">{t.dek}</p>

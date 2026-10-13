@@ -400,3 +400,13 @@
   .ed-vid__film { display: none; }
   .ed-vid.is-playing .ed-vid__film { display: block; }
 }
+
+/* ─── thoughts: series badge, notes, image credits (2026-10-13) ─────────── */
+.th-series { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent, var(--sp-signal)); }
+.th-note {
+  margin: 1.4em 0 !important; padding: 14px 18px; border-radius: var(--r-md); font-size: 15px !important;
+  background: rgba(255,255,255,.04); border-left: 3px solid var(--accent, var(--sp-signal)); color: var(--sp-soft);
+}
+.th-credit { display: block; margin-top: 4px; font-size: 12px; color: var(--sp-muted); opacity: .85; }
+.th-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.th-cover-credit { margin: 8px 0 0; text-align: right; }

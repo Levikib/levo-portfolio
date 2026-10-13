@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import "../../editorial.css";
 import { SUBSTACK_URL, THOUGHTS } from "@/data/thoughts";
-import type { Block, Thought } from "@/data/thoughts";
+import type { Block, Credit, Thought } from "@/data/thoughts";
 import { ID, OG_DEFAULT, abs, breadcrumbs, describe, graph, ldJson, pageMetadata, personRef } from "@/lib/seo";
 import { SITE, waLink } from "@/data/facts";
 import { ClayButton, ClayCard, CtaBand } from "@/components/signal";
@@ -86,6 +86,14 @@ function postLd(t: Thought) {
   );
 }
 
+function CreditLine({ c }: { c: Credit }) {
+  return (
+    <span className="th-credit">
+      Photo: <a href={c.href} target="_blank" rel="noopener noreferrer nofollow">{c.name}</a> on {c.source}
+    </span>
+  );
+}
+
 function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
   switch (b.t) {
     case "p":
@@ -101,6 +109,8 @@ function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
       );
     case "list":
       return <ul className="cs-list th-list">{b.items.map((x, j) => <li key={j}>{x}</li>)}</ul>;
+    case "note":
+      return <p className="th-note" role="note">{b.text}</p>;
     case "code":
       return (
         <ClayCard as="figure" accent={accent} pad="none" className="cs-code th-code">
@@ -113,7 +123,12 @@ function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
       return (
         <figure className="th-figure">
           <div className="th-figure__frame"><Image src={b.src} alt={b.alt} width={b.w} height={b.h} sizes="(max-width: 800px) 92vw, 760px" /></div>
-          {b.caption && <figcaption>{b.caption}</figcaption>}
+          {(b.caption || b.credit) && (
+            <figcaption>
+              {b.caption}
+              {b.credit && <CreditLine c={b.credit} />}
+            </figcaption>
+          )}
         </figure>
       );
   }
@@ -143,6 +158,7 @@ export default function ThoughtPage({ params }: { params: { slug: string } }) {
           <div className="ed-card__meta">
             <span className="ed-badge" style={{ "--accent": m.accent } as CSSProperties}>{m.label}</span>
             <span className="ed-card__client"><time dateTime={t.date}>{fmtDate(t.date)}</time> · {t.minutes} min read</span>
+            {t.series && <span className="th-series">✦ {t.series.name} · Part {t.series.part}</span>}
           </div>
           <h1 className="th-article__title">{t.title}</h1>
           <p className="th-article__dek">{t.dek}</p>
@@ -154,6 +170,9 @@ export default function ThoughtPage({ params }: { params: { slug: string } }) {
             <ClayCard pad="none" accent={m.accent} className="th-article__cover">
               <Image src={t.cover.src} alt={t.cover.alt} width={t.cover.w} height={t.cover.h} priority sizes="(max-width: 1000px) 92vw, 960px" />
             </ClayCard>
+          )}
+          {t.cover?.credit && (
+            <p className="th-cover-credit"><CreditLine c={t.cover.credit} /></p>
           )}
         </header>
 

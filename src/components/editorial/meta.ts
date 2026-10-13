@@ -15,6 +15,13 @@ export const KIND_META: Record<EditorialKind, { label: string; accent: string; v
 };
 
 export const TOPIC_META: Record<ThoughtTopic, { label: string; accent: string }> = {
+  life: { label: "Life & lessons", accent: "#ffd166" },
+  films: { label: "Films", accent: "#ff5e5e" },
+  books: { label: "Books", accent: "#c9a46a" },
+  games: { label: "Games", accent: "#7cf0c8" },
+  politics: { label: "Politics", accent: "#9fb3ff" },
+  "fun-facts": { label: "Fun facts", accent: "#ffe14d" },
+  "2am": { label: "2 a.m. thoughts", accent: "#b48cff" },
   engineering: { label: "Engineering", accent: "#d4ff3a" },
   founder: { label: "Founder notes", accent: "#ff8a1f" },
   design: { label: "Design", accent: "#8b7cff" },
