@@ -22,7 +22,7 @@ export default function ThoughtsPage() {
           id="th-h1"
           eyebrow="$ cat ./thoughts/*.md"
           title={<>Thoughts<span className="ed-dot" aria-hidden>.</span></>}
-          kicker="Long-form notes on engineering, founding a company from Nairobi, design, anime and African tech. Written by me, from the work."
+          kicker="Anime, films and TV, life lessons, Kenya, impossible questions and 2 a.m. thoughts. Plus engineering and founder notes. All written by me, honestly."
         />
         <div className="cta-row ed-hero__ctas">
           <ClayButton variant="primary" size="lg" href={subscribeHref()} external={!!SUBSTACK_URL} icon={SUBSTACK_URL ? undefined : "@"}>

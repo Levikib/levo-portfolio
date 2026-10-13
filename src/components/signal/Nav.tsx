@@ -34,7 +34,7 @@ const GROUPS = [
 
 const FEATURED_ED = EDITORIAL.find((i) => i.featured && i.kind === "magazine") ?? EDITORIAL.find((i) => i.featured) ?? EDITORIAL[0];
 const FEATURED_STILL = FEATURED_ED ? stillOf(FEATURED_ED.cover) : null;
-const POSTS = published(THOUGHTS).slice(0, 3);
+const POSTS = published(THOUGHTS).slice(0, 4);
 
 const OPEN_DELAY = 90;
 const CLOSE_DELAY = 220;
@@ -431,7 +431,7 @@ export default function Nav() {
               <div className="nv-intro" style={v({ "--i": 0 })}>
                 <span className="nv-kicker">$ cat ./takes</span>
                 <p className="nv-intro__title">Takes.</p>
-                <p className="nv-intro__text">Opinions on building, business and Nairobi tech. Short, direct, from the work.</p>
+                <p className="nv-intro__text">Anime, films, life lessons, Kenya and 2 a.m. thoughts. Honest, in my own words.</p>
                 <Link href="/thoughts" className="nv-more" onClick={closeAll}>All takes<i aria-hidden>→</i></Link>
               </div>
               {POSTS.length > 0 ? (

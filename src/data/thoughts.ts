@@ -55,11 +55,7 @@ export const TOPICS: { id: ThoughtTopic | "all"; label: string }[] = [
 export const SUBSTACK_URL: string | null = null; // TODO(levo): add once the Substack exists
 
 /** Topics Levo plans to write. Shown as "coming soon" cards until a post is published. */
-export const COMING: { title: string; topic: ThoughtTopic }[] = [
-  { title: "Schema-per-tenant: the decision that shaped Makeja Homes", topic: "engineering" },
-  { title: "One Piece and me, part 2: Marineford and the price of a dream", topic: "anime" },
-  { title: "Shipping world-class products from Nairobi", topic: "africa-tech" },
-];
+export const COMING: { title: string; topic: ThoughtTopic }[] = []; // Levo: no "coming soon" cards, only real posts
 
 import { onePieceRobin } from "./posts/one-piece-robin";
 import { kenyaUpswing } from "./posts/kenya-upswing";
