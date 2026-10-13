@@ -39,7 +39,7 @@ export const TOPICS: { id: ThoughtTopic | "all"; label: string }[] = [
   { id: "all", label: "All" },
   { id: "life", label: "Life & lessons" },
   { id: "anime", label: "Anime" },
-  { id: "films", label: "Films" },
+  { id: "films", label: "Films & TV" },
   { id: "books", label: "Books" },
   { id: "games", label: "Games" },
   { id: "politics", label: "Politics" },
@@ -64,6 +64,9 @@ export const COMING: { title: string; topic: ThoughtTopic }[] = [
 import { onePieceRobin } from "./posts/one-piece-robin";
 import { kenyaUpswing } from "./posts/kenya-upswing";
 import { zombieCranberries } from "./posts/zombie-cranberries";
+import { hundredOrOne } from "./posts/hundred-or-one";
+import { memories } from "./posts/memories";
+import { blackSails } from "./posts/black-sails";
 
 /** Newest first. Each post lives in its own file under src/data/posts/. */
-export const THOUGHTS: Thought[] = [zombieCranberries, kenyaUpswing, onePieceRobin];
+export const THOUGHTS: Thought[] = [blackSails, memories, hundredOrOne, zombieCranberries, kenyaUpswing, onePieceRobin];
