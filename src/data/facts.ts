@@ -15,6 +15,9 @@ export const SITE = {
   whatsapp: "254723819934",
   github: "https://github.com/Levikib",
   linkedin: "https://linkedin.com/in/levis-kibirie-6bba13344",
+  /** The CV PDF in /public. Replace the file to update it; the path stays the same. Short links: /cv and /resume. */
+  cv: "/cv/Levis_Kibirie_CV.pdf",
+  cvUpdated: "Oct 2026",
 } as const;
 
 type Fact = { value: number; suffix?: string; label: string; source: string };

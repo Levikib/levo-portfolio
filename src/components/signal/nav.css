@@ -392,3 +392,25 @@
    and the floating bubble steps aside while the sheet is open so it never covers the CTA. */
 .nv a.cbtn[href*="wa.me"] { width: auto !important; height: auto !important; right: auto !important; bottom: auto !important; }
 body:has(.nv[data-sheet="true"]) aside[aria-label="Chat on WhatsApp"] { display: none; }
+
+/* CV download: always visible, desktop and mobile, beside "Let's talk". */
+.nv-cv {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 16px 0 6px;
+  border-radius: 999px; background: var(--well); box-shadow: var(--well-shadow), inset 0 0 0 1.5px rgba(212, 255, 58, .55);
+  color: var(--sp-paper); font-size: 14.5px; font-weight: 700; text-decoration: none; white-space: nowrap;
+  transition: transform .25s var(--nv-spring), box-shadow .2s ease;
+}
+.nv-cv__icon {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px;
+  background: var(--sp-lime); color: var(--sp-ink); font-size: 16px; font-weight: 800;
+}
+.nv-cv:hover { transform: translateY(-2px); box-shadow: var(--well-shadow), inset 0 0 0 1.5px var(--sp-lime); }
+.nv-cv:hover .nv-cv__icon { animation: nv-cv-bob .6s ease; }
+.nv-cv:focus-visible { outline: 2px solid var(--sp-lime); outline-offset: 3px; }
+@keyframes nv-cv-bob { 40% { transform: translateY(3px); } }
+@media (max-width: 900px) {
+  .nv-cv { min-height: 42px; padding: 0 12px 0 4px; font-size: 13.5px; }
+  .nv-cv__icon { width: 32px; height: 32px; }
+  .nv .nv-sheet__foot .nv-sheet__cv { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .nv-cv, .nv-cv:hover .nv-cv__icon { transition: none; animation: none; } }

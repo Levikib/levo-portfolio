@@ -8,7 +8,7 @@ import { PROJECTS } from "@/data/projects";
 import { EDITORIAL } from "@/data/editorial";
 import { COMING, THOUGHTS } from "@/data/thoughts";
 import { CREATIVE_SECTIONS } from "@/data/creative";
-import { waLink } from "@/data/facts";
+import { waLink, SITE } from "@/data/facts";
 import { KIND_META, TOPIC_META, fmtDate, mediaCount, published, stillOf } from "@/components/editorial/meta";
 import ClayButton from "./ClayButton";
 
@@ -219,7 +219,7 @@ export default function Nav() {
     const prev = body.style.overflow;
     body.style.overflow = "hidden";
     const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
-    lenis?.stop();
+    if (typeof lenis?.stop === "function") lenis.stop();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") { setSheet(false); burgerRef.current?.focus(); return; }
       if (e.key !== "Tab") return;
@@ -236,7 +236,7 @@ export default function Nav() {
     mq.addEventListener?.("change", onMq);
     return () => {
       body.style.overflow = prev;
-      lenis?.start();
+      if (typeof lenis?.start === "function") lenis.start();
       document.removeEventListener("keydown", onKey);
       mq.removeEventListener?.("change", onMq);
     };
@@ -304,6 +304,10 @@ export default function Nav() {
           </div>
 
           <div className="nv__end">
+            <a href={SITE.cv} download="Levis_Kibirie_CV.pdf" className="nv-cv" aria-label="Download my CV (PDF)">
+              <span className="nv-cv__icon" aria-hidden>↓</span>
+              <span className="nv-cv__label">CV</span>
+            </a>
             <span onPointerEnter={enterPlain("cta")} onPointerLeave={leaveList} className="nv-cta-wrap">
               <ClayButton href="/contact" variant="signal" className="nv-cta">Let&apos;s talk</ClayButton>
             </span>
@@ -547,6 +551,7 @@ export default function Nav() {
         <div className="nv-sheet__foot">
           <ClayButton href="/contact" variant="signal" size="lg" className="nv-sheet__cta">Let&apos;s talk</ClayButton>
           <ClayButton href={waLink("Hi Levo, I saw your portfolio and want to talk.")} external variant="ghost" size="lg" className="nv-sheet__wa">WhatsApp</ClayButton>
+          <ClayButton href={SITE.cv} download="Levis_Kibirie_CV.pdf" variant="primary" size="lg" icon="↓" className="nv-sheet__cv">Download my CV (PDF)</ClayButton>
         </div>
       </div>
     </header>

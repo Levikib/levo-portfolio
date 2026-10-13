@@ -13,3 +13,8 @@
 @media (prefers-reduced-motion: reduce) { .soc__a { transition: none; } .soc__a:hover { transform: none; } }
 .sp-hero__socials { margin-top: 18px; }
 .ab-hero__socials { margin-top: 18px; }
+/* The CV pill stands out from the profile pills. */
+.soc__a--cv { color: var(--sp-ink); background: var(--sp-lime); box-shadow: 0 6px 18px rgba(212, 255, 58, .25); }
+.soc__a--cv:hover { color: var(--sp-ink); box-shadow: 0 8px 22px rgba(212, 255, 58, .35), inset 0 0 0 1.5px var(--sp-ink); }
+.soc--sm .soc__a--cv .soc__label { display: inline; }
+.soc .soc__a.soc__a--cv, .soc .soc__a.soc__a--cv:hover { color: #08090b; }

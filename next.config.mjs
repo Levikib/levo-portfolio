@@ -21,6 +21,9 @@ const nextConfig = {
       { source: "/blog", destination: "/thoughts", permanent: false },
       { source: "/blog/:path*", destination: "/thoughts", permanent: false },
       { source: "/store", destination: "/editorial?kind=product", permanent: false },
+      // Short, shareable CV links.
+      { source: "/cv", destination: "/cv/Levis_Kibirie_CV.pdf", permanent: false },
+      { source: "/resume", destination: "/cv/Levis_Kibirie_CV.pdf", permanent: false },
     ];
   },
 

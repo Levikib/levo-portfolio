@@ -8,6 +8,8 @@ export type ClayButtonProps = {
   href?: string;
   /** New tab with rel="noreferrer". */
   external?: boolean;
+  /** Plain <a download> for files (e.g. the CV). Pass a filename or true. */
+  download?: string | boolean;
   /** Trailing glyph. Default "→" for internal, "↗" for external. Pass "" for none. */
   icon?: string;
   size?: "md" | "lg";
@@ -22,6 +24,7 @@ export default function ClayButton({
   variant = "primary",
   href,
   external,
+  download,
   icon,
   size = "md",
   className = "",
@@ -38,6 +41,13 @@ export default function ClayButton({
       {glyph && <span className="cbtn__icon" aria-hidden>{glyph}</span>}
     </>
   );
+  if (href && download) {
+    return (
+      <a href={href} download={download === true ? "" : download} className={cls} style={style} {...aria}>
+        {inner}
+      </a>
+    );
+  }
   if (!href) return <button type="button" className={cls} style={style} {...aria}>{inner}</button>;
   if (ext || /^mailto:|^tel:/.test(href)) {
     return (

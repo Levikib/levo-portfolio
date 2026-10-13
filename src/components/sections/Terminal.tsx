@@ -105,6 +105,7 @@ const HELP_GROUPS: { label: string; color: string; items: { cmd: string; desc: s
   {
     label: "CONNECT", color: "#d97706",
     items: [
+      { cmd: "cv", desc: "→  Open my CV (PDF)" },
       { cmd: "contact", desc: "→  Get in touch" },
       { cmd: "socials", desc: "→  Social + code links" },
       { cmd: "hire", desc: "→  Scroll to the contact form" },
@@ -342,6 +343,9 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
     for (const l of BEYOND_LINES) {
       out.push({ type: "output", text: l, color: undefined });
     }
+  } else if (cmd === "cv" || cmd === "resume") {
+    out.push({ type: "output", text: "  Opening Levis_Kibirie_CV.pdf (2 pages, updated Oct 2026)...", color: "#4ead6a" });
+    out.push({ type: "output", text: "__GOTO__/cv/Levis_Kibirie_CV.pdf" });
   } else if (cmd === "contact") {
     out.push({ type: "blank", text: "" });
     for (const l of CONTACT_LINES) {
@@ -439,7 +443,7 @@ const BOOT_SEQUENCE = [
 const TAB_COMPLETE_CMDS = [
   "help","projects","open makeja","open mikono","open elatec","open noevella","open ghostnet","open levo-cli","work","makeja","ghostnet","nse","shantech","chillminds",
   "whoami","about","timeline","skills","stack","beyond",
-  "contact","socials","hire levis","neofetch","history","man ",
+  "contact","cv","resume","socials","hire levis","neofetch","history","man ",
   "clear","ls","pwd","date",
 ];
 
@@ -624,7 +628,7 @@ export default function Terminal() {
 
         {/* Quick-fire buttons */}
         <div style={{ display:"flex", flexWrap:"wrap", gap:"8px", marginTop:"16px" }}>
-          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","skills","timeline","whoami","socials","neofetch","contact"].map(cmd => (
+          {["help","projects","makeja","ghostnet","nse","shantech","chillminds","skills","timeline","whoami","socials","neofetch","cv","contact"].map(cmd => (
             <button key={cmd}
               onClick={() => { setInput(cmd); setTimeout(() => { setInput(""); setLines(prev => [...prev, { type:"input", text:cmd }, ...processCommand(cmd, history), { type:"blank", text:"" }]); setHistory(prev => [cmd, ...prev.slice(0, 49)]); }, 10); }}
               style={{ fontFamily:"var(--font-mono)", fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", background:"rgba(16,185,129,0.05)", border:"1px solid rgba(16,185,129,0.18)", color:"rgba(16,185,129,0.85)", padding:"6px 14px", minHeight:"44px", cursor:"pointer", transition:"all 0.2s" }}

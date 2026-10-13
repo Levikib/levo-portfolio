@@ -175,3 +175,12 @@ Brief he supplied: `docs/ideas/pixel-clay-brief.md`. The idea is to merge pixel-
 ## 14. Makeja BUILD marketplace (2026-10-11)
 
 Separate repo work: Levikib/makeja-homes. Merged to production on 2026-10-12 (PR #1). Start with `docs/build/HANDOFF.md` and `docs/build/CHECKLISTS.md` on `main`.
+
+## 15. CV on the site (2026-10-13)
+
+- CV lives at `public/cv/Levis_Kibirie_CV.pdf` (2 pages, ATS-safe, built from the portfolio facts; Makeja numbers match `src/data/facts.ts`). To update it, replace that file; the path never changes. `SITE.cv` in `src/data/facts.ts` points to it.
+- Short links: `/cv` and `/resume` redirect to the PDF (`next.config.mjs`).
+- Where it shows: nav "CV" download pill (desktop and mobile, beside Let's talk), mobile menu "Download my CV (PDF)", hero "Download CV" button, lime CV pill in `Socials` (About hero and footer; hidden in the home hero via `cv={false}`), home contact section, terminal command `cv` / `resume`.
+- `ClayButton` now takes `download` for file links.
+- Fixed: the mobile menu crashed on open (`window.lenis` is not a Lenis instance, `.stop` is not a function); Nav now checks before calling stop/start.
+- Master CV source (HTML) was generated in a Claude session; the user's local copy is `Documents/Professional Documents/Levis_Kibirie_CV_2026_v3.pdf`.

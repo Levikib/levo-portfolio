@@ -96,6 +96,7 @@ export default function Home() {
               <ClayButton variant="ghost" href={waLink("Hi Levo, I saw your portfolio and want to talk.")} external>WhatsApp</ClayButton>
               <ClayButton variant="ghost" href={`mailto:${SITE.email}`} icon="@">Email</ClayButton>
               <ClayButton variant="ghost" href={SITE.linkedin} external>LinkedIn</ClayButton>
+              <ClayButton variant="signal" href={SITE.cv} download="Levis_Kibirie_CV.pdf" icon="↓">Download CV</ClayButton>
             </div>
           </div>
         </div>

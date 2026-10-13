@@ -1,4 +1,4 @@
-import { MAKEJA, CAREER, fmt } from "@/data/facts";
+import { MAKEJA, CAREER, fmt, SITE } from "@/data/facts";
 import { HERO } from "@/data/media";
 import { Star, Squiggle, Arrow, Underline, Burst } from "./Doodles";
 import ClayCard from "./ClayCard";
@@ -44,8 +44,9 @@ export default function Hero() {
             <div className="cta-row sp-hero__ctas">
               <ClayButton href="#path" variant="primary" size="lg" icon="↓">Follow the signal</ClayButton>
               <ClayButton href="/#contact" variant="ghost" size="lg">Hire me</ClayButton>
+              <ClayButton href={SITE.cv} download="Levis_Kibirie_CV.pdf" variant="signal" size="lg" icon="↓">Download CV</ClayButton>
             </div>
-            <Socials className="sp-hero__socials" />
+            <Socials className="sp-hero__socials" cv={false} />
           </div>
 
           <div className="sp-bubble sp-hand sp-bubble--mob" aria-hidden>let&apos;s build something real!</div>
