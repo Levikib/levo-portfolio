@@ -68,12 +68,12 @@ export const kenyaUpswing: Thought = {
     { t: "p", text: "Look at our own artists. Nameless held a 25-year anniversary concert at the Carnivore in August, and it sold out about eight weeks before the show. Kenyans paying to celebrate Kenyan music, made by Kenyans, for Kenyans. The Safari Sevens line-up had Nameless, Mejja and Breeder LW playing between rugby matches. A few years ago, that energy wasn't there. Now it is." },
     {
       t: "image",
-      src: u("photo-1512299286776-c18be8ed6a1a", 1600, 1067),
-      alt: "A team playing rugby",
+      src: u("photo-1769708046949-108aa733f753", 1600, 1067),
+      alt: "Kenyan fans waving flags and cheering at a sporting event",
       w: 1600,
       h: 1067,
       caption: "Sevens weekend is a national holiday in spirit, if not on paper.",
-      credit: un("Quino Al", "https://unsplash.com/photos/team-playing-rugby-sport-XAlKHW9ierw"),
+      credit: un("Justin Lagat", "https://unsplash.com/photos/kenyan-fans-cheer-at-a-sporting-event-with-flags-7e16OcueiNs"),
     },
 
     { t: "h", text: "Thank you, Kibaki" },
