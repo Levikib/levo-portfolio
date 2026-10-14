@@ -95,13 +95,5 @@ export const hundredOrOne: Thought = {
     { t: "p", text: "The good news is nobody will ever actually stand at that lever. But the question still teaches something useful: if they mean that much, show it now. Call them. Visit. Say it out loud. Don't wait for an impossible choice to find out how much someone matters." },
     { t: "p", text: "So, your turn. A hundred strangers, or the one you love? Be honest. Nobody's watching." },
 
-    {
-      t: "sources",
-      items: [
-        { label: "Stanford Encyclopedia of Philosophy: Doing vs. Allowing Harm (the trolley problem, Foot and Thomson)", href: "https://plato.stanford.edu/entries/doing-allowing/" },
-        { label: "Awad et al., The Moral Machine experiment, Nature (2018)", href: "https://www.nature.com/articles/s41586-018-0637-6" },
-        { label: "Stanford Encyclopedia of Philosophy: Bernard Williams", href: "https://plato.stanford.edu/entries/williams-bernard/" },
-      ],
-    },
   ],
 };

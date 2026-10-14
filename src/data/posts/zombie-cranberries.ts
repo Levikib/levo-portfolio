@@ -116,12 +116,5 @@ export const zombieCranberries: Thought = {
     },
     { t: "p", text: "Go play it loud tonight. Then tell me: if your personality were a song, what would it be?" },
 
-    {
-      t: "sources",
-      items: [
-        { label: "uDiscover Music: Zombie, the story behind The Cranberries' deathless classic", href: "https://www.udiscovermusic.com/uncategorized/the-cranberries-zombie-song/" },
-        { label: "IMRO: The Cranberries' Zombie video hits 1 billion YouTube views, first Irish band to do it", href: "https://imro.ie/news/the-cranberries-zombie-video-hits-1-billion-youtube-views-making-history-as-the-first-irish-band-ever-to-hit-this-milestone/" },
-      ],
-    },
   ],
 };

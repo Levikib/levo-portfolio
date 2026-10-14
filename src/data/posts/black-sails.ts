@@ -130,15 +130,5 @@ export const blackSails: Thought = {
     },
     { t: "p", text: "If you haven't watched Black Sails, watch it. If you have, tell me: Flint, Vane or Silver? Whose side were you on? Because I already told you mine. Vane, every single time." },
 
-    {
-      t: "sources",
-      items: [
-        { label: "Wikipedia: Black Sails (TV series)", href: "https://en.wikipedia.org/wiki/Black_Sails_(TV_series)" },
-        { label: "Wikipedia: Charles Vane (the real pirate)", href: "https://en.wikipedia.org/wiki/Charles_Vane" },
-        { label: "Mail & Guardian: Kenya lifts ban on Mau Mau (2003)", href: "https://mg.co.za/article/2003-09-01-kenya-lifts-ban-on-mau/" },
-        { label: "Looper: The ending of Black Sails finally explained", href: "https://www.looper.com/1180660/the-ending-of-black-sails-finally-explained" },
-        { label: "Inverse: Black Sails series finale, the creators on Flint, Silver and Thomas Hamilton", href: "https://www.inverse.com/article/29653-black-sails-series-finale-the-end-james-flint-dead-john-silver-thomas-hamilton" },
-      ],
-    },
   ],
 };

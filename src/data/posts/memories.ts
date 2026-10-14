@@ -96,13 +96,5 @@ export const memories: Thought = {
     { t: "p", text: "I'm still not fully at peace with my answer, and maybe that's the point of a question like this. It's not supposed to be easy. It's supposed to show you what you're holding on to." },
     { t: "p", text: "Your turn: your past, or your future? Be honest." },
 
-    {
-      t: "sources",
-      items: [
-        { label: "Wikipedia: Henry Molaison (Patient H.M.)", href: "https://en.wikipedia.org/wiki/Henry_Molaison" },
-        { label: "MIT Brain and Cognitive Sciences: An unforgettable life (H.M.)", href: "https://bcs.mit.edu/news/unforgettable-life" },
-        { label: "Boing Boing: Meet the man with only a seven-second memory (Clive Wearing)", href: "https://boingboing.net/2022/05/11/meet-the-man-with-only-a-seven-second-memory.html" },
-      ],
-    },
   ],
 };

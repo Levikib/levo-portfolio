@@ -137,19 +137,5 @@ export const kenyaUpswing: Thought = {
       credit: un("Click Smith | Nick254 Media Ltd", "https://unsplash.com/photos/a-view-of-a-city-at-night-from-the-top-of-a-building-Lc9MlKlMMhI"),
     },
 
-    {
-      t: "sources",
-      items: [
-        { label: "Citizen Digital: Shujaa crush Morans to retain Safari Sevens crown (11 Oct 2026)", href: "https://citizen.digital/article/shujaa-crush-morans-to-retain-safari-sevens-crown-in-all-kenyan-final-n391839" },
-        { label: "Capital FM: Nameless, Mejja, Breeder LW lead Safari Sevens entertainment line-up", href: "https://capitalfm.africa/nameless-mejja-breeder-lw-lead-star-studded-safari-sevens-entertainment-line-up/" },
-        { label: "Nairametrics: Kenya's inflation rises to 6.8% in September (KNBS data, 30 Sep 2026)", href: "https://nairametrics.com/2026/09/30/kenyas-inflation-rises-to-6-8-in-september-highest-in-one-year/" },
-        { label: "The Standard: World Bank says up to 2.4 million Kenyans risk falling into poverty in 2026 (11 Jul 2026)", href: "https://standardmedia.co.ke/business/amp/national/article/2001552567/world-bank-says-over-24-million-kenyans-risk-falling-into-poverty-in-2026" },
-        { label: "The Star: Report says joblessness and graft are major issues in Kenya", href: "https://www.the-star.co.ke/news/2025-08-05-report-joblessness-graft-major-issues-in-kenya" },
-        { label: "Citizen Digital: Nameless' 25-year anniversary concert sells out two months before show", href: "https://citizen.digital/article/nameless-25-year-anniversary-concert-sells-out-two-months-before-show" },
-        { label: "People Daily: Free primary education policy freed many from ignorance", href: "https://peopledaily.digital/news/free-primary-education-policy-freed-many-from-ignorance" },
-        { label: "Citizen Digital: Kenya records 7.9 million tourists in 2025 as sector earns Ksh 500 billion", href: "https://citizen.digital/article/kenya-records-79-million-tourists-in-2025-as-sector-earns-ksh05-trillion-n380167" },
-        { label: "AllAfrica: Moody's upgrades Kenya's credit rating on lower default risk (Jan 2026)", href: "https://allafrica.com/stories/202601280101.html" },
-      ],
-    },
   ],
 };

@@ -371,6 +371,8 @@
 .th-figure { margin: 2em 0 !important; }
 .th-figure__frame { padding: 8px; border-radius: var(--r-md); background: linear-gradient(168deg, var(--clay-hi), var(--clay-lo)); box-shadow: var(--clay-rest); }
 .th-figure__frame img { width: 100%; height: auto; display: block; border-radius: calc(var(--r-md) - 8px); }
+/* portrait art (posters, phone wallpapers): keep it from towering over the text */
+.th-figure--tall .th-figure__frame { max-width: 460px; margin-inline: auto; }
 .th-figure figcaption { margin-top: 12px; text-align: center; font-size: 14px; color: var(--sp-muted); }
 .th-endmark { text-align: center; color: var(--accent); letter-spacing: .6em; font-size: 14px; margin-top: var(--s6); }
 .th-article__foot .ed-pn { padding-top: var(--s6); max-width: 960px; margin: 0 auto; }
