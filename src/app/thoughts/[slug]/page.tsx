@@ -133,7 +133,7 @@ function Render({ b, accent, i }: { b: Block; accent: string; i: number }) {
     case "image":
       return (
         <figure className={b.h > b.w * 1.15 ? "th-figure th-figure--tall" : "th-figure"}>
-          <div className="th-figure__frame"><Image src={b.src} alt={b.alt} width={b.w} height={b.h} sizes={b.h > b.w * 1.15 ? "(max-width: 800px) 92vw, 460px" : "(max-width: 800px) 92vw, 760px"} /></div>
+          <div className="th-figure__frame" style={b.w < 700 ? { maxWidth: Math.min(b.w + 16, b.h > b.w * 1.15 ? 460 : 760), marginInline: "auto" } : undefined}><Image src={b.src} alt={b.alt} width={b.w} height={b.h} sizes={b.h > b.w * 1.15 ? "(max-width: 800px) 92vw, 460px" : "(max-width: 800px) 92vw, 760px"} /></div>
           {(b.caption || b.credit) && (
             <figcaption>
               {b.caption}
