@@ -210,7 +210,7 @@ export async function isRevoked(jti: string) {
     tagline: "A handmade animal shop whose checkout writes the WhatsApp order for you.",
     summary:
       "A full store for a Nairobi craft business that supports 25+ women: 30 animals, a custom-order studio with 29 order types, gift and size finders, a budgeted animal layer, and a checkout that writes a referenced WhatsApp order sized to fit the link.",
-    live: "https://mikono-creations.vercel.app",
+    live: "https://mikonocreations.co.ke",
     repo: "https://github.com/Levikib/Mikono-Creations",
     role: "Strategy, design and full build, run as a multi-agent pipeline with audit gates",
     when: "2026",
@@ -545,7 +545,7 @@ const failSafe = window.setTimeout(() => el.classList.add('is-in'), 3000)`,
     tagline: "A cybersecurity training ground with an AI operator built in.",
     summary:
       "Thirteen training modules from OSINT to Active Directory, eight standalone security tools, a leaderboard, and GHOST, an LLM agent for signed-in users.",
-    live: "https://ghostnet-pi.vercel.app",
+    live: "https://ghostnet-nine.vercel.app",
     repo: "https://github.com/Levikib/ghostnet",
     role: "Design and build",
     when: "2025",

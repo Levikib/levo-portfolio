@@ -206,7 +206,7 @@ const SOCIALS_LINES = [
   "  WhatsApp   +254 723 819 934",
   "",
   "  Makeja Homes   makejahomes.co.ke",
-  "  GhostNet       ghostnet-pi.vercel.app",
+  "  GhostNet       ghostnet-nine.vercel.app",
 ];
 
 const PROJECTS_LINES = [
@@ -288,7 +288,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "ghostnet") {
     out.push({ type: "output", text: GHOSTNET_ASCII, color: "#10b981" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Live at ghostnet-pi.vercel.app. GHOST Agent is online.", color: "#10b981" });
+    out.push({ type: "output", text: "  ● Live at ghostnet-nine.vercel.app. GHOST Agent is online.", color: "#10b981" });
   } else if (cmd === "nse") {
     out.push({ type: "output", text: NSE_ASCII, color: "#d97706" });
     out.push({ type: "blank", text: "" });

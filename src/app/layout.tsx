@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono, DM_Sans, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import "./mobile.css";
 import "./signal.css";
+import "./fonts.css";
 import { SAME_AS, SITE_NAME, SITE_URL, graph, ldJson, makejaOrg, person, website } from "@/lib/seo";
 import { ROUTE_COPY, ROUTE_META, routeJsonLd } from "@/lib/seo-routes";
 import RouteJsonLd from "@/lib/RouteJsonLd";
@@ -12,31 +12,6 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import Nav from "@/components/signal/Nav";
 import Footer from "@/components/signal/Footer";
 
-const display = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-display",
-  display: "swap",
-});
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-mono",
-  display: "swap",
-});
-const hand = Permanent_Marker({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-hand",
-  display: "swap",
-});
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-body",
-  display: "swap",
-  preload: false,
-});
 
 export const metadata: Metadata = {
   ...ROUTE_META.home,
@@ -70,10 +45,24 @@ const routeLd = routeJsonLd();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable} ${dmSans.variable} ${hand.variable}`}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Fonts come from one Google Fonts stylesheet, not next/font/google:
+            since Nov 2026 Google returns font URLs next/font 14.2 can't parse,
+            which fails the build. It loads without blocking first paint
+            (media="print" until it arrives); variables live in fonts.css. */}
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&family=Permanent+Marker&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&family=Permanent+Marker&display=swap" media="print" data-lv-fonts="" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=document.querySelector('link[data-lv-fonts]');if(!l)return;var on=function(){l.media='all'};if(l.sheet){on()}else{l.addEventListener('load',on)}})();`,
+          }}
+        />
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&family=Permanent+Marker&display=swap" />
+        </noscript>
         {SAME_AS.map((href) => <link key={href} rel="me" href={href} />)}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: siteJsonLd }} />
         <RouteJsonLd map={routeLd} />

@@ -1,0 +1,8 @@
+/* Font families as CSS variables (same names next/font used to set). The
+   faces come from the Google Fonts stylesheet linked in layout.tsx. */
+:root {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-hand: 'Permanent Marker', 'Comic Sans MS', cursive;
+}

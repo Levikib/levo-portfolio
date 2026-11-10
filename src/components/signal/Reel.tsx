@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LazyVideo from "./LazyVideo";
 import type { Slot } from "@/data/media";
 
 /**
@@ -8,9 +9,7 @@ import type { Slot } from "@/data/media";
 export default function Reel({ slot, alt, no, name }: { slot: Slot; alt: string; shot?: string; no?: string; name?: string }) {
   if (slot.ready) {
     return (
-      <video autoPlay muted loop playsInline preload="none" poster={slot.poster} aria-label={alt}>
-        <source src={slot.src} type="video/mp4" />
-      </video>
+      <LazyVideo src={slot.src} poster={slot.poster} label={alt} />
     );
   }
   if (slot.fallback) {
