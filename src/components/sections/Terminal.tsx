@@ -304,7 +304,7 @@ function processCommand(raw: string, commandHistory: string[]): Line[] {
   } else if (cmd === "hookah") {
     out.push({ type: "output", text: HOOKAH_ASCII, color: "#9d5cf5" });
     out.push({ type: "blank", text: "" });
-    out.push({ type: "output", text: "  ● Live at hookah-website-two.vercel.app. 3D hero, live Paystack checkout.", color: "#9d5cf5" });
+    out.push({ type: "output", text: "  ● In progress: 3D hero and Paystack checkout. Code at github.com/Levikib/hookah-website.", color: "#9d5cf5" });
   } else if (cmd === "projects") {
     out.push({ type: "output", text: "  // All Projects", color: "#a855f7" });
     out.push({ type: "blank", text: "" });

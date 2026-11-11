@@ -1,0 +1,28 @@
+# Levis Kibirie
+
+> Levis Kibirie (Levo) is a full-stack product engineer in Nairobi, Kenya. He builds and runs production web products end to end: Next.js and TypeScript front ends, PostgreSQL back ends, payments (M-Pesa, Paystack), WhatsApp automation and AI features. He is the founder and lead engineer of Makeja Homes.
+
+Contact: https://levis.makejahomes.co.ke/contact
+
+## Selected work
+
+- [Makeja Homes](https://levis.makejahomes.co.ke/work/makeja-homes): property management software for Kenyan landlords, with multi-tenant PostgreSQL, M-Pesa and Paystack rent collection, WhatsApp bot and AI assistant. Live: https://makejahomes.co.ke
+- [Mikono Creations](https://levis.makejahomes.co.ke/work/mikono-creations): a handmade crocheted-animal shop whose checkout writes the WhatsApp order. Live: https://mikonocreations.co.ke
+- [Elatec Safety Systems](https://levis.makejahomes.co.ke/work/elatec-safety-systems): a security and solar installer that sells and books online. Live: https://www.elatecsafetysystems.co.ke
+- [Noevella Group](https://levis.makejahomes.co.ke/work/noevella-group): an agency site with a CMS the founder runs herself. Live: https://noevellagroup.com
+- [GhostNet](https://levis.makejahomes.co.ke/work/ghostnet): a cybersecurity training platform with 13 modules, guided labs and an AI guide. Live: https://ghostnet-nine.vercel.app
+- [levo-cli](https://levis.makejahomes.co.ke/work/levo-cli): a terminal for exploring this portfolio, in the browser and in your own shell.
+- [Hookah 3D](https://levis.makejahomes.co.ke/work/hookah-3d): a WebGL product shader experiment (in progress).
+
+## Pages
+
+- [Work](https://levis.makejahomes.co.ke/work): all case studies, with architecture and key decisions.
+- [About](https://levis.makejahomes.co.ke/about)
+- [Thoughts](https://levis.makejahomes.co.ke/thoughts): writing.
+- [Creative](https://levis.makejahomes.co.ke/creative)
+- [Editorial](https://levis.makejahomes.co.ke/editorial)
+- [Contact](https://levis.makejahomes.co.ke/contact)
+
+## Optional
+
+- [Sitemap](https://levis.makejahomes.co.ke/sitemap.xml)

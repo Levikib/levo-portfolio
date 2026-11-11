@@ -351,7 +351,7 @@ export function activeSteps(path: PathMode, b: Brief): StepId[] {
     tagline: "A security and solar installer that now sells and books online.",
     summary:
       "A service business site with a real shop, bookings, a WhatsApp order hand-off, a towns-served index computed from real project records, and structured data written by hand for local search.",
-    live: "https://elatecsafetysystems.co.ke",
+    live: "https://www.elatecsafetysystems.co.ke",
     repoNote: "Client repo, private. Walkthrough on request.",
     role: "Design and full build through ShanTech",
     when: "2026",
@@ -585,7 +585,6 @@ for (const msg of messages)
     tagline: "A product that comes apart on the GPU.",
     summary:
       "An R&D shader for a hookah rental site: one model splits into 5 bands with a custom vertex shader, driven by a single progress uniform. Still in progress and not yet on the live page.",
-    live: "https://hookah-website-two.vercel.app",
     repo: "https://github.com/Levikib/hookah-website",
     role: "Design and build",
     when: "2026",
